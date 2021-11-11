@@ -1,10 +1,10 @@
 <template>
-    <span class="haha">123124</span>
+    <Monitor></Monitor>
 </template>
 
 <script setup>
-
 import {ref} from 'vue'
+import Monitor from "./packages/Monitor/pages/index.vue"
 
 </script>
 

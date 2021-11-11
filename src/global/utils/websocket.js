@@ -1,3 +1,4 @@
+import { getRandom } from "@/global/utils"
 /*
    DouyuEx WebSocket UnLogin
     By: 小淳
@@ -138,10 +139,6 @@ function hex(e) {
         }).join("")
     }
     return ""
-}
-
-function getRandom(min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
 }
 
 export {

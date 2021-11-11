@@ -21,5 +21,14 @@ export default defineConfig({
     alias: {
         '@': path.resolve(__dirname, 'src')
     }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 添加公共样式
+        additionalData: ` @import "@/global/styles/themes/index.scss";
+                          @import "@/global/styles/vars.scss";`
+      }
+    }
   }
 })
