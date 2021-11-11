@@ -1,19 +1,27 @@
 <template>
-    <div class="chunk"></div>
+    <div class="chunk">
+        <div v-for="(item, index) in content" :key="index" style="user-select: none;">{{item}}</div>
+    </div>
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
+import {ref, computed, onMounted} from 'vue'
 let props = defineProps({
-    order: Number,
     size: Number
 })
 
 let sizeStyle = computed(() => {
     return `${String(props.size)}%`
 })
-let orderStyle = computed(() => {
-    return props.order
+
+let content = ref([]);
+
+let i = 0;
+onMounted(() => {
+    setInterval(() => {
+        content.value.push(i);
+        i++;
+    }, 1000);
 })
 
 </script>
@@ -22,8 +30,6 @@ let orderStyle = computed(() => {
 .chunk {
     width: 100%;
     flex: 0 0 v-bind(sizeStyle);
-    order: v-bind(orderStyle);
-
     background-color: pink;
     border-radius: 10px;
 }
