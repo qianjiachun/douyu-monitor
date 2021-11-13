@@ -1,21 +1,22 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import importToCDN from 'vite-plugin-cdn-import'
 import path from "path";
+
+import styleImport from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    importToCDN({
-      modules: [
+    styleImport({
+      libs: [
         {
-          name:'vue',
-          var:'Vue',
-          path:'https://cdn.jsdelivr.net/npm/vue@3.2.16/dist/vue.global.prod.js'
-        }
-      ]
-    })
+          libraryName: 'vant',
+          esModule: true,
+          resolveStyle: (name) => `vant/es/${name}/style`,
+        },
+      ],
+    }),
   ],
   resolve: {
     alias: {
@@ -27,8 +28,9 @@ export default defineConfig({
       scss: {
         // 添加公共样式
         additionalData: ` @import "@/global/styles/themes/index.scss";
-                          @import "@/global/styles/vars.scss";`
+                          @import "@/global/styles/vars.scss";`,
+        charset: false,
       }
     }
-  }
+  },
 })
