@@ -1,7 +1,7 @@
 <template>
     <div class="monitor" @click.prevent="onClickMonitor">
-        <Gift v-if="options.switch.includes('gift')" :maxOrder="maxOrder" :options="options"></Gift>
-        <Enter v-if="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options"></Enter>
+        <Gift v-if="options.switch.includes('gift')" :maxOrder="maxOrder" :options="options" :giftList="giftList" :allGiftData="allGiftData"></Gift>
+        <Enter v-if="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options" :enterList="enterList"></Enter>
         <Danmaku v-if="options.switch.includes('danmaku')" :maxOrder="maxOrder" :options="options" :danmakuList="danmakuList"></Danmaku>
     </div>
     <Popup v-model:show="isShowOption" position="bottom" :style="{ height: '40%' }">
@@ -29,6 +29,12 @@
                         <Slider v-model="options.fontSize" :min="12" :max="30"/>
                     </template>
                 </Field>
+                <Field label="锁屏">
+                    <template #input>
+                        <Switch v-model="options.lock" size="20" />
+                    </template>
+                </Field>
+                <Field v-model="options.threshold" label="数据上限" type="digit" placeholder="当超过上限 旧数据会被删除"></Field>
             </Tab>
             <Tab title="弹幕">
                 <Field label="占比">
@@ -45,7 +51,7 @@
                         </CheckboxGroup>
                     </template>
                 </Field>
-                <Field v-model="options.danmaku.ban.level" label="屏蔽等级" type="digit" placeholder="请输入屏蔽的等级"></Field>
+                <Field v-model="options.danmaku.ban.level" label="屏蔽等级≤" type="digit" placeholder="请输入屏蔽的等级"></Field>
                 <Field v-model="options.danmaku.ban.keywords" label="屏蔽关键词" placeholder="空格隔开 例如:弹幕1 弹幕2"></Field>
                 <Field v-model="options.danmaku.ban.nicknames" label="屏蔽昵称" placeholder="模糊匹配 空格隔开 例如:昵称1 昵称2"></Field>
             </Tab>
@@ -55,6 +61,8 @@
                         <Slider v-model="options.size.gift" :disabled="maxOrder===options.order.gift"/>
                     </template>
                 </Field>
+                <Field v-model="options.gift.ban.price" label="屏蔽单价<" type="number" placeholder="请输入单价"></Field>
+                <Field v-model="options.gift.totalPrice" label="高亮总价≥" type="number" placeholder="请输入总价"></Field>
             </Tab>
             <Tab title="进场">
                 <Field label="占比">
@@ -62,60 +70,44 @@
                         <Slider v-model="options.size.enter" :disabled="maxOrder===options.order.enter"/>
                     </template>
                 </Field>
+                <Field label="显示">
+                    <template #input>
+                        <CheckboxGroup v-model="options.enter.show" direction="horizontal">
+                            <Checkbox name="noble" shape="square">贵族</Checkbox>
+                            <Checkbox name="avatar" shape="square">头像</Checkbox>
+                        </CheckboxGroup>
+                    </template>
+                </Field>
+                <Field v-model="options.enter.keywords" label="关键昵称" placeholder="空格隔开 例如:昵称1 昵称2"></Field>
             </Tab>
         </Tabs>
     </Popup>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 import Danmaku from "../components/Danmaku/Danmaku.vue"
 import Gift from "../components/Gift/Gift.vue"
 import Enter from "../components/Enter/Enter.vue"
 
-import { Popup, Tab, Tabs, Form, Field, CellGroup, Slider, Checkbox, CheckboxGroup, RadioGroup, Radio } from 'vant'
+import { Popup, Tab, Tabs, Field, Slider, Checkbox, CheckboxGroup, RadioGroup, Radio, Switch } from 'vant'
 
 import { useNormalStyle } from "../hooks/useNormalStyle.js"
 import { useWebsocket } from "../hooks/useWebsocket.js"
 
-let options = ref({
-    // 纵向column 横向row
-    direction: "column",
-    // 每个模块的占比%
-    size: {
-        enter: 20,
-        gift: 20,
-        danmaku: 30,
-    },
-    // 每个模块的排序
-    order: {
-        enter: 0,
-        gift: 1,
-        danmaku: 2,
-    },
-    // 每个模块开关，按顺序排
-    switch: ["enter", "gift", "danmaku"],
-    // 数据阈值
-    threshold: 300,
-    // 锁屏
-    lock: false, 
-    // 字号
-    fontSize: 14,
-    // 弹幕设置
-    danmaku: {
-        show: ["avatar", "fans", "noble"],
-        ban: {
-            level: 0,
-            keywords: "",
-            nicknames: "",
-        }
-    }
-});
+import { giftData } from "@/global/utils/dydata/giftData.js"
+import { saveLocalData, getLocalData } from "@/global/utils"
+import { defaultOptions } from '../options'
+
+const LOCAL_NAME = "monitor_options"
+
+let options = ref(defaultOptions);
 
 let { directionStyle, fontSizeStyle } = useNormalStyle(options);
-let { connectWs, danmakuList } = useWebsocket(options);
+let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options);
 
+let allGiftData = ref({});
 let isShowOption = ref(false);
 let activeTab = ref(0);
 
@@ -129,10 +121,40 @@ let maxOrder = computed(() => {
     return ret;
 });
 
-onMounted(() => {
-	connectWs(window.rid);
+onMounted(async () => {
+    let rid = window.rid;
+    let localData = JSON.parse(getLocalData(LOCAL_NAME));
+    if (Object.prototype.toString.call(localData) !== '[object Object]') {
+        localData = defaultOptions;
+    }
+    options.value = localData;
+    let data = await getRoomGiftData(rid);
+    let roomGiftData = {prefix: "https://gfs-op.douyucdn.cn/dygift"};
+    for (let i = 0; i < data.data.giftList.length; i++) {
+        let item = data.data.giftList[i];
+        roomGiftData[item.id] = {
+            n: item.name,
+            pic: item.basicInfo.focusPic,
+            pc: item.priceInfo.price,
+        }
+    }
+    allGiftData.value = {...roomGiftData, ...giftData};
+	connectWs(rid);
 })
 
+function getRoomGiftData(rid) {
+    return new Promise(resolve => {
+        fetch('https://gift.douyucdn.cn/api/gift/v2/web/list?rid=' + rid,{
+            method: 'GET',
+        }).then(res => {
+            return res.json();
+        }).then(ret => {
+            resolve(ret);
+        }).catch(err => {
+            console.log("请求失败!", err);
+        })
+    })
+}
 
 function onClickMonitor() {
     isShowOption.value = true;
@@ -145,6 +167,10 @@ function onChangeSwitch(list) {
     }
 }
 
+watch(options, (n, o) => {
+    saveLocalData(LOCAL_NAME, JSON.stringify(n));
+}, {deep: true})
+
 </script>
 
 <style lang="scss" scoped>
@@ -155,5 +181,6 @@ function onChangeSwitch(list) {
     display: flex;
     flex-direction: v-bind(directionStyle);
     font-size: v-bind(fontSizeStyle);
+    user-select: none;
 }
 </style>

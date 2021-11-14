@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { Ex_WebSocket_UnLogin } from "@/global/utils/websocket.js"
 import { STT } from "@/global/utils/stt.js"
 import { getStrMiddle } from "@/global/utils"
@@ -54,11 +54,30 @@ export function useWebsocket(options) {
             danmakuList.value.push(obj);
         }
         if (msgType === "dgb" && options.value.switch.includes("gift")) {
-            // console.log(data);
+            let obj = {
+                nn: data.nn,
+                gfid: data.gfid,
+                gfcnt: data.gfcnt,
+                tt: new Date().getTime(),
+            }
+            if (giftList.value.length + 1 > options.value.threshold) {
+                giftList.value.shift();
+            }
+            giftList.value.push(obj);
         }
-        // if (msgType === "uenter" && options.value.switch.includes("enter")) {
-        //     console.log(data);
-        // }
+        if (msgType === "uenter" && options.value.switch.includes("enter")) {
+            let obj = {
+                nn: data.nn,
+                avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
+                lv: data.level, // 等级
+                noble: data.nl, // 贵族等级
+                tt: new Date().getTime(),
+            }
+            if (enterList.value.length + 1 > options.value.threshold) {
+                enterList.value.shift();
+            }
+            enterList.value.push(obj);
+        }
     }
     const checkDanmakuValid = (data) => {
         // 判断屏蔽等级
@@ -86,5 +105,5 @@ export function useWebsocket(options) {
         return true;
     }
 
-    return { connectWs, danmakuList }
+    return { connectWs, danmakuList, enterList, giftList }
 }

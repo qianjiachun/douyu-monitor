@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import {ref, computed, watch, onUpdated } from 'vue'
+import {ref, computed, onUpdated } from 'vue'
 import {useFlexStyle} from "../../hooks/useFlexStyle.js"
 import {useBorderStyle} from "../../hooks/useBorderStyle.js"
 import {nobleData} from "@/global/utils/dydata/nobleData.js"
@@ -59,7 +59,7 @@ onUpdated(() => {
     padding: 5px;
     box-sizing: border-box;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     content-visibility: auto;
     .item {
         display: flex;
@@ -72,6 +72,7 @@ onUpdated(() => {
         img {
             width: v-bind(imgSizeStyle);
             height: v-bind(imgSizeStyle);
+            border-radius: 50%;
         }
         .item__fans {
             width: 60px;

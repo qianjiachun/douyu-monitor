@@ -1,4 +1,4 @@
-import { computed, watch } from "vue";
+import { computed } from "vue";
 
 export function useBorderStyle(props, type) {
     let splitLineColor = "rgb(227, 227, 227)"
