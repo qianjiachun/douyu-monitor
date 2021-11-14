@@ -32,6 +32,9 @@ export function useWebsocket(options) {
 
         let data = stt.deserialize(msg);
         if (msgType === "chatmsg" && options.value.switch.includes("danmaku")) {
+            if (!checkDanmakuValid(data)) {
+                return;
+            }
             let obj = {
                 nn: data.nn, // 昵称
                 avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
@@ -56,6 +59,31 @@ export function useWebsocket(options) {
         // if (msgType === "uenter" && options.value.switch.includes("enter")) {
         //     console.log(data);
         // }
+    }
+    const checkDanmakuValid = (data) => {
+        // 判断屏蔽等级
+        if (data.level <= options.value.danmaku.ban.level) {
+            return false;
+        }
+        // 判断关键词
+        if (options.value.danmaku.ban.keywords.trim() !== "") {
+            let arr = options.value.danmaku.ban.keywords.split(" ");
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== "" && data.txt.indexOf(arr[i]) !== -1) {
+                    return false;
+                }
+            }
+        }
+        // 判断关键昵称
+        if (options.value.danmaku.ban.nicknames.trim() !== "") {
+            let arr = options.value.danmaku.ban.nicknames.split(" ");
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== "" && data.nn.indexOf(arr[i]) !== -1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     return { connectWs, danmakuList }

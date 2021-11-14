@@ -1,12 +1,14 @@
 <template>
     <div ref="dom_danmaku" class="danmaku">
-        <div class="item" v-for="item in danmakuList" :key="item.tt">
-            <div class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
-            <div class="item__noble"><img :src="`${nobleData.prefix}${nobleData[item.noble]?.pic}`" loading="lazy"/></div>
-            <div class="item__fans">【Lv.{{item.fansLv}} {{item.fansName}}】</div>
+        <div :style="`${item.nobleC ? 'background-color:rgb(255,243,223)' : ''}`" class="item" v-for="item in danmakuList" :key="item.tt">
             <div :class="`item__level UserLevel--${item.lv}`"></div>
-            <div class="item__name">{{item.nn}}</div>
-            <div :style="`color:${danmakuColor[item.color]}`" class="item__txt">：{{item.txt}}</div>
+            <div v-if="!!item.noble && options.danmaku.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
+            <div v-if="!!item.fansName && options.danmaku.show.includes('fans')" :class="`item__fans FansMedal fansLevel-${item.fansLv}`">
+                <span class="FansMedal-name">{{item.fansName}}</span>
+            </div>
+            <div v-if="options.danmaku.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
+            <div class="item__name">{{item.nn}}:</div>
+            <div :style="`color:${danmakuColor[item.color]}`" class="item__txt">{{item.txt}}</div>
         </div>
     </div>
 </template>
@@ -31,16 +33,23 @@ let props = defineProps({
 let { flexStyle, orderStyle } = useFlexStyle(props, "danmaku");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "danmaku");
 let dom_danmaku = ref(null);
+let imgSizeStyle = computed(() => {
+    return `${props.options.fontSize * 2}px`;
+})
 
 
 onUpdated(() => {
-    dom_danmaku.value.scrollTop = dom_danmaku.value.scrollHeight
+    if (props.options.lock) {
+        return;
+    }
+    dom_danmaku.value.scrollTop = dom_danmaku.value.scrollHeight;
 })
 
 </script>
 
 <style lang="scss" scoped>
 @import "@/global/utils/dydata/userLevel.scss";
+@import "@/global/utils/dydata/fansLevel.scss";
 .danmaku {
     height: 100%;
     order: v-bind(orderStyle);
@@ -54,17 +63,28 @@ onUpdated(() => {
     content-visibility: auto;
     .item {
         display: flex;
-        .item__avatar img {
-            width: 20px;
-            height: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+        >*{
+            margin-right: 5px;
         }
-        .item__noble img {
-            width: 20px;
-            height: 20px;
+
+        img {
+            width: v-bind(imgSizeStyle);
+            height: v-bind(imgSizeStyle);
+        }
+        .item__fans {
+            width: 60px;
         }
         .item__level {
             width: 40px;
             height: 16px;
+        }
+        .item__name {
+            color: rgb(153,153,153);
+        }
+        .item__txt {
+            color: rgb(51,51,51)
         }
     }
 }

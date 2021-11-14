@@ -24,6 +24,11 @@
                         </RadioGroup>
                     </template>
                 </Field>
+                <Field label="字号">
+                    <template #input>
+                        <Slider v-model="options.fontSize" :min="12" :max="30"/>
+                    </template>
+                </Field>
             </Tab>
             <Tab title="弹幕">
                 <Field label="占比">
@@ -31,6 +36,18 @@
                         <Slider v-model="options.size.danmaku" :disabled="maxOrder===options.order.danmaku"/>
                     </template>
                 </Field>
+                <Field label="显示">
+                    <template #input>
+                        <CheckboxGroup v-model="options.danmaku.show" direction="horizontal">
+                            <Checkbox name="noble" shape="square">贵族</Checkbox>
+                            <Checkbox name="fans" shape="square">粉丝牌</Checkbox>
+                            <Checkbox name="avatar" shape="square">头像</Checkbox>
+                        </CheckboxGroup>
+                    </template>
+                </Field>
+                <Field v-model="options.danmaku.ban.level" label="屏蔽等级" type="digit" placeholder="请输入屏蔽的等级"></Field>
+                <Field v-model="options.danmaku.ban.keywords" label="屏蔽关键词" placeholder="空格隔开 例如:弹幕1 弹幕2"></Field>
+                <Field v-model="options.danmaku.ban.nicknames" label="屏蔽昵称" placeholder="模糊匹配 空格隔开 例如:昵称1 昵称2"></Field>
             </Tab>
             <Tab title="礼物">
                 <Field label="占比">
@@ -59,7 +76,7 @@ import Enter from "../components/Enter/Enter.vue"
 
 import { Popup, Tab, Tabs, Form, Field, CellGroup, Slider, Checkbox, CheckboxGroup, RadioGroup, Radio } from 'vant'
 
-import { useDirectionStyle } from "../hooks/useDirectionStyle.js"
+import { useNormalStyle } from "../hooks/useNormalStyle.js"
 import { useWebsocket } from "../hooks/useWebsocket.js"
 
 let options = ref({
@@ -80,10 +97,23 @@ let options = ref({
     // 每个模块开关，按顺序排
     switch: ["enter", "gift", "danmaku"],
     // 数据阈值
-    threshold: 1000,
+    threshold: 300,
+    // 锁屏
+    lock: false, 
+    // 字号
+    fontSize: 14,
+    // 弹幕设置
+    danmaku: {
+        show: ["avatar", "fans", "noble"],
+        ban: {
+            level: 0,
+            keywords: "",
+            nicknames: "",
+        }
+    }
 });
 
-let { directionStyle } = useDirectionStyle(options);
+let { directionStyle, fontSizeStyle } = useNormalStyle(options);
 let { connectWs, danmakuList } = useWebsocket(options);
 
 let isShowOption = ref(false);
@@ -124,5 +154,6 @@ function onChangeSwitch(list) {
     overflow: hidden;
     display: flex;
     flex-direction: v-bind(directionStyle);
+    font-size: v-bind(fontSizeStyle);
 }
 </style>
