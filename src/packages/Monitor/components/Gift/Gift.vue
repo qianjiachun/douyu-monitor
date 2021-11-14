@@ -25,5 +25,7 @@ let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
     border-bottom: v-bind(borderBottomStyle);
     border-right: v-bind(borderRightStyle);
     content-visibility: auto;
+    padding: 5px;
+    box-sizing: border-box;
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
     <div class="monitor" @click.prevent="onClickMonitor">
-        <Gift v-show="options.switch.includes('gift')" :maxOrder="maxOrder" :options="options"></Gift>
-        <Enter v-show="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options"></Enter>
-        <Danmaku v-show="options.switch.includes('danmaku')" :maxOrder="maxOrder" :options="options"></Danmaku>
+        <Gift v-if="options.switch.includes('gift')" :maxOrder="maxOrder" :options="options"></Gift>
+        <Enter v-if="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options"></Enter>
+        <Danmaku v-if="options.switch.includes('danmaku')" :maxOrder="maxOrder" :options="options" :danmakuList="danmakuList"></Danmaku>
     </div>
     <Popup v-model:show="isShowOption" position="bottom" :style="{ height: '40%' }">
         <Tabs v-model:active="activeTab">
             <Tab title="通用">
                 <Field label="布局">
                     <template #input>
-                        <CheckboxGroup style="display: flex;justify-content: space-between;width: 100%;" v-model="options.switch" direction="horizontal" @change="onChangeSwitch">
+                        <CheckboxGroup v-model="options.switch" direction="horizontal" @change="onChangeSwitch">
                             <Checkbox name="enter" shape="square">进场</Checkbox>
                             <Checkbox name="gift" shape="square">礼物</Checkbox>
                             <Checkbox name="danmaku" shape="square">弹幕</Checkbox>
@@ -79,10 +79,12 @@ let options = ref({
     },
     // 每个模块开关，按顺序排
     switch: ["enter", "gift", "danmaku"],
+    // 数据阈值
+    threshold: 1000,
 });
 
 let { directionStyle } = useDirectionStyle(options);
-let { connectWs } = useWebsocket();
+let { connectWs, danmakuList } = useWebsocket(options);
 
 let isShowOption = ref(false);
 let activeTab = ref(0);
