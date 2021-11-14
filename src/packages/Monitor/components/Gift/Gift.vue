@@ -1,6 +1,6 @@
 <template>
     <div ref="dom_gift" class="gift">
-        <div v-show="isShowItem(item)" :style="getItemStyle(item)" class="item" v-for="item in giftList" :key="item.tt">
+        <div :style="getItemStyle(item)" class="item" v-for="item in giftList" :key="item.key">
             <div class="item__gift"><img :src="`${allGiftData.prefix}${allGiftData[item.gfid].pic}`" loading="lazy" /></div>
             <div class="item__cnt">{{allGiftData[item.gfid].n}}*{{item.gfcnt}}</div>
             <div class="item__name">{{item.nn}}</div>
@@ -33,11 +33,8 @@ let imgSizeStyle = computed(() => {
     return `${props.options.fontSize * 2}px`;
 })
 
-function isShowItem(item) {
-    return props.allGiftData[item.gfid].pc >= props.options.gift.ban.price * 100
-}
 function getItemStyle(item) {
-    if (props.allGiftData[item.gfid].pc * item.gfcnt >= props.options.gift.totalPrice * 100) {
+    if (Number(props.allGiftData[item.gfid].pc) * Number(item.gfcnt) >= Number(props.options.gift.totalPrice) * 100) {
         return "background-color: rgb(255,243,223)";
     } else {
         return "";
@@ -85,11 +82,11 @@ onUpdated(() => {
             width: 40px;
             height: 16px;
         }
-        .item__name, .item__cnt {
-            color: rgb(153,153,153);
+        .item__name {
+            color: #2B94FF;
         }
-        .item__txt {
-            color: rgb(51,51,51)
+        .item__cnt {
+            color: rgb(153,153,153);
         }
     }
 }

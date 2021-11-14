@@ -16,14 +16,14 @@ export const defaultOptions = {
     // 每个模块开关，按顺序排
     switch: ["enter", "gift", "danmaku"],
     // 数据阈值
-    threshold: 200,
+    threshold: 100,
     // 锁屏
     lock: false, 
     // 字号
     fontSize: 14,
     // 弹幕设置
     danmaku: {
-        show: ["avatar", "fans", "noble"],
+        show: ["level", "avatar", "fans", "noble"],
         ban: {
             level: 0,
             keywords: "",
@@ -32,7 +32,7 @@ export const defaultOptions = {
     },
     // 入场设置
     enter: {
-        show: ["avatar", "noble"],
+        show: ["level", "avatar", "noble"],
         keywords: "",
     },
     // 礼物设置

@@ -1,7 +1,7 @@
 <template>
     <div ref="dom_danmaku" class="danmaku">
-        <div :style="`${item.nobleC ? 'background-color:rgb(255,243,223)' : ''}`" class="item" v-for="item in danmakuList" :key="item.tt">
-            <div :class="`item__level UserLevel--${item.lv}`"></div>
+        <div :style="`${item.nobleC ? 'background-color:rgb(255,243,223)' : ''}`" class="item" v-for="item in danmakuList" :key="item.key">
+            <div v-if="options.danmaku.show.includes('level')" :class="`item__level UserLevel--${item.lv}`"></div>
             <div v-if="!!item.noble && options.danmaku.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
             <div v-if="!!item.fansName && options.danmaku.show.includes('fans')" :class="`item__fans FansMedal fansLevel-${item.fansLv}`">
                 <span class="FansMedal-name">{{item.fansName}}</span>
@@ -82,7 +82,7 @@ onUpdated(() => {
             height: 16px;
         }
         .item__name {
-            color: rgb(153,153,153);
+            color: #2B94FF;
         }
         .item__txt {
             color: rgb(51,51,51)

@@ -1,10 +1,10 @@
 <template>
     <div ref="dom_enter" class="enter">
-        <div :style="getWrapStyle(item)" class="item" v-for="item in enterList" :key="item.tt">
-            <div :class="`item__level UserLevel--${item.lv}`"></div>
+        <div :style="getWrapStyle(item)" class="item" v-for="item in enterList" :key="item.key">
+            <div v-if="options.enter.show.includes('level')" :class="`item__level UserLevel--${item.lv}`"></div>
             <div v-if="!!item.noble && options.enter.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
             <div v-if="options.enter.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
-            <div class="item__name">{{item.nn}} 进入了直播间</div>
+            <div class="item__name"><span>{{item.nn}}</span> 进入了直播间</div>
         </div>
     </div>
 </template>
@@ -85,6 +85,9 @@ onUpdated(() => {
         }
         .item__name {
             color: rgb(153,153,153);
+            span {
+                color: #2B94FF;
+            }
         }
     }
 }

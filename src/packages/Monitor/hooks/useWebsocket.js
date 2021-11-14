@@ -3,7 +3,7 @@ import { Ex_WebSocket_UnLogin } from "@/global/utils/websocket.js"
 import { STT } from "@/global/utils/stt.js"
 import { getStrMiddle } from "@/global/utils"
 
-export function useWebsocket(options) {
+export function useWebsocket(options, allGiftData) {
     let ws = null;
     let stt = new STT();
     let danmakuList = ref([]);
@@ -46,7 +46,7 @@ export function useWebsocket(options) {
                 zf: data.diaf, // 是否是钻粉
                 noble: data.nl, // 贵族等级
                 nobleC: data.nc, // 贵族弹幕是否开启，1开
-                tt: data.cst, // 时间戳
+                key: data.cid, // 时间戳
             };
             if (danmakuList.value.length + 1 > options.value.threshold) {
                 danmakuList.value.shift();
@@ -54,11 +54,15 @@ export function useWebsocket(options) {
             danmakuList.value.push(obj);
         }
         if (msgType === "dgb" && options.value.switch.includes("gift")) {
+            if (!checkGiftValid(data)) {
+                return;
+            }
             let obj = {
                 nn: data.nn,
+                lv: data.level, // 等级
                 gfid: data.gfid,
                 gfcnt: data.gfcnt,
-                tt: new Date().getTime(),
+                key: new Date().getTime() + Math.random(),
             }
             if (giftList.value.length + 1 > options.value.threshold) {
                 giftList.value.shift();
@@ -71,7 +75,7 @@ export function useWebsocket(options) {
                 avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
                 lv: data.level, // 等级
                 noble: data.nl, // 贵族等级
-                tt: new Date().getTime(),
+                key: new Date().getTime() + Math.random(),
             }
             if (enterList.value.length + 1 > options.value.threshold) {
                 enterList.value.shift();
@@ -79,9 +83,10 @@ export function useWebsocket(options) {
             enterList.value.push(obj);
         }
     }
+
     const checkDanmakuValid = (data) => {
         // 判断屏蔽等级
-        if (data.level <= options.value.danmaku.ban.level) {
+        if (Number(data.level) <= Number(options.value.danmaku.ban.level)) {
             return false;
         }
         // 判断关键词
@@ -103,6 +108,10 @@ export function useWebsocket(options) {
             }
         }
         return true;
+    }
+
+    const checkGiftValid = (data) => {
+        return Number(allGiftData.value[data.gfid].pc) >= Number(options.value.gift.ban.price) * 100;
     }
 
     return { connectWs, danmakuList, enterList, giftList }

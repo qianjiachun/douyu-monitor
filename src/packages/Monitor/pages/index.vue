@@ -45,6 +45,7 @@
                 <Field label="显示">
                     <template #input>
                         <CheckboxGroup v-model="options.danmaku.show" direction="horizontal">
+                            <Checkbox name="level" shape="square">等级</Checkbox>
                             <Checkbox name="noble" shape="square">贵族</Checkbox>
                             <Checkbox name="fans" shape="square">粉丝牌</Checkbox>
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
@@ -73,6 +74,7 @@
                 <Field label="显示">
                     <template #input>
                         <CheckboxGroup v-model="options.enter.show" direction="horizontal">
+                            <Checkbox name="level" shape="square">等级</Checkbox>
                             <Checkbox name="noble" shape="square">贵族</Checkbox>
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
                         </CheckboxGroup>
@@ -103,13 +105,13 @@ import { defaultOptions } from '../options'
 const LOCAL_NAME = "monitor_options"
 
 let options = ref(defaultOptions);
-
-let { directionStyle, fontSizeStyle } = useNormalStyle(options);
-let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options);
-
 let allGiftData = ref({});
 let isShowOption = ref(false);
 let activeTab = ref(0);
+let { directionStyle, fontSizeStyle } = useNormalStyle(options);
+let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options, allGiftData);
+
+
 
 let maxOrder = computed(() => {
     let ret = 0;
