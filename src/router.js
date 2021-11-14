@@ -6,6 +6,7 @@ function parseUrl() {
         "http://www.douyuex.com/",
         "https://douyuex.com/",
         "http://douyuex.com/",
+        "http://monitor.douyuex.com/"
     ]
     if (HOSTS.includes(url)) {
         // 重定向
@@ -13,7 +14,6 @@ function parseUrl() {
     } else {
         // 本站
         rid = getRid(url);
-        console.log("我是房间号", rid);
     }
     return rid;
 }
