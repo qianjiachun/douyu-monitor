@@ -35,7 +35,11 @@ let imgSizeStyle = computed(() => {
 
 function getItemStyle(item) {
     if (Number(props.allGiftData[item.gfid].pc) * Number(item.gfcnt) >= Number(props.options.gift.totalPrice) * 100) {
-        return "background-color: rgb(255,243,223)";
+        if (props.options.mode === "day") {
+            return "background-color:rgb(255,243,223)";
+        } else {
+            return "background-color:rgb(55,55,55)";
+        }
     } else {
         return "";
     }
@@ -52,6 +56,7 @@ onUpdated(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/global/styles/themes/index.scss";
 .gift {
     height: 100%;
     order: v-bind(orderStyle);
@@ -83,10 +88,10 @@ onUpdated(() => {
             height: 16px;
         }
         .item__name {
-            color: #2B94FF;
+            @include fontColor("nicknameColor");
         }
         .item__cnt {
-            color: rgb(153,153,153);
+            @include fontColor("contentColor");
         }
     }
 }

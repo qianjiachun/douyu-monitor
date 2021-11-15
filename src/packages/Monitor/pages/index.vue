@@ -4,7 +4,16 @@
         <Enter v-if="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options" :enterList="enterList"></Enter>
         <Danmaku v-if="options.switch.includes('danmaku')" :maxOrder="maxOrder" :options="options" :danmakuList="danmakuList"></Danmaku>
     </div>
-    <Popup v-model:show="isShowOption" position="bottom" :style="{ height: '40%' }">
+    <Popup class="popup" v-model:show="isShowOption" position="bottom" :style="{ height: '45%' }">
+        <div class="popup-top">
+            <div @click="onClickChangeMode">
+                <svg v-if="options.mode === 'night'" t="1636947463842" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="20823" width="24" height="24"><path d="M438.857 73.143c0-40.396 32.466-73.143 73.143-73.143 40.396 0 73.143 32.466 73.143 73.143v73.143h-146.286v-73.143zM438.857 877.714h146.286v73.143c0 40.396-32.466 73.143-73.143 73.143-40.396 0-73.143-32.466-73.143-73.143v-73.143zM73.143 585.143c-40.396 0-73.143-32.466-73.143-73.143 0-40.396 32.466-73.143 73.143-73.143h73.143v146.286h-73.143zM877.714 585.143v-146.286h73.143c40.396 0 73.143 32.466 73.143 73.143 0 40.396-32.466 73.143-73.143 73.143h-73.143zM149.961 253.401c-28.564-28.564-28.763-74.676 0-103.44 28.564-28.564 74.676-28.763 103.44 0l51.719 51.719-103.44 103.44-51.722-51.719zM718.879 822.319l103.44-103.44 51.719 51.722c28.564 28.564 28.763 74.676 0 103.44-28.564 28.564-74.676 28.763-103.44 0l-51.719-51.719zM253.401 874.039c-28.564 28.564-74.676 28.763-103.44 0-28.564-28.564-28.763-74.676 0-103.44l51.719-51.719 103.44 103.44-51.719 51.722zM822.319 305.121l-103.44-103.44 51.722-51.719c28.564-28.564 74.676-28.763 103.44 0 28.564 28.564 28.763 74.676 0 103.44l-51.719 51.719zM512 804.571c161.583 0 292.571-130.989 292.571-292.571 0-161.583-130.989-292.571-292.571-292.571-161.583 0-292.571 130.989-292.571 292.571 0 161.583 130.989 292.571 292.571 292.571z" p-id="20824" fill="#8a8a8a"></path></svg>
+                <svg v-else t="1636947364663" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17884" width="24" height="24"><path d="M487.204571 67.474286A444.525714 444.525714 0 1 1 92.16 715.373714a357.778286 357.778286 0 1 0 296.96-636.708571c32.182857-7.350857 65.097143-11.081143 98.084571-11.190857z" p-id="17885" fill="#8a8a8a"></path></svg>
+            </div>
+            <div @click="onClickRestOptions">
+                <svg t="1636947206527" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14990" width="24" height="24"><path d="M890.092308 988.002462a37.257846 37.257846 0 0 1-25.67877-27.72677c-53.326769-236.937846-209.526154-305.467077-408.576-368.64l-55.847384 182.744616a37.415385 37.415385 0 0 1-67.741539 8.428307L65.851077 353.516308a37.257846 37.257846 0 0 1 15.281231-53.090462L549.021538 70.656a37.257846 37.257846 0 0 1 40.96 5.198769 37.651692 37.651692 0 0 1 11.500308 39.384616l-47.261538 154.702769c92.317538 34.264615 169.905231 87.985231 230.636307 159.901538 54.429538 64.275692 95.310769 142.966154 121.619693 233.787077 42.771692 147.692308 33.004308 277.897846 31.744 292.312616v0.157538a37.336615 37.336615 0 0 1-34.816 33.634462 40.329846 40.329846 0 0 1-13.39077-1.732923zM352.492308 673.476923l42.692923-139.657846a37.494154 37.494154 0 0 1 46.710154-24.733539c129.969231 39.778462 233.314462 78.769231 314.998153 140.288 35.052308 26.151385 65.851077 56.871385 91.766154 91.608616a733.026462 733.026462 0 0 0-14.493538-58.683077c-53.563077-182.114462-166.990769-300.819692-337.289846-352.886154a38.281846 38.281846 0 0 1-22.291693-18.432 36.312615 36.312615 0 0 1-2.599384-28.356923l32.610461-106.653538-353.28 173.292307L352.492308 673.476923z" fill="#8a8a8a" p-id="14991"></path></svg>
+            </div>
+        </div>
         <Tabs v-model:active="activeTab">
             <Tab title="通用">
                 <Field label="布局">
@@ -49,6 +58,8 @@
                             <Checkbox name="noble" shape="square">贵族</Checkbox>
                             <Checkbox name="fans" shape="square">粉丝牌</Checkbox>
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
+                            <Checkbox name="roomAdmin" shape="square">房管</Checkbox>
+                            <Checkbox name="diamond" shape="square">钻粉</Checkbox>
                         </CheckboxGroup>
                     </template>
                 </Field>
@@ -93,7 +104,7 @@ import Danmaku from "../components/Danmaku/Danmaku.vue"
 import Gift from "../components/Gift/Gift.vue"
 import Enter from "../components/Enter/Enter.vue"
 
-import { Popup, Tab, Tabs, Field, Slider, Checkbox, CheckboxGroup, RadioGroup, Radio, Switch } from 'vant'
+import { Popup, Tab, Tabs, Field, Slider, Checkbox, CheckboxGroup, RadioGroup, Radio, Switch, Dialog } from 'vant'
 
 import { useNormalStyle } from "../hooks/useNormalStyle.js"
 import { useWebsocket } from "../hooks/useWebsocket.js"
@@ -110,8 +121,6 @@ let isShowOption = ref(false);
 let activeTab = ref(0);
 let { directionStyle, fontSizeStyle } = useNormalStyle(options);
 let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options, allGiftData);
-
-
 
 let maxOrder = computed(() => {
     let ret = 0;
@@ -130,14 +139,17 @@ onMounted(async () => {
         localData = defaultOptions;
     }
     options.value = localData;
+
     let data = await getRoomGiftData(rid);
     let roomGiftData = {prefix: "https://gfs-op.douyucdn.cn/dygift"};
-    for (let i = 0; i < data.data.giftList.length; i++) {
-        let item = data.data.giftList[i];
-        roomGiftData[item.id] = {
-            n: item.name,
-            pic: item.basicInfo.focusPic,
-            pc: item.priceInfo.price,
+    if ("giftList" in data.data) {
+        for (let i = 0; i < data.data.giftList.length; i++) {
+            let item = data.data.giftList[i];
+            roomGiftData[item.id] = {
+                n: item.name,
+                pic: item.basicInfo.focusPic,
+                pc: item.priceInfo.price,
+            }
         }
     }
     allGiftData.value = {...roomGiftData, ...giftData};
@@ -169,14 +181,44 @@ function onChangeSwitch(list) {
     }
 }
 
+function onClickChangeMode() {
+    if (options.value.mode === "day") {
+        options.value.mode = "night";
+    } else {
+        options.value.mode = "day";
+    }
+}
+
+function onClickRestOptions() {
+    Dialog.confirm({
+        title: '提示',
+        message: '确认恢复默认设置？',
+    })
+    .then(() => {
+        options.value = defaultOptions;
+    }).catch(() => {});
+}
+
+
 watch(options, (n, o) => {
     saveLocalData(LOCAL_NAME, JSON.stringify(n));
 }, {deep: true})
 
+watch(() => options.value.mode, (n, o) => {
+    if (n === "night") {
+        window.document.documentElement.setAttribute("data-theme", 'night');
+    } else {
+        window.document.documentElement.setAttribute("data-theme", 'day');
+    }
+}, {immediate: true, deep: true})
+
+
 </script>
 
 <style lang="scss" scoped>
+@import "@/global/styles/themes/index.scss";
 .monitor {
+    @include backgroundColor("backgroundColor");
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -185,4 +227,24 @@ watch(options, (n, o) => {
     font-size: v-bind(fontSizeStyle);
     user-select: none;
 }
+.popup {
+    .popup-top {
+        user-select: none;
+        height: 32px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+        text-align: right;
+        border-bottom: 1px solid rgb(227, 227, 227);
+        > div {
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    }
+}
+
 </style>

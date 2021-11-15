@@ -43,9 +43,10 @@ export function useWebsocket(options, allGiftData) {
                 color: data.col, // 弹幕颜色 undefine就是普通弹幕 2蓝色 3绿色 6粉色 4橙色 5紫色 1红色
                 fansName: data.bnn, // 粉丝牌名字
                 fansLv: data.bl, // 粉丝牌等级
-                zf: data.diaf, // 是否是钻粉
+                diamond: data.diaf, // 是否是钻粉
                 noble: data.nl, // 贵族等级
                 nobleC: data.nc, // 贵族弹幕是否开启，1开
+                roomAdmin: data.rg, // 房管，data.rg为4则是房管
                 key: data.cid, // 时间戳
             };
             if (danmakuList.value.length + 1 > options.value.threshold) {

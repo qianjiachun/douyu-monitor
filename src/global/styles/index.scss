@@ -19,3 +19,7 @@ html, body, #app {
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
+
+@import "@/global/utils/dydata/fansLevel.scss";
+@import "@/global/utils/dydata/roomAdmin.scss";
+@import "@/global/utils/dydata/userLevel.scss";

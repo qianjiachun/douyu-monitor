@@ -21,6 +21,13 @@
 //获取背景颜色
 @mixin backgroundColor($color) {
   @include themeify {
-    background: themed($color)!important;
+    background: themed($color);
+  }
+}
+
+//获取背景颜色
+@mixin fontColor($color) {
+  @include themeify {
+    color: themed($color);
   }
 }

@@ -1,7 +1,7 @@
 <template>
     <div ref="dom_enter" class="enter">
         <div :style="getWrapStyle(item)" class="item" v-for="item in enterList" :key="item.key">
-            <div v-if="options.enter.show.includes('level')" :class="`item__level UserLevel--${item.lv}`"></div>
+            <div v-if="options.enter.show.includes('level')" :class="`item__level ${options.mode==='night'?'fansLevelNight':''} UserLevel--${item.lv}`"></div>
             <div v-if="!!item.noble && options.enter.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
             <div v-if="options.enter.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
             <div class="item__name"><span>{{item.nn}}</span> 进入了直播间</div>
@@ -37,11 +37,22 @@ function getWrapStyle(item) {
         let arr = keywords.split(" ");
         for (let i = 0; i < arr.length; i++) {
             if (item.nn.indexOf(arr[i]) !== -1) {
-                return "background-color: rgb(255,243,223)";
+                if (props.options.mode === "day") {
+                    return "background-color:rgb(255,243,223)";
+                } else {
+                    return "background-color: #494949;background-image: linear-gradient(90deg, #494949 0%, #9a9a9a 100%);";
+                }
             }
         }
     }
-    return item.noble ? 'background-color:rgb(227,230,232)' : '';
+    if (item.noble) {
+        if (props.options.mode === "day") {
+            return "background-color:rgb(227,230,232);";
+        } else {
+            return "background-color:rgb(55,55,55);";
+        }
+    }
+    return "";
 }
 
 onUpdated(() => {
@@ -54,7 +65,7 @@ onUpdated(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/global/utils/dydata/userLevel.scss";
+@import "@/global/styles/themes/index.scss";
 .enter {
     height: 100%;
     order: v-bind(orderStyle);
@@ -84,9 +95,9 @@ onUpdated(() => {
             height: 16px;
         }
         .item__name {
-            color: rgb(153,153,153);
+            @include fontColor("contentColor");
             span {
-                color: #2B94FF;
+                @include fontColor("nicknameColor");
             }
         }
     }

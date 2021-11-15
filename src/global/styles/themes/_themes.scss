@@ -1,9 +1,15 @@
 $themes: (
-  light: (
-    backgroundColor: #cccccc,//背景色
+  day: (
+    backgroundColor: white,// 背景色
+    txtColor: rgb(51,51,51), // 弹幕颜色
+    contentColor: rgb(153,153,153), // 文本颜色
+    nicknameColor: #2B94FF, // 昵称颜色
   ),
-  dark: (
-    backgroundColor: #181c27,//背景
+  night: (
+    backgroundColor: rgb(37,38,42),
+    txtColor: rgba(187,187,187,1),
+    contentColor: rgb(153,153,153),
+    nicknameColor: rgb(255,119,0), // 昵称颜色
   )
 );
 

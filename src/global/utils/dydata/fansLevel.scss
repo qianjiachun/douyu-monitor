@@ -8,12 +8,20 @@
     text-align: center
 }
 
+.FansMedalBox-diamondsIcon {
+    width: 27px;
+    height: 19px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 
 .FansMedal.fansLevel-0 {
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/0_135d70b.png)
 }
 
-.FansMedal.fansLevel-0,.FansMedal.fansLevel-1 {
+.FansMedal.fansLevel-0,
+.FansMedal.fansLevel-1 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -28,7 +36,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/2_9b854b2.png)
 }
 
-.FansMedal.fansLevel-2,.FansMedal.fansLevel-3 {
+.FansMedal.fansLevel-2,
+.FansMedal.fansLevel-3 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -43,7 +52,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/4_cb3ff7e.png)
 }
 
-.FansMedal.fansLevel-4,.FansMedal.fansLevel-5 {
+.FansMedal.fansLevel-4,
+.FansMedal.fansLevel-5 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -58,7 +68,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/6_5e906ee.png)
 }
 
-.FansMedal.fansLevel-6,.FansMedal.fansLevel-7 {
+.FansMedal.fansLevel-6,
+.FansMedal.fansLevel-7 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -73,7 +84,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/8_3a3778f.png)
 }
 
-.FansMedal.fansLevel-8,.FansMedal.fansLevel-9 {
+.FansMedal.fansLevel-8,
+.FansMedal.fansLevel-9 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -88,7 +100,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/10_7e9b00f.png)
 }
 
-.FansMedal.fansLevel-10,.FansMedal.fansLevel-11 {
+.FansMedal.fansLevel-10,
+.FansMedal.fansLevel-11 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -103,7 +116,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/12_71799a1.png)
 }
 
-.FansMedal.fansLevel-12,.FansMedal.fansLevel-13 {
+.FansMedal.fansLevel-12,
+.FansMedal.fansLevel-13 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -118,7 +132,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/14_f8a1ac4.png)
 }
 
-.FansMedal.fansLevel-14,.FansMedal.fansLevel-15 {
+.FansMedal.fansLevel-14,
+.FansMedal.fansLevel-15 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -133,7 +148,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/16_27ad0b3.png)
 }
 
-.FansMedal.fansLevel-16,.FansMedal.fansLevel-17 {
+.FansMedal.fansLevel-16,
+.FansMedal.fansLevel-17 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -148,7 +164,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/18_dff808c.png)
 }
 
-.FansMedal.fansLevel-18,.FansMedal.fansLevel-19 {
+.FansMedal.fansLevel-18,
+.FansMedal.fansLevel-19 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -163,7 +180,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/20_f651aab.png)
 }
 
-.FansMedal.fansLevel-20,.FansMedal.fansLevel-21 {
+.FansMedal.fansLevel-20,
+.FansMedal.fansLevel-21 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -178,7 +196,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/22_ff87867.png)
 }
 
-.FansMedal.fansLevel-22,.FansMedal.fansLevel-23 {
+.FansMedal.fansLevel-22,
+.FansMedal.fansLevel-23 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -193,7 +212,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/24_94f40fa.png)
 }
 
-.FansMedal.fansLevel-24,.FansMedal.fansLevel-25 {
+.FansMedal.fansLevel-24,
+.FansMedal.fansLevel-25 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -208,7 +228,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/26_ca2405b.png)
 }
 
-.FansMedal.fansLevel-26,.FansMedal.fansLevel-27 {
+.FansMedal.fansLevel-26,
+.FansMedal.fansLevel-27 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -223,7 +244,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/28_62caffc.png)
 }
 
-.FansMedal.fansLevel-28,.FansMedal.fansLevel-29 {
+.FansMedal.fansLevel-28,
+.FansMedal.fansLevel-29 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -238,7 +260,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/30_996b523.png)
 }
 
-.FansMedal.fansLevel-30,.FansMedal.fansLevel-31 {
+.FansMedal.fansLevel-30,
+.FansMedal.fansLevel-31 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -253,7 +276,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/32_8ee4425.png)
 }
 
-.FansMedal.fansLevel-32,.FansMedal.fansLevel-33 {
+.FansMedal.fansLevel-32,
+.FansMedal.fansLevel-33 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -268,7 +292,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/34_92dbed2.png)
 }
 
-.FansMedal.fansLevel-34,.FansMedal.fansLevel-35 {
+.FansMedal.fansLevel-34,
+.FansMedal.fansLevel-35 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -283,7 +308,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/36_aeb0481.png)
 }
 
-.FansMedal.fansLevel-36,.FansMedal.fansLevel-37 {
+.FansMedal.fansLevel-36,
+.FansMedal.fansLevel-37 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -298,7 +324,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/38_fe61796.png)
 }
 
-.FansMedal.fansLevel-38,.FansMedal.fansLevel-39 {
+.FansMedal.fansLevel-38,
+.FansMedal.fansLevel-39 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -313,7 +340,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/40_5f7e491.png)
 }
 
-.FansMedal.fansLevel-40,.FansMedal.fansLevel-41 {
+.FansMedal.fansLevel-40,
+.FansMedal.fansLevel-41 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -328,7 +356,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/42_9b3c500.png)
 }
 
-.FansMedal.fansLevel-42,.FansMedal.fansLevel-43 {
+.FansMedal.fansLevel-42,
+.FansMedal.fansLevel-43 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -343,7 +372,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/44_23e4ffe.png)
 }
 
-.FansMedal.fansLevel-44,.FansMedal.fansLevel-45 {
+.FansMedal.fansLevel-44,
+.FansMedal.fansLevel-45 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -358,7 +388,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/46_381dc35.png)
 }
 
-.FansMedal.fansLevel-46,.FansMedal.fansLevel-47 {
+.FansMedal.fansLevel-46,
+.FansMedal.fansLevel-47 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;
@@ -373,7 +404,8 @@
     background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/48_24d51b4.png)
 }
 
-.FansMedal.fansLevel-48,.FansMedal.fansLevel-49 {
+.FansMedal.fansLevel-48,
+.FansMedal.fansLevel-49 {
     background-repeat: no-repeat;
     -moz-background-size: 60px 19px;
     -webkit-background-size: 60px 19px;

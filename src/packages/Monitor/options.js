@@ -1,4 +1,6 @@
 export const defaultOptions = {
+    // 日间day 夜间night模式
+    mode: "day",
     // 纵向column 横向row
     direction: "column",
     // 每个模块的占比%
@@ -23,7 +25,7 @@ export const defaultOptions = {
     fontSize: 14,
     // 弹幕设置
     danmaku: {
-        show: ["level", "avatar", "fans", "noble"],
+        show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond"],
         ban: {
             level: 0,
             keywords: "",
