@@ -23,3 +23,8 @@ html, body, #app {
 @import "@/global/utils/dydata/fansLevel.scss";
 @import "@/global/utils/dydata/roomAdmin.scss";
 @import "@/global/utils/dydata/userLevel.scss";
+
+.van-checkbox--horizontal {
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
