@@ -79,6 +79,7 @@ onUpdated(() => {
         img {
             width: v-bind(imgSizeStyle);
             height: v-bind(imgSizeStyle);
+            border-radius: 10%;
         }
         .item__fans {
             width: 60px;
