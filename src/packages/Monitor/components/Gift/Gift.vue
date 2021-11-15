@@ -4,6 +4,7 @@
             <div class="item__gift"><img :src="`${allGiftData.prefix}${allGiftData[item.gfid].pic}`" loading="lazy" /></div>
             <div class="item__cnt">{{allGiftData[item.gfid].n}}*{{item.gfcnt}}</div>
             <div class="item__name">{{item.nn}}</div>
+            <div v-if="Number(item.hits)>=5" class="item__hits">累计x{{item.hits}}</div>
         </div>
     </div>
 </template>
@@ -92,6 +93,9 @@ onUpdated(() => {
             @include fontColor("nicknameColor");
         }
         .item__cnt {
+            @include fontColor("contentColor");
+        }
+        .item__hits {
             @include fontColor("contentColor");
         }
     }

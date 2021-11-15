@@ -63,6 +63,7 @@ export function useWebsocket(options, allGiftData) {
                 lv: data.level, // 等级
                 gfid: data.gfid,
                 gfcnt: data.gfcnt,
+                hits: data.hits,
                 key: new Date().getTime() + Math.random(),
             }
             if (giftList.value.length + 1 > options.value.threshold) {
