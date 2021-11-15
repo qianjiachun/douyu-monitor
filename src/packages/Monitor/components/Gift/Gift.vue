@@ -35,10 +35,10 @@ let imgSizeStyle = computed(() => {
 
 function getItemStyle(item) {
     if (Number(props.allGiftData[item.gfid].pc) * Number(item.gfcnt) >= Number(props.options.gift.totalPrice) * 100) {
-        if (props.options.mode === "day") {
-            return "background-color:rgb(255,243,223)";
-        } else {
+        if (props.options.mode === "night") {
             return "background-color:rgb(55,55,55)";
+        } else {
+            return "background-color:rgb(255,243,223)";
         }
     } else {
         return "";

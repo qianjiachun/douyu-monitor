@@ -185,10 +185,10 @@ function onChangeSwitch(list) {
 }
 
 function onClickChangeMode() {
-    if (options.value.mode === "day") {
-        options.value.mode = "night";
-    } else {
+    if (options.value.mode === "night") {
         options.value.mode = "day";
+    } else {
+        options.value.mode = "night";
     }
 }
 

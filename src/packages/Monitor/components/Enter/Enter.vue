@@ -37,19 +37,19 @@ function getWrapStyle(item) {
         let arr = keywords.split(" ");
         for (let i = 0; i < arr.length; i++) {
             if (item.nn.indexOf(arr[i]) !== -1) {
-                if (props.options.mode === "day") {
-                    return "background-color:rgb(255,243,223)";
-                } else {
+                if (props.options.mode === "night") {
                     return "background-color: #494949;background-image: linear-gradient(90deg, #494949 0%, #9a9a9a 100%);";
+                } else {
+                    return "background-color:rgb(255,243,223)";
                 }
             }
         }
     }
     if (item.noble) {
-        if (props.options.mode === "day") {
-            return "background-color:rgb(227,230,232);";
-        } else {
+        if (props.options.mode === "night") {
             return "background-color:rgb(55,55,55);";
+        } else {
+            return "background-color:rgb(227,230,232);";
         }
     }
     return "";

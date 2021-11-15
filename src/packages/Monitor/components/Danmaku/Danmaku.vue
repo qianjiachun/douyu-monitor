@@ -43,10 +43,10 @@ let imgSizeStyle = computed(() => {
 
 function getItemStyle(item) {
     if (item.nobleC) {
-        if (props.options.mode === "day") {
-            return "background-color:rgb(255,243,223)";
-        } else {
+        if (props.options.mode === "night") {
             return "background-color:rgb(55,55,55)";
+        } else {
+            return "background-color:rgb(255,243,223)";
         }
     }
     return "";
