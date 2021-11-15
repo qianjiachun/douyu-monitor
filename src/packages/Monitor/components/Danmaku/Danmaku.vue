@@ -1,7 +1,7 @@
 <template>
     <div ref="dom_danmaku" class="danmaku">
         <div :style="getItemStyle(item)" class="item" v-for="item in danmakuList" :key="item.key">
-            <div v-if="options.danmaku.show.includes('level')" :class="`item__level ${options.mode==='night'?'fansLevelNight':''} UserLevel--${item.lv}`"></div>
+            <div v-if="options.danmaku.show.includes('level')" :class="`item__level ${options.mode==='night' && Number(item.lv < 70)?'fansLevelNight':''} UserLevel--${item.lv}`"></div>
             <div v-if="!!item.noble && options.danmaku.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
             <div v-if="!!item.fansName && options.danmaku.show.includes('fans')" :class="`item__fans ${!!item.diamond && options.danmaku.show.includes('diamond') ? 'is-diamond' : ''} FansMedal fansLevel-${item.fansLv}`">
                 <span class="FansMedal-name">{{item.fansName}}</span>
