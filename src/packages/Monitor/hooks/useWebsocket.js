@@ -92,8 +92,9 @@ export function useWebsocket(options, allGiftData) {
             return false;
         }
         // 判断关键词
-        if (options.value.danmaku.ban.keywords.trim() !== "") {
-            let arr = options.value.danmaku.ban.keywords.split(" ");
+        let keywords = options.value.danmaku.ban.keywords ? options.value.danmaku.ban.keywords.trim() : "";
+        if (keywords !== "") {
+            let arr = keywords.split(" ");
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] !== "" && data.txt.indexOf(arr[i]) !== -1) {
                     return false;
@@ -101,8 +102,9 @@ export function useWebsocket(options, allGiftData) {
             }
         }
         // 判断关键昵称
-        if (options.value.danmaku.ban.nicknames.trim() !== "") {
-            let arr = options.value.danmaku.ban.nicknames.split(" ");
+        let nicknames = options.value.danmaku.ban.nicknames ? options.value.danmaku.ban.nicknames.trim() : "";
+        if (nicknames !== "") {
+            let arr = nicknames.split(" ");
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i] !== "" && data.nn.indexOf(arr[i]) !== -1) {
                     return false;
@@ -113,7 +115,24 @@ export function useWebsocket(options, allGiftData) {
     }
 
     const checkGiftValid = (data) => {
-        return Number(allGiftData.value[data.gfid].pc) >= Number(options.value.gift.ban.price) * 100;
+        let giftData = allGiftData.value[data.gfid];
+        // 屏蔽单价
+        if (Number(giftData.pc) < Number(options.value.gift.ban.price) * 100) {
+            return false;
+        }
+
+        // 屏蔽关键词
+        let keywords = options.value.gift.ban.keywords ? options.value.gift.ban.keywords.trim() : "";
+        if (keywords !== "") {
+            let giftName = giftData.n;
+            let arr = keywords.split(" ");
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== "" && giftName.indexOf(arr[i]) !== -1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     return { connectWs, danmakuList, enterList, giftList }

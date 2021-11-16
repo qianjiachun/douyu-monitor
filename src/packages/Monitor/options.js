@@ -42,6 +42,7 @@ export const defaultOptions = {
         totalPrice: 100,
         ban: {
             price: 0,
+            keywords: "",
         }
     }
 }
