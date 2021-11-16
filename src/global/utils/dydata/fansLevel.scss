@@ -1,3 +1,12 @@
+.FansMedal {
+    display: inline-block;
+    vertical-align: middle;
+    width: 60px;
+    height: 19px;
+    margin-top: -3px;
+    overflow: hidden
+}
+
 .FansMedal-name {
     display: block;
     margin-left: 20px;
@@ -14,6 +23,10 @@
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.is-diamonds {
+    padding-right: 24px
 }
 
 .FansMedal.fansLevel-0 {

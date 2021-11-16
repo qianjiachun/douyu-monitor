@@ -1,23 +1,18 @@
 <template>
     <div ref="dom_danmaku" class="danmaku">
         <div :style="getItemStyle(item)" class="item" v-for="item in danmakuList" :key="item.key">
-            <!-- 等级 -->
-            <span v-if="options.danmaku.show.includes('level')" :class="`item__level UserLevel ${options.mode==='night' && Number(item.lv < 70)?'fansLevelNight':''} UserLevel--${item.lv}`"></span>
-            <!-- 贵族 -->
-            <span v-if="!!item.noble && options.danmaku.show.includes('noble')" class="item__noble Barrage-icon Barrage-noble">
-                <img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/>
-            </span>
-            <!-- 粉丝牌 -->
-            <div v-if="!!item.fansName && options.danmaku.show.includes('fans')" :class="`item__fans ${!!item.diamond && options.danmaku.show.includes('diamond') ? 'is-diamonds' : ''} FansMedal fansLevel-${item.fansLv}`">
+            <div v-if="options.danmaku.show.includes('level')" :class="`item__level ${options.mode==='night' && Number(item.lv < 70)?'fansLevelNight':''} UserLevel--${item.lv}`"></div>
+            <div v-if="!!item.noble && options.danmaku.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
+            <div v-if="!!item.fansName && options.danmaku.show.includes('fans')" :class="`item__fans ${!!item.diamond && options.danmaku.show.includes('diamond') ? 'is-diamond' : ''} FansMedal fansLevel-${item.fansLv}`">
                 <span class="FansMedal-name">{{item.fansName}}</span>
                 <img v-if="!!item.diamond && options.danmaku.show.includes('diamond')" class="FansMedalBox-diamondsIcon" src="https://sta-op.douyucdn.cn/douyu/2021/08/05/02304a1c04587e43ac626ce5ce07d935.png" alt="" loading="lazy">
             </div>
-            <span v-if="item.roomAdmin=='4' && options.danmaku.show.includes('roomAdmin')" class="item__roomAdmin">
+            <div v-if="item.roomAdmin=='4' && options.danmaku.show.includes('roomAdmin')" class="item__roomAdmin">
                 <span class="Barrage-icon Barrage-icon--roomAdmin"></span>
-            </span>
-            <span v-if="options.danmaku.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></span>
-            <span class="item__name">{{item.nn}}：</span>
-            <span :style="`color:${danmakuColor[item.color]};`" class="item__txt">{{item.txt}}</span>
+            </div>
+            <div v-if="options.danmaku.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
+            <div class="item__name">{{item.nn}}:</div>
+            <div :style="`color:${danmakuColor[item.color]}`" class="item__txt">{{item.txt}}</div>
         </div>
     </div>
 </template>
@@ -80,46 +75,41 @@ onUpdated(() => {
     overflow-y: auto;
     content-visibility: auto;
     .item {
-        vertical-align: middle;
-        width: 100%;
-        margin-bottom: 5px;
-
-        &:last-child {
-            margin-bottom: 0px;
-        }
-
-        >* {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        >*{
             margin-right: 5px;
         }
-        >:nth-last-child(1), >:nth-last-child(2) {
-            margin-right: 0;
+
+        img {
+            width: v-bind(imgSizeStyle);
+            height: v-bind(imgSizeStyle);
+            border-radius: 50%;
         }
-        .item__level {
-            vertical-align: middle;
+        .item__roomAdmin {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         .item__fans {
             width: 60px;
             position: relative;
-            vertical-align: middle;
         }
-
-        .item__avatar {
-            vertical-align: middle;
-            img {
-                width: v-bind(imgSizeStyle);
-                height: v-bind(imgSizeStyle);
-                border-radius: 50%;
-            }
+        .item__level {
+            width: 40px;
+            height: 16px;
         }
         .item__name {
-            vertical-align: middle;
             @include fontColor("nicknameColor");
         }
         .item__txt {
-            vertical-align: middle;
             @include fontColor("txtColor");
         }
-
+        .is-diamond {
+            padding-right: 24px;
+        }
     }
 }
 </style>

@@ -40,14 +40,14 @@ function getWrapStyle(item) {
                 if (props.options.mode === "night") {
                     return "background-color: #494949;background-image: linear-gradient(90deg, #494949 0%, #9a9a9a 100%);";
                 } else {
-                    return "background-color:rgb(255,243,223)";
+                    return "background-color:rgb(255,243,223);border-top:1px solid #ffe4b8;border-bottom:1px solid #ffe4b8;";
                 }
             }
         }
     }
     if (item.noble) {
         if (props.options.mode === "night") {
-            return "background-color:rgb(55,55,55);";
+            return "background-color:rgb(55,55,55);border-top:1px solid rgb(90,90,90);border-bottom:1px solid rgb(90,90,90);";
         } else {
             return "background-color:rgb(227,230,232);";
         }
@@ -81,6 +81,11 @@ onUpdated(() => {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        margin-bottom: 5px;
+
+        &:last-child {
+            margin-bottom: 0px;
+        }
         >*{
             margin-right: 5px;
         }
