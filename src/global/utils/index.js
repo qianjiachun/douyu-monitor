@@ -14,3 +14,7 @@ export function saveLocalData(name, data) {
 export function getLocalData(name) {
 	return localStorage.getItem(name);
 }
+
+export function deepCopy(v) {
+	return JSON.parse(JSON.stringify(v));
+}
