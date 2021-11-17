@@ -1,5 +1,8 @@
 ## 斗鱼弹幕助手
 
+### 预览
+[https://www.douyuex.com/288016](https://www.douyuex.com/288016)
+
 ### 特性
 1. 纯前端
 2. 全响应式
