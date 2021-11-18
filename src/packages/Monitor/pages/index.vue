@@ -50,6 +50,11 @@
                         <Switch v-model="options.transparent" size="20" />
                     </template>
                 </Field>
+                <Field label="动画">
+                    <template #input>
+                        <Switch v-model="options.animation" size="20" />
+                    </template>
+                </Field>
                 <Field v-model="options.threshold" label="数据上限" type="digit" placeholder="当超过上限 旧数据会被删除"></Field>
             </Tab>
             <Tab title="弹幕">

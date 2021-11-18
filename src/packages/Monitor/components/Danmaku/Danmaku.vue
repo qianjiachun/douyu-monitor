@@ -1,6 +1,6 @@
 <template>
     <div ref="dom_danmaku" class="danmaku">
-        <div :style="getItemStyle(item)" class="item" v-for="item in danmakuList" :key="item.key">
+        <div :style="getItemStyle(item)" :class="`item ${options.animation?'fadeInLeft' : ''}`" v-for="item in danmakuList" :key="item.key">
             <!-- 等级 -->
             <span v-if="options.danmaku.show.includes('level')" :class="`item__level UserLevel ${options.mode==='night' && Number(item.lv < 70)?'fansLevelNight':''} UserLevel--${item.lv}`"></span>
             <!-- 贵族 -->
@@ -83,7 +83,6 @@ onUpdated(() => {
         vertical-align: middle;
         width: 100%;
         margin-bottom: 5px;
-        animation: fade 0.55s;
 
         &:last-child {
             margin-bottom: 0px;

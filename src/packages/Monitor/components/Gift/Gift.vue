@@ -1,6 +1,6 @@
 <template>
     <div ref="dom_gift" class="gift">
-        <div :style="getItemStyle(item)" class="item" v-for="item in giftList" :key="item.key">
+        <div :style="getItemStyle(item)" :class="`item ${options.animation?'fadeInLeft' : ''}`" v-for="item in giftList" :key="item.key">
             <div class="item__gift"><img :src="`${allGiftData.prefix}${allGiftData[item.gfid].pic}`" loading="lazy" /></div>
             <div class="item__cnt">{{allGiftData[item.gfid].n}}*{{item.gfcnt}}</div>
             <div class="item__name">{{item.nn}}</div>
@@ -74,7 +74,6 @@ onUpdated(() => {
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 5px;
-        animation: fade 0.55s;
 
         &:last-child {
             margin-bottom: 0px;

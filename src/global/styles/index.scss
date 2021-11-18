@@ -29,14 +29,28 @@ html, body, #app {
     margin-top: 1px;
 }
 
-@keyframes fade {
-    0% {
-        opacity: 0;
-        position: absolute;
-        margin-left: 55px;
-    }
-    100% {
-        opacity: 1;
-        margin-left: 0px;
-    }
+@-webkit-keyframes fadeInLeft {
+	0% {
+		opacity: .4;
+		-webkit-transform: translateX(30px);
+	}	
+	100% {
+		opacity: 1;
+		-webkit-transform: translateX(0);
+	}
+}
+ 
+@keyframes fadeInLeft {
+	0% {
+		opacity: .4;
+		transform: translateX(30px);
+	}	
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.fadeInLeft {
+    animation: fadeInLeft 0.45s;
 }

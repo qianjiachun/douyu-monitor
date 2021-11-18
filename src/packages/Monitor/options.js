@@ -25,6 +25,8 @@ export const defaultOptions = {
     fontSize: 14,
     // 背景透明
     transparent: false,
+    // 开启动画
+    animation: true,
     // 弹幕设置
     danmaku: {
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond"],
