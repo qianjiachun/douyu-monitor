@@ -83,6 +83,7 @@ onUpdated(() => {
         vertical-align: middle;
         width: 100%;
         margin-bottom: 5px;
+        animation: fade 0.55s;
 
         &:last-child {
             margin-bottom: 0px;

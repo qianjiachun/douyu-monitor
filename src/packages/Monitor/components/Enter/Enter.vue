@@ -82,6 +82,7 @@ onUpdated(() => {
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 5px;
+        animation: fade 0.55s;
 
         &:last-child {
             margin-bottom: 0px;
