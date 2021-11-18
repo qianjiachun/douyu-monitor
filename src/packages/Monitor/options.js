@@ -23,6 +23,8 @@ export const defaultOptions = {
     lock: false, 
     // 字号
     fontSize: 14,
+    // 背景透明
+    transparent: false,
     // 弹幕设置
     danmaku: {
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond"],

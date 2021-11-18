@@ -18,3 +18,18 @@ export function getLocalData(name) {
 export function deepCopy(v) {
 	return JSON.parse(JSON.stringify(v));
 }
+
+export function getClassStyle(dom, attr) {
+	// 获取dom的class里的css属性值
+	var ie = !+"\v1"; //简单判断ie6~8
+	if (attr == "backgroundPosition") { //IE6~8不兼容backgroundPosition写法，识别backgroundPositionX/Y
+		if (ie) {
+			return dom.currentStyle.backgroundPositionX + " " + dom.currentStyle.backgroundPositionY;
+		}
+	}
+	if (dom.currentStyle) {
+		return dom.currentStyle[attr];
+	} else {
+		return document.defaultView.getComputedStyle(dom, null)[attr];
+	}
+}

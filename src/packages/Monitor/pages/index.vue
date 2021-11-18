@@ -1,5 +1,5 @@
 <template>
-    <div class="monitor" @click.prevent="onClickMonitor">
+    <div class="monitor" @click.prevent="onClickMonitor" ref="domMonitor">
         <Gift v-if="options.switch.includes('gift')" :maxOrder="maxOrder" :options="options" :giftList="giftList" :allGiftData="allGiftData"></Gift>
         <Enter v-if="options.switch.includes('enter')" :maxOrder="maxOrder" :options="options" :enterList="enterList"></Enter>
         <Danmaku v-if="options.switch.includes('danmaku')" :maxOrder="maxOrder" :options="options" :danmakuList="danmakuList"></Danmaku>
@@ -43,6 +43,11 @@
                 <Field label="字号">
                     <template #input>
                         <Slider v-model="options.fontSize" :min="12" :max="30"/>
+                    </template>
+                </Field>
+                <Field label="背景透明">
+                    <template #input>
+                        <Switch v-model="options.transparent" size="20" />
                     </template>
                 </Field>
                 <Field v-model="options.threshold" label="数据上限" type="digit" placeholder="当超过上限 旧数据会被删除"></Field>
@@ -113,11 +118,12 @@ import { useNormalStyle } from "../hooks/useNormalStyle.js"
 import { useWebsocket } from "../hooks/useWebsocket.js"
 
 import { giftData } from "@/global/utils/dydata/giftData.js"
-import { saveLocalData, getLocalData, deepCopy } from "@/global/utils"
+import { saveLocalData, getLocalData, deepCopy, getClassStyle, getStrMiddle } from "@/global/utils"
 import { defaultOptions } from '../options'
 
 const LOCAL_NAME = "monitor_options"
 
+let domMonitor = ref(null);
 let options = ref(deepCopy(defaultOptions));
 let allGiftData = ref({});
 let isShowOption = ref(false);
@@ -216,6 +222,22 @@ watch(() => options.value.mode, (n, o) => {
         window.document.documentElement.setAttribute("data-theme", 'night');
     } else {
         window.document.documentElement.setAttribute("data-theme", 'day');
+    }
+}, {immediate: true, deep: true})
+
+
+watch(() => options.value.transparent, (n, o) => {
+    if (!domMonitor.value) {
+        return;
+    }
+    if (!n) {
+        domMonitor.value.style.backgroundColor = ``;
+        return;
+    }
+    let str = getClassStyle(domMonitor.value, "backgroundColor");
+    let rgb = String(str).match(/[^\(\)]+(?=\))/g)[0];
+    if (n) {
+        domMonitor.value.style.backgroundColor = `rgba(${rgb},0)`;
     }
 }, {immediate: true, deep: true})
 
