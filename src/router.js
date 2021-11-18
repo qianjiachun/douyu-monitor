@@ -2,11 +2,12 @@ function parseUrl() {
     let url = window.location.href;
     let rid = "";
     const HOSTS = [
+        "https://www.douyuex.com",
+        "http://www.douyuex.com",
         "https://www.douyuex.com/",
         "http://www.douyuex.com/",
         "https://douyuex.com/",
         "http://douyuex.com/",
-        "http://monitor.douyuex.com/"
     ]
     if (HOSTS.includes(url)) {
         // 重定向
