@@ -1,6 +1,6 @@
 <template>
     <div ref="dom_enter" class="enter">
-        <div :style="getWrapStyle(item)" class="item" v-for="item in enterList" :key="item.key">
+        <div :style="getWrapStyle(item)" :class="`item ${options.animation?'fadeInLeft' : ''}`" v-for="item in enterList" :key="item.key">
             <div v-if="options.enter.show.includes('level')" :class="`item__level ${options.mode==='night' && Number(item.lv < 70)?'fansLevelNight':''} UserLevel--${item.lv}`"></div>
             <div v-if="!!item.noble && options.enter.show.includes('noble')" class="item__noble"><img :src="`${item.noble in nobleData ? nobleData.prefix + nobleData[item.noble].pic : ''}`" loading="lazy"/></div>
             <div v-if="options.enter.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
