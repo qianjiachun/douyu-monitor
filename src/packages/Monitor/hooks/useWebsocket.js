@@ -29,9 +29,8 @@ export function useWebsocket(options, allGiftData) {
         if (!msgType) {
             return;
         }
-
-        let data = stt.deserialize(msg);
         if (msgType === "chatmsg" && options.value.switch.includes("danmaku")) {
+            let data = stt.deserialize(msg);
             if (!checkDanmakuValid(data)) {
                 return;
             }
@@ -54,24 +53,71 @@ export function useWebsocket(options, allGiftData) {
             }
             danmakuList.value.push(obj);
         }
-        if (msgType === "dgb" && options.value.switch.includes("gift")) {
-            if (!checkGiftValid(data)) {
-                return;
+        if ((msgType === "dgb" || msgType === "odfbc" || msgType === "rndfbc") && options.value.switch.includes("gift")) {
+            let data = stt.deserialize(msg);
+            // 续费钻粉
+            // {"type":"rndfbc","uid":"573096","rid":"5189167","nick":"一只小洋丶","icon":"avatar_v3/202111/d7d383be4c874af0b50e3d9eb58ad462","level":"39","nl":"0","pg":"1","fl":"24","bn":"歆崽"}
+
+            // 开通钻粉
+            // {"type":"odfbc","uid":"341314282","rid":"5189167","nick":"nt五香蛋","icon":"avatar_v3/202103/04d3d252139f4620bd417c6bef673bd6","level":"36","nl":"0","pg":"1","fl":"22","bn":"歆崽"}
+            let obj = {};
+            switch (msgType) {
+                case "dgb":
+                    // 正常礼物
+                    if (!checkGiftValid(data)) {
+                        return;
+                    }
+                    obj = {
+                        nn: data.nn,
+                        lv: data.level, // 等级
+                        gfid: data.gfid,
+                        gfcnt: data.gfcnt,
+                        hits: data.hits,
+                        key: new Date().getTime() + Math.random(),
+                    }
+                    if (giftList.value.length + 1 > options.value.threshold) {
+                        giftList.value.shift();
+                    }
+                    giftList.value.push(obj);
+                    break;
+                case "odfbc":
+                    // 开通钻粉
+                    obj = {
+                        type: "开通钻粉",
+                        nn: data.nick,
+                        lv: data.level,
+                        gfid: "0",
+                        gfcnt: "1",
+                        hits: "1",
+                        key: new Date().getTime() + Math.random(),
+                    }
+                    if (giftList.value.length + 1 > options.value.threshold) {
+                        giftList.value.shift();
+                    }
+                    giftList.value.push(obj);
+                    break;
+                case "rndfbc":
+                    // 续费钻粉
+                    obj = {
+                        type: "续费钻粉",
+                        nn: data.nick,
+                        lv: data.level,
+                        gfid: "0",
+                        gfcnt: "1",
+                        hits: "1",
+                        key: new Date().getTime() + Math.random(),
+                    }
+                    if (giftList.value.length + 1 > options.value.threshold) {
+                        giftList.value.shift();
+                    }
+                    giftList.value.push(obj);
+                    break;
+                default:
+                    break;
             }
-            let obj = {
-                nn: data.nn,
-                lv: data.level, // 等级
-                gfid: data.gfid,
-                gfcnt: data.gfcnt,
-                hits: data.hits,
-                key: new Date().getTime() + Math.random(),
-            }
-            if (giftList.value.length + 1 > options.value.threshold) {
-                giftList.value.shift();
-            }
-            giftList.value.push(obj);
         }
         if (msgType === "uenter" && options.value.switch.includes("enter")) {
+            let data = stt.deserialize(msg);
             let obj = {
                 nn: data.nn,
                 avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg

@@ -1,8 +1,10 @@
 <template>
     <div ref="dom_gift" class="gift">
         <div :style="getItemStyle(item)" :class="`item ${options.animation?'fadeInLeft' : ''}`" v-for="item in giftList" :key="item.key">
-            <div class="item__gift"><img :src="`${allGiftData.prefix}${allGiftData[item.gfid].pic}`" loading="lazy" /></div>
-            <div class="item__cnt">{{allGiftData[item.gfid].n}}*{{item.gfcnt}}</div>
+            <div class="item__gift">
+                <img :src="`${'type' in item ? DIAMOND_URL : allGiftData.prefix}${'type' in item ? '' : allGiftData[item.gfid].pic}`" loading="lazy" />
+            </div>
+            <div class="item__cnt">{{'type' in item ? item.type : allGiftData[item.gfid].n}}*{{item.gfcnt}}</div>
             <div class="item__name">{{item.nn}}</div>
             <div v-if="Number(item.hits)>=5" class="item__hits">累计x{{item.hits}}</div>
         </div>
@@ -29,12 +31,21 @@ let props = defineProps({
 });
 let { flexStyle, orderStyle } = useFlexStyle(props, "gift");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
+// 钻粉图片
+const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/diamond-fans-master/assets/images/badge-small_7e76c70.png"
 let dom_gift = ref(null);
 let imgSizeStyle = computed(() => {
     return `${props.options.fontSize * 2}px`;
 })
 
 function getItemStyle(item) {
+    if ("type" in item) {
+        if (props.options.mode === "night") {
+            return "background-color:rgb(55,55,55);border-top:1px solid rgb(90,90,90);border-bottom:1px solid rgb(90,90,90);";
+        } else {
+            return "background-color:rgb(255,243,223)";
+        }
+    }
     if (Number(props.allGiftData[item.gfid].pc) * Number(item.gfcnt) >= Number(props.options.gift.totalPrice) * 100) {
         if (props.options.mode === "night") {
             return "background-color:rgb(55,55,55);border-top:1px solid rgb(90,90,90);border-bottom:1px solid rgb(90,90,90);";
