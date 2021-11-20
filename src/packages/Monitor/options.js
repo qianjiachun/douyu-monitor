@@ -3,6 +3,8 @@ export const defaultOptions = {
     mode: "day",
     // 纵向column 横向row
     direction: "column",
+    // 左对齐left 右对齐right
+    align: "left",
     // 每个模块的占比%
     size: {
         enter: 15,

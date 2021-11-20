@@ -1,6 +1,6 @@
 function parseUrl() {
     let url = window.location.href;
-    let rid = "";
+    let info = {};
     const HOSTS = [
         "https://www.douyuex.com",
         "http://www.douyuex.com",
@@ -17,16 +17,22 @@ function parseUrl() {
         location.href = "https://xiaochunchun.gitee.io/douyuex/";
     } else {
         // 本站
-        rid = getRid(url);
+        info = getInfo(url);
     }
-    return rid;
+    return info;
 }
 
-function getRid(url) {
-    let ret = getQueryVariable("rid");
-    if (!ret) {
+function getInfo(url) {
+    let ret = {};
+    let rid = getQueryVariable("rid");
+    let options = getQueryVariable("exoptions");
+    options = options ? decodeURIComponent(options) : "";
+    if (!rid) {
         let arr = String(url).split("/");
-        ret = arr[arr.length - 1].split("?")[0];
+        ret.rid = arr[arr.length - 1].split("?")[0];
+    }
+    if (options) {
+        ret.options = options;
     }
     return ret;
 }

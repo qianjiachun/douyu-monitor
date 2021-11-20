@@ -18,6 +18,9 @@
                 <svg v-if="options.mode === 'night'" t="1636947364663" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17884" width="24" height="24"><path d="M487.204571 67.474286A444.525714 444.525714 0 1 1 92.16 715.373714a357.778286 357.778286 0 1 0 296.96-636.708571c32.182857-7.350857 65.097143-11.081143 98.084571-11.190857z" p-id="17885" fill="#8a8a8a"></path></svg>
                 <svg v-else t="1636947463842" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="20823" width="24" height="24"><path d="M438.857 73.143c0-40.396 32.466-73.143 73.143-73.143 40.396 0 73.143 32.466 73.143 73.143v73.143h-146.286v-73.143zM438.857 877.714h146.286v73.143c0 40.396-32.466 73.143-73.143 73.143-40.396 0-73.143-32.466-73.143-73.143v-73.143zM73.143 585.143c-40.396 0-73.143-32.466-73.143-73.143 0-40.396 32.466-73.143 73.143-73.143h73.143v146.286h-73.143zM877.714 585.143v-146.286h73.143c40.396 0 73.143 32.466 73.143 73.143 0 40.396-32.466 73.143-73.143 73.143h-73.143zM149.961 253.401c-28.564-28.564-28.763-74.676 0-103.44 28.564-28.564 74.676-28.763 103.44 0l51.719 51.719-103.44 103.44-51.722-51.719zM718.879 822.319l103.44-103.44 51.719 51.722c28.564 28.564 28.763 74.676 0 103.44-28.564 28.564-74.676 28.763-103.44 0l-51.719-51.719zM253.401 874.039c-28.564 28.564-74.676 28.763-103.44 0-28.564-28.564-28.763-74.676 0-103.44l51.719-51.719 103.44 103.44-51.719 51.722zM822.319 305.121l-103.44-103.44 51.722-51.719c28.564-28.564 74.676-28.763 103.44 0 28.564 28.564 28.763 74.676 0 103.44l-51.719 51.719zM512 804.571c161.583 0 292.571-130.989 292.571-292.571 0-161.583-130.989-292.571-292.571-292.571-161.583 0-292.571 130.989-292.571 292.571 0 161.583 130.989 292.571 292.571 292.571z" p-id="20824" fill="#8a8a8a"></path></svg>
             </div>
+            <div @click="onClickShare">
+                <svg t="1637380837755" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2733" width="24" height="24"><path d="M380.36396 566.298587l300.553318 205.558677a149.295574 149.295574 0 1 1-38.731537 76.865893L338.262608 640.818406a149.295574 149.295574 0 1 1-13.180667-226.374746l318.938002-230.299087a149.295574 149.295574 0 1 1 43.082437 74.093261L375.501189 483.418215a149.039639 149.039639 0 0 1 4.905426 82.923028zM789.263209 213.406506a63.983817 63.983817 0 1 0 0-127.967635 63.983817 63.983817 0 0 0 0 127.967635z m0 725.149931a63.983817 63.983817 0 1 0 0-127.967635 63.983817 63.983817 0 0 0 0 127.967635z m-554.526418-341.247027a63.983817 63.983817 0 1 0 0-127.967634 63.983817 63.983817 0 0 0 0 127.967634z" fill="#8A8A8A" p-id="2734"></path></svg>
+            </div>
             <div @click="onClickRestOptions">
                 <svg t="1636947206527" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14990" width="24" height="24"><path d="M890.092308 988.002462a37.257846 37.257846 0 0 1-25.67877-27.72677c-53.326769-236.937846-209.526154-305.467077-408.576-368.64l-55.847384 182.744616a37.415385 37.415385 0 0 1-67.741539 8.428307L65.851077 353.516308a37.257846 37.257846 0 0 1 15.281231-53.090462L549.021538 70.656a37.257846 37.257846 0 0 1 40.96 5.198769 37.651692 37.651692 0 0 1 11.500308 39.384616l-47.261538 154.702769c92.317538 34.264615 169.905231 87.985231 230.636307 159.901538 54.429538 64.275692 95.310769 142.966154 121.619693 233.787077 42.771692 147.692308 33.004308 277.897846 31.744 292.312616v0.157538a37.336615 37.336615 0 0 1-34.816 33.634462 40.329846 40.329846 0 0 1-13.39077-1.732923zM352.492308 673.476923l42.692923-139.657846a37.494154 37.494154 0 0 1 46.710154-24.733539c129.969231 39.778462 233.314462 78.769231 314.998153 140.288 35.052308 26.151385 65.851077 56.871385 91.766154 91.608616a733.026462 733.026462 0 0 0-14.493538-58.683077c-53.563077-182.114462-166.990769-300.819692-337.289846-352.886154a38.281846 38.281846 0 0 1-22.291693-18.432 36.312615 36.312615 0 0 1-2.599384-28.356923l32.610461-106.653538-353.28 173.292307L352.492308 673.476923z" fill="#8a8a8a" p-id="14991"></path></svg>
             </div>
@@ -38,6 +41,10 @@
                         <RadioGroup v-model="options.direction" direction="horizontal">
                             <Radio name="column">纵向</Radio>
                             <Radio name="row">横向</Radio>
+                        </RadioGroup>
+                        <RadioGroup v-model="options.align" direction="horizontal">
+                            <Radio name="left">左对齐</Radio>
+                            <Radio name="right">右对齐</Radio>
                         </RadioGroup>
                     </template>
                 </Field>
@@ -114,6 +121,8 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 
+import useClipboard from 'vue-clipboard3'
+
 import Danmaku from "../components/Danmaku/Danmaku.vue"
 import Gift from "../components/Gift/Gift.vue"
 import Enter from "../components/Enter/Enter.vue"
@@ -136,6 +145,7 @@ let isShowOption = ref(false);
 let activeTab = ref(0);
 let { directionStyle, fontSizeStyle } = useNormalStyle(options);
 let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options, allGiftData);
+let { toClipboard } = useClipboard();
 
 let maxOrder = computed(() => {
     let ret = 0;
@@ -149,11 +159,19 @@ let maxOrder = computed(() => {
 
 onMounted(async () => {
     let rid = window.rid;
-    let localData = JSON.parse(getLocalData(LOCAL_NAME));
-    if (Object.prototype.toString.call(localData) !== '[object Object]') {
-        localData = deepCopy(defaultOptions);
+    let propsOptions = window.options;
+    console.log(propsOptions);
+    if (propsOptions && propsOptions !== "") {
+        // 当网页参数传了options，就使用网页的options
+        options.value = JSON.parse(propsOptions);
+    } else {
+        let localData = JSON.parse(getLocalData(LOCAL_NAME));
+        if (Object.prototype.toString.call(localData) !== '[object Object]') {
+            localData = deepCopy(defaultOptions);
+        }
+        options.value = localData;
     }
-    options.value = localData;
+    
 
     let data = await getRoomGiftData(rid);
     let roomGiftData = {prefix: "https://gfs-op.douyucdn.cn/dygift"};
@@ -214,6 +232,26 @@ function onClickRestOptions() {
     }).catch(() => {});
 }
 
+function onClickShare() {
+    let url = location.href;
+    if (url.includes("?")) {
+        url += "&exoptions=";
+    } else {
+        url += "?exoptions=";
+    }
+    url += encodeURIComponent(JSON.stringify(options.value));
+    Dialog.confirm({
+        title: '复制分享链接',
+        message: '链接保存了当前设置，可粘贴至斗鱼直播伴侣浏览器源中，使设置与网页一致',
+    })
+    .then(async () => {
+        try {
+            await toClipboard(url);
+        } catch (e) {
+            console.error(e);
+        }
+    }).catch(() => {});
+}
 
 
 watch(options, (n, o) => {

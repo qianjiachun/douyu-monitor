@@ -27,7 +27,7 @@ let props = defineProps({
         type: Array,
     }
 });
-let { flexStyle, orderStyle } = useFlexStyle(props, "enter");
+let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "enter");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "enter");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 let dom_enter = ref(null);
@@ -89,6 +89,8 @@ onMounted(() => {
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 5px;
+        justify-content: v-bind(justifyContentStyle);
+        text-align: v-bind(textAlignStyle);
 
         &:last-child {
             margin-bottom: 0px;

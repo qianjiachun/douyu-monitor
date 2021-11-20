@@ -42,7 +42,7 @@ let props = defineProps({
     }
 });
 let dom_danmaku = ref(null);
-let { flexStyle, orderStyle } = useFlexStyle(props, "danmaku");
+let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "danmaku");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "danmaku");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 let imgSizeStyle = computed(() => {
@@ -91,6 +91,8 @@ onMounted(() => {
         vertical-align: middle;
         width: 100%;
         margin-bottom: 5px;
+        justify-content: v-bind(justifyContentStyle);
+        text-align: v-bind(textAlignStyle);
 
         &:last-child {
             margin-bottom: 0px;

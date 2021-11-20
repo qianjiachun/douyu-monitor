@@ -8,5 +8,7 @@ import "@/global/styles/index.scss"
 
 import { parseUrl } from "./router.js"
 
-window.rid = parseUrl()
+let info = parseUrl();
+window.rid = info.rid;
+window.options = info.options;
 createApp(App).mount('#app')

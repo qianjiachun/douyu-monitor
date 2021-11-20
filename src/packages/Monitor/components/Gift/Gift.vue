@@ -31,7 +31,7 @@ let props = defineProps({
         type: Object,
     }
 });
-let { flexStyle, orderStyle } = useFlexStyle(props, "gift");
+let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "gift");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 // 钻粉图片
@@ -93,6 +93,8 @@ onMounted(() => {
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 5px;
+        justify-content: v-bind(justifyContentStyle);
+        text-align: v-bind(textAlignStyle);
 
         &:last-child {
             margin-bottom: 0px;
