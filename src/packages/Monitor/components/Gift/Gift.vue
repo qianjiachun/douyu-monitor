@@ -8,13 +8,15 @@
             <div class="item__name">{{item.nn}}</div>
             <div v-if="Number(item.hits)>=5" class="item__hits">累计x{{item.hits}}</div>
         </div>
+        <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_gift)">回到底部</div>
     </div>
 </template>
 
 <script setup>
-import {ref, computed, onUpdated } from 'vue'
+import {ref, computed, onUpdated, onMounted } from 'vue'
 import {useFlexStyle} from "../../hooks/useFlexStyle.js"
 import {useBorderStyle} from "../../hooks/useBorderStyle.js"
+import { useScroll } from '../../hooks/useScroll.js'
 let props = defineProps({
     maxOrder: {
         type: Number,
@@ -31,6 +33,7 @@ let props = defineProps({
 });
 let { flexStyle, orderStyle } = useFlexStyle(props, "gift");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
+let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 // 钻粉图片
 const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/diamond-fans-master/assets/images/badge-small_7e76c70.png"
 let dom_gift = ref(null);
@@ -59,10 +62,15 @@ function getItemStyle(item) {
 
 
 onUpdated(() => {
-    if (props.options.lock) {
-        return;
-    }
-    dom_gift.value.scrollTop = dom_gift.value.scrollHeight;
+    onScrollUpdate(dom_gift.value);
+})
+onMounted(() => {
+    dom_gift.value.addEventListener("mousewheel", () => {
+        onScroll(dom_gift.value);
+    })
+    dom_gift.value.addEventListener("touchmove", () => {
+        onScroll(dom_gift.value);
+    })
 })
 
 </script>

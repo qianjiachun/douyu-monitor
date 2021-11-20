@@ -19,8 +19,6 @@ export const defaultOptions = {
     switch: ["enter", "gift", "danmaku"],
     // 数据阈值
     threshold: 100,
-    // 锁屏
-    lock: false, 
     // 字号
     fontSize: 14,
     // 背景透明

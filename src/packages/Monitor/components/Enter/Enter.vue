@@ -6,13 +6,15 @@
             <div v-if="options.enter.show.includes('avatar')" class="item__avatar"><img :src="`https://apic.douyucdn.cn/upload/${item.avatar}_small.jpg`" loading="lazy" /></div>
             <div class="item__name"><span>{{item.nn}}</span> 进入了直播间</div>
         </div>
+        <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_enter)">回到底部</div>
     </div>
 </template>
 
 <script setup>
-import {ref, computed, onUpdated } from 'vue'
+import {ref, computed, onUpdated, onMounted } from 'vue'
 import {useFlexStyle} from "../../hooks/useFlexStyle.js"
 import {useBorderStyle} from "../../hooks/useBorderStyle.js"
+import { useScroll } from '../../hooks/useScroll.js'
 import {nobleData} from "@/global/utils/dydata/nobleData.js"
 let props = defineProps({
     maxOrder: {
@@ -27,6 +29,7 @@ let props = defineProps({
 });
 let { flexStyle, orderStyle } = useFlexStyle(props, "enter");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "enter");
+let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 let dom_enter = ref(null);
 let imgSizeStyle = computed(() => {
     return `${props.options.fontSize * 2}px`;
@@ -56,12 +59,16 @@ function getWrapStyle(item) {
 }
 
 onUpdated(() => {
-    if (props.options.lock) {
-        return;
-    }
-    dom_enter.value.scrollTop = dom_enter.value.scrollHeight;
+    onScrollUpdate(dom_enter.value);
 })
-
+onMounted(() => {
+    dom_enter.value.addEventListener("mousewheel", () => {
+        onScroll(dom_enter.value);
+    })
+    dom_enter.value.addEventListener("touchmove", () => {
+        onScroll(dom_enter.value);
+    })
+})
 </script>
 
 <style lang="scss" scoped>

@@ -19,13 +19,15 @@
             <span class="item__name">{{item.nn}}：</span>
             <span :style="`color:${danmakuColor[item.color]};`" class="item__txt">{{item.txt}}</span>
         </div>
+        <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_danmaku)">回到底部</div>
     </div>
 </template>
 
 <script setup>
-import {ref, computed, onUpdated } from 'vue'
+import {ref, computed, onUpdated, onMounted } from 'vue'
 import {useFlexStyle} from "../../hooks/useFlexStyle.js"
 import {useBorderStyle} from "../../hooks/useBorderStyle.js"
+import { useScroll } from '../../hooks/useScroll.js'
 import {nobleData} from "@/global/utils/dydata/nobleData.js"
 import {danmakuColor} from "@/global/utils/dydata/danmakuColor.js"
 let props = defineProps({
@@ -39,9 +41,10 @@ let props = defineProps({
         type: Array,
     }
 });
+let dom_danmaku = ref(null);
 let { flexStyle, orderStyle } = useFlexStyle(props, "danmaku");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "danmaku");
-let dom_danmaku = ref(null);
+let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 let imgSizeStyle = computed(() => {
     return `${props.options.fontSize * 2}px`;
 })
@@ -58,10 +61,15 @@ function getItemStyle(item) {
 }
 
 onUpdated(() => {
-    if (!props.options.lock) {
-        dom_danmaku.value.scrollTop = dom_danmaku.value.scrollHeight;
-    }
-    
+    onScrollUpdate(dom_danmaku.value);
+})
+onMounted(() => {
+    dom_danmaku.value.addEventListener("mousewheel", () => {
+        onScroll(dom_danmaku.value);
+    })
+    dom_danmaku.value.addEventListener("touchmove", () => {
+        onScroll(dom_danmaku.value);
+    })
 })
 
 </script>
