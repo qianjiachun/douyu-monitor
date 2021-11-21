@@ -30,6 +30,8 @@ function getInfo(url) {
     if (!rid) {
         let arr = String(url).split("/");
         ret.rid = arr[arr.length - 1].split("?")[0];
+    } else {
+        ret.rid = rid;
     }
     if (options) {
         ret.options = options;

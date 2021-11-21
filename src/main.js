@@ -11,4 +11,5 @@ import { parseUrl } from "./router.js"
 let info = parseUrl();
 window.rid = info.rid;
 window.options = info.options;
+console.log(info)
 createApp(App).mount('#app')
