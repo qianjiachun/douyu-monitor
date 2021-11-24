@@ -35,7 +35,7 @@ let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyl
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 // 钻粉图片
-const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/diamond-fans-master/assets/images/badge-small_7e76c70.png"
+const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/live-player-aside-master/assets/images/diamonds_banner_logo_c077d7b.gif"
 let dom_gift = ref(null);
 let imgSizeStyle = computed(() => {
     return `${props.options.fontSize * 2}px`;
