@@ -160,7 +160,6 @@ let maxOrder = computed(() => {
 onMounted(async () => {
     let rid = window.rid;
     let propsOptions = window.options;
-    console.log(propsOptions);
     if (propsOptions && propsOptions !== "") {
         // 当网页参数传了options，就使用网页的options
         options.value = JSON.parse(propsOptions);
