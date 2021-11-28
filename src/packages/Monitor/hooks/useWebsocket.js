@@ -68,11 +68,11 @@ export function useWebsocket(options, allGiftData) {
                         return;
                     }
                     obj = {
-                        nn: data.nn,
+                        nn: data.nn, // 昵称
                         lv: data.level, // 等级
-                        gfid: data.gfid,
-                        gfcnt: data.gfcnt,
-                        hits: data.hits,
+                        gfid: data.gfid, // 礼物id 获取名字：allGiftData[item.gfid].n
+                        gfcnt: data.gfcnt, // 礼物数量
+                        hits: data.hits, // 连击
                         key: new Date().getTime() + Math.random(),
                     }
                     if (giftList.value.length + 1 > options.value.threshold) {
