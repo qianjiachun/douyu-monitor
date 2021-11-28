@@ -9,8 +9,10 @@ function parseUrl() {
         "https://douyuex.com/",
         "http://douyuex.com/",
         "https://www.douyuex.com/introduction/",
+        "https://www.douyuex.com/introduction",
         "https://www.douyuex.com/install/web.html",
         "https://www.douyuex.com/update/",
+        "https://www.douyuex.com/update",
     ]
     if (HOSTS.includes(url)) {
         // 重定向
