@@ -7,12 +7,6 @@ export function useFlexStyle(props, type) {
     let orderStyle = computed(() => {
         return String(props.options.order[type]);
     });
-    let justifyContentStyle = computed(() => {
-        return props.options.align === "right" ? "flex-end" : "flex-start";
-    });
-    let textAlignStyle = computed(() => {
-        return props.options.align === "right" ? "right" : "left";
-    });
 
-    return { flexStyle, orderStyle, justifyContentStyle, textAlignStyle }
+    return { flexStyle, orderStyle }
 }

@@ -26,9 +26,9 @@
 
 
 ### 如何修改消息的样式（提交PR）
-**强烈建议复制项目基础的.vue文件，在此基础上对item进行修改**
-下面分别对每个模块细节作说明
-
+在每个模块的templates下新建一个文件(.vue)，然后接受指定的props即可进行样式的编写  
+每一个文件代表着每一行所呈现的样式  
+下面分别对每个模块参数详细说明：
 #### options（设置）
 ```js
 export const defaultOptions = {
@@ -96,18 +96,13 @@ export const defaultOptions = {
 ```
 #### 弹幕样式
 ##### 路径
-`src/packages/Monitor/components/Danmaku`
+`src/packages/Monitor/components/Danmaku/templates/Default.vue`
 
 ##### props说明
 ```
-maxOrder: 主要影响到模块的布局样式，原封不动即可。不要修改
-// 主要影响代码如下，以及style中绑定相应的样式
-let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "danmaku");
-let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "danmaku");
+options: 配置项，原封不动传入即可
 
-------------------------------------------------------------------------
-
-danmakuList: 弹幕数据列表，vFor输出即可，key已经包含在每一项的[key]中
+data: 每条弹幕数据，格式如下
 let obj = {
     nn: data.nn, // 昵称
     avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
@@ -129,18 +124,13 @@ v-if="options.danmaku.show.includes('avatar')"
 
 #### 礼物样式
 ##### 路径
-`src/packages/Monitor/components/Gift`
+`src/packages/Monitor/components/Gift/templates/Default.vue`
 
 ##### props说明
 ```
-maxOrder: 主要影响到模块的布局样式，原封不动即可。不要修改
-// 主要影响代码如下，以及style中绑定相应的样式
-let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "gift");
-let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "gift");
+options: 配置项，原封不动传入即可
 
-------------------------------------------------------------------------
-
-giftList: 礼物数据列表，vFor输出即可，key已经包含在每一项的[key]中
+data: 每条礼物数据，格式如下
 普通礼物（dgb）：
 let obj = {
     nn: data.nn, // 昵称
@@ -163,7 +153,7 @@ let obj = {
 
 ------------------------------------------------------------------------
 
-allGiftData（所有礼物数据）：
+allGiftData（所有礼物数据，原封不动传入即可）：
 allGiftData[礼物id] = {
     n: item.name, // 礼物名称
     pic: item.basicInfo.focusPic, // 礼物图片地址: allGiftData.prefix + allGiftData[id].pic
@@ -173,18 +163,13 @@ allGiftData[礼物id] = {
 
 #### 入场样式
 ##### 路径
-`src/packages/Monitor/components/Enter`
+`src/packages/Monitor/components/Enter/templates/Default.vue`
 
 ##### props说明
 ```
-maxOrder: 主要影响到模块的布局样式，原封不动即可。不要修改
-// 主要影响代码如下，以及style中绑定相应的样式
-let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "enter");
-let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "enter");
+options: 配置项，原封不动传入即可
 
-------------------------------------------------------------------------
-
-enterList: 入场数据列表，vFor输出即可，key已经包含在每一项的[key]中
+data: 每条入场数据
 let obj = {
     nn: data.nn, // 昵称
     avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
