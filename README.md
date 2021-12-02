@@ -25,11 +25,11 @@
 2. 作者: 小淳 Email: 189964430@qq.com
 
 
-### 如何修改消息的样式（提交PR）
+## 如何修改消息的样式（提交PR）
 在每个模块的templates下新建一个文件(.vue)，然后接受指定的props即可进行样式的编写  
 每一个文件代表着每一行所呈现的样式  
 下面分别对每个模块参数详细说明：
-#### options（设置）
+### options（设置）
 ```js
 export const defaultOptions = {
     // 日间day 夜间night模式
@@ -94,11 +94,11 @@ export const defaultOptions = {
     }
 }
 ```
-#### 弹幕样式
-##### 路径
+### 弹幕样式
+#### 路径
 `src/packages/Monitor/components/Danmaku/templates/Default.vue`
 
-##### props说明
+#### props说明
 ```
 options: 配置项，原封不动传入即可
 
@@ -122,11 +122,11 @@ let obj = {
 v-if="options.danmaku.show.includes('avatar')"
 ```
 
-#### 礼物样式
-##### 路径
+### 礼物样式
+#### 路径
 `src/packages/Monitor/components/Gift/templates/Default.vue`
 
-##### props说明
+#### props说明
 ```
 options: 配置项，原封不动传入即可
 
@@ -161,11 +161,11 @@ allGiftData[礼物id] = {
 }
 ```
 
-#### 入场样式
-##### 路径
+### 入场样式
+#### 路径
 `src/packages/Monitor/components/Enter/templates/Default.vue`
 
-##### props说明
+#### props说明
 ```
 options: 配置项，原封不动传入即可
 
