@@ -2,16 +2,21 @@
     <div ref="dom_enter" class="enter">
         <Deafult
             v-for="item in enterList"
-            :options="options"
             :data="item"
             :key="item.key"
+            :mode="options.mode"
+            :keywords="options.enter.keywords"
+            :showAnimation="options.animation"
+            :showLevel="options.enter.show.includes('level')"
+            :showNoble="options.enter.show.includes('noble')"
+            :showAvatar="options.enter.show.includes('avatar')"
         ></Deafult>
         <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_enter)">回到底部</div>
     </div>
 </template>
 
 <script setup>
-import {ref, computed, onUpdated, onMounted } from 'vue'
+import {ref, onUpdated, onMounted } from 'vue'
 import Deafult from "./templates/Default.vue"
 import {useFlexStyle} from "../../hooks/useFlexStyle.js"
 import {useBorderStyle} from "../../hooks/useBorderStyle.js"
@@ -27,7 +32,7 @@ let props = defineProps({
         type: Array,
     }
 });
-let { flexStyle, orderStyle } = useFlexStyle(props, "enter");
+let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "enter");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "enter");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 let dom_enter = ref(null);
@@ -57,5 +62,9 @@ onMounted(() => {
     overflow-x: hidden;
     overflow-y: auto;
     content-visibility: auto;
+    .item {
+        justify-content: v-bind(justifyContentStyle);
+        text-align: v-bind(textAlignStyle);
+    }
 }
 </style>

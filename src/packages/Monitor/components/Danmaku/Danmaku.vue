@@ -2,9 +2,16 @@
     <div ref="dom_danmaku" class="danmaku">
         <Deafult
             v-for="item in danmakuList"
-            :options="options"
-            :data="item"
             :key="item.key"
+            :data="item"
+            :mode="options.mode"
+            :showAnimation="options.animation"
+            :showLevel="options.danmaku.show.includes('level')"
+            :showNoble="options.danmaku.show.includes('noble')"
+            :showFans="options.danmaku.show.includes('fans')"
+            :showDiamond="options.danmaku.show.includes('diamond')"
+            :showRoomAdmin="options.danmaku.show.includes('roomAdmin')"
+            :showAvatar="options.danmaku.show.includes('avatar')"
         ></Deafult>
         <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_danmaku)">回到底部</div>
     </div>
@@ -29,7 +36,7 @@ let props = defineProps({
     }
 });
 let dom_danmaku = ref(null);
-let { flexStyle, orderStyle } = useFlexStyle(props, "danmaku");
+let { flexStyle, orderStyle, justifyContentStyle, textAlignStyle } = useFlexStyle(props, "danmaku");
 let { borderBottomStyle, borderRightStyle } = useBorderStyle(props, "danmaku");
 let { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 
@@ -61,5 +68,9 @@ onMounted(() => {
     overflow-x: hidden;
     overflow-y: auto;
     content-visibility: auto;
+    .item {
+        justify-content: v-bind(justifyContentStyle);
+        text-align: v-bind(textAlignStyle);
+    }
 }
 </style>

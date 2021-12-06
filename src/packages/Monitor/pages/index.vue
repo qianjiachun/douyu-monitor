@@ -143,7 +143,7 @@ let options = ref(deepCopy(defaultOptions));
 let allGiftData = ref({});
 let isShowOption = ref(false);
 let activeTab = ref(0);
-let { directionStyle, fontSizeStyle } = useNormalStyle(options);
+let { directionStyle, fontSizeStyle, avatarImgSizeStyle} = useNormalStyle(options);
 let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options, allGiftData);
 let { toClipboard } = useClipboard();
 
@@ -324,4 +324,12 @@ watch(() => options.value.transparent, (n, o) => {
     }
 }
 
+</style>
+
+<style lang="scss">
+.avatar {
+    width: v-bind(avatarImgSizeStyle);
+    height: v-bind(avatarImgSizeStyle);
+    border-radius: 50%;
+}
 </style>

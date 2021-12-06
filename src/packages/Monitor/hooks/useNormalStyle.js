@@ -9,5 +9,11 @@ export function useNormalStyle(options) {
         return `${options.value.fontSize}px`;
     });
 
-    return { directionStyle, fontSizeStyle }
+    // 图片（头像）尺寸
+    let avatarImgSizeStyle = computed(() => {
+        return `${options.value.fontSize * 2}px`;
+    });
+
+
+    return { directionStyle, fontSizeStyle, avatarImgSizeStyle }
 }
