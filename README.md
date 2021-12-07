@@ -100,8 +100,6 @@ export const defaultOptions = {
 
 #### props说明
 ```
-options: 配置项，原封不动传入即可
-
 data: 每条弹幕数据，格式如下
 let obj = {
     nn: data.nn, // 昵称
@@ -128,8 +126,6 @@ v-if="options.danmaku.show.includes('avatar')"
 
 #### props说明
 ```
-options: 配置项，原封不动传入即可
-
 data: 每条礼物数据，格式如下
 普通礼物（dgb）：
 let obj = {
@@ -153,8 +149,7 @@ let obj = {
 
 ------------------------------------------------------------------------
 
-allGiftData（所有礼物数据，原封不动传入即可）：
-allGiftData[礼物id] = {
+giftData（礼物信息）：{
     n: item.name, // 礼物名称
     pic: item.basicInfo.focusPic, // 礼物图片地址: allGiftData.prefix + allGiftData[id].pic
     pc: item.priceInfo.price, // 礼物价格（记得÷100）
@@ -167,8 +162,6 @@ allGiftData[礼物id] = {
 
 #### props说明
 ```
-options: 配置项，原封不动传入即可
-
 data: 每条入场数据
 let obj = {
     nn: data.nn, // 昵称
