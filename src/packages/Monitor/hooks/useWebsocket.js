@@ -31,6 +31,8 @@ export function useWebsocket(options, allGiftData) {
         }
         if (msgType === "chatmsg" && options.value.switch.includes("danmaku")) {
             let data = stt.deserialize(msg);
+            // 超管弹幕
+            // {"type":"chatmsg","rid":"4624967","uid":"409227923","nn":"鲨鱼仟仟","txt":"提醒主播，请主播调整自己的上装，请勿深V着装。请尽快调整，谢谢合作。","cid":"609ef1a236494f5c9c85300000000000","ic":"avatar_v3/202105/7b4b257d45c74deab9ff4e57746fd8a5","level":"7","sahf":"1","admzq":"1","pg":"5","cst":"1639922444040","bl":"0","brid":"0","pdg":"35","pdk":"81"}
             if (!checkDanmakuValid(data)) {
                 return;
             }
@@ -46,6 +48,7 @@ export function useWebsocket(options, allGiftData) {
                 noble: data.nl, // 贵族等级
                 nobleC: data.nc, // 贵族弹幕是否开启，1开
                 roomAdmin: data.rg, // 房管，data.rg为4则是房管
+                super: data.pg, // 超管，data.pg为5则为超管
                 key: data.cid, // 时间戳
             };
             if (danmakuList.value.length + 1 > options.value.threshold) {

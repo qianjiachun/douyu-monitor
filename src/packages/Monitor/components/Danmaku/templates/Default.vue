@@ -28,7 +28,7 @@ let props = defineProps(["data", "mode", "showAnimation", "showLevel", "showNobl
 // 控制日夜模式背景颜色
 function getItemClass(data) {
     let ret = "";
-    if (data.nobleC) {
+    if (data.nobleC || data.super == "5") {
         if (props.mode === "night") {
             ret = "noble-night";
         } else {
