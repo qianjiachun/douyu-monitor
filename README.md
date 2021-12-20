@@ -131,6 +131,7 @@ let obj = {
     noble: data.nl, // 贵族等级
     nobleC: data.nc, // 贵族弹幕是否开启，1开
     roomAdmin: data.rg, // 房管，data.rg为4则是房管
+    super: data.pg, // 超管，data.pg为5则为超管
     key: data.cid, // 时间戳
 };
 
