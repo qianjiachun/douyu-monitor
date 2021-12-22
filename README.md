@@ -46,6 +46,16 @@
 2. `npm install`
 3. `npm run dev`
 
+## 发布
+1. `npm build`
+2. 在nginx配置中加入以下代码
+```
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+
 ## 如何修改消息的样式（提交PR）
 项目提供了基础消息样式（斗鱼原版），如果想要定制比较好看的（例如气泡）的弹幕消息，参考如下：  
 
@@ -137,6 +147,7 @@ let obj = {
     noble: data.nl, // 贵族等级
     nobleC: data.nc, // 贵族弹幕是否开启，1开
     roomAdmin: data.rg, // 房管，data.rg为4则是房管
+    super: data.pg, // 超管，data.pg为5则为超管
     key: data.cid, // 时间戳
 };
 
