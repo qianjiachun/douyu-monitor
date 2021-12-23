@@ -165,7 +165,7 @@ export function useWebsocket(options, allGiftData) {
         }
         // 过滤重复弹幕
         if (options.value.danmaku.ban.isFilterRepeat) {
-            if (danmakuList.value[danmakuList.value.length - 1].txt === data.txt) {
+            if (danmakuList.value.length > 0 && danmakuList.value[danmakuList.value.length - 1].txt === data.txt) {
                 return false;
             }
         }
