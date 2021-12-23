@@ -33,3 +33,21 @@ export function getClassStyle(dom, attr) {
 		return document.defaultView.getComputedStyle(dom, null)[attr];
 	}
 }
+
+export function formatObj(obj, objTemplate) {
+	let ret = {};
+	// 将obj格式化成objTemplate的属性格式，而obj的值不变，缺少的属性会增加上去
+	for (const key in objTemplate) {
+		if (key in obj) {
+			if (Object.prototype.toString.call(objTemplate[key]) === "[object Object]") {
+				let childRet = formatObj(obj[key], objTemplate[key]);
+				ret[key] = childRet;
+			} else {
+				ret[key] = obj[key];
+			}
+		} else {
+			ret[key] = objTemplate[key];
+		}
+	}
+	return ret;
+}

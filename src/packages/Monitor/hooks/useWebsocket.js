@@ -121,6 +121,9 @@ export function useWebsocket(options, allGiftData) {
         }
         if (msgType === "uenter" && options.value.switch.includes("enter")) {
             let data = stt.deserialize(msg);
+            if (!checkEnterValid(data)) {
+                return;
+            }
             let obj = {
                 nn: data.nn,
                 avatar: data.ic, // 头像地址 https://apic.douyucdn.cn/upload/ + avatar + _small.jpg
@@ -160,6 +163,12 @@ export function useWebsocket(options, allGiftData) {
                 }
             }
         }
+        // 过滤重复弹幕
+        if (options.value.danmaku.ban.isFilterRepeat) {
+            if (danmakuList.value[danmakuList.value.length - 1].txt === data.txt) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -180,6 +189,14 @@ export function useWebsocket(options, allGiftData) {
                     return false;
                 }
             }
+        }
+        return true;
+    }
+
+    const checkEnterValid = (data) => {
+        // 判断屏蔽等级
+        if (Number(data.level) <= Number(options.value.enter.ban.level)) {
+            return false;
         }
         return true;
     }
