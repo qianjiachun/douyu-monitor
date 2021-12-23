@@ -1,5 +1,7 @@
 <p align="center">
-    <img src="./icon.png" width="150">
+    <a href="https://github.com/qianjiachun/douyu-monitor">
+        <img src="https://s4.ax1x.com/2021/12/23/TGQyAf.png" width="150" height="150"/>
+    </a>
     <h3 align="center">Douyu-Monitor</h3>
     <br>
     <p align="center">
