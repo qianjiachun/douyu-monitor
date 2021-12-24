@@ -49,8 +49,9 @@
 3. `npm run dev`
 
 ## 发布
-1. `npm build`
-2. 在nginx配置中加入以下代码
+1. `npm run build`
+2. 将dist文件夹内容部署至服务器
+3. 在nginx配置中加入以下代码
 ```
 location / {
     try_files $uri $uri/ /index.html;
