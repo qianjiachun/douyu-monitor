@@ -37,6 +37,7 @@ export const defaultOptions = {
             level: 0, // 等级
             keywords: "", // 关键词
             nicknames: "", // 关键昵称
+            isFilterRepeat: false, // 过滤重复弹幕，如果下一条内容与上一条一样，则丢弃
         }
     },
     // 入场设置
@@ -46,6 +47,10 @@ export const defaultOptions = {
         show: ["level", "avatar", "noble"],
         // 高亮关键昵称
         keywords: "",
+        // 屏蔽项
+        ban: {
+            level: 0, // 等级
+        }
     },
     // 礼物设置
     gift: {

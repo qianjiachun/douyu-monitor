@@ -86,6 +86,11 @@
                 <Field v-model="options.danmaku.ban.level" label="屏蔽等级≤" type="digit" placeholder="请输入屏蔽的等级"></Field>
                 <Field v-model="options.danmaku.ban.keywords" label="屏蔽关键词" placeholder="空格隔开 例如:弹幕1 弹幕2"></Field>
                 <Field v-model="options.danmaku.ban.nicknames" label="屏蔽昵称" placeholder="模糊匹配 空格隔开 例如:昵称1 昵称2"></Field>
+                <Field label="过滤重复">
+                    <template #input>
+                        <Switch v-model="options.danmaku.ban.isFilterRepeat" size="20" />
+                    </template>
+                </Field>
             </Tab>
             <Tab title="礼物">
                 <Field label="占比">
@@ -113,6 +118,7 @@
                     </template>
                 </Field>
                 <Field v-model="options.enter.keywords" label="关键昵称" placeholder="空格隔开 例如:昵称1 昵称2"></Field>
+                <Field v-model="options.enter.ban.level" label="屏蔽等级≤" type="digit" placeholder="请输入屏蔽的等级"></Field>
             </Tab>
         </Tabs>
     </Popup>
@@ -133,7 +139,7 @@ import { useNormalStyle } from "../hooks/useNormalStyle.js"
 import { useWebsocket } from "../hooks/useWebsocket.js"
 
 import { giftData } from "@/global/utils/dydata/giftData.js"
-import { saveLocalData, getLocalData, deepCopy, getClassStyle, getStrMiddle } from "@/global/utils"
+import { saveLocalData, getLocalData, deepCopy, getClassStyle, getStrMiddle, formatObj } from "@/global/utils"
 import { defaultOptions } from '../options'
 
 const LOCAL_NAME = "monitor_options"
@@ -170,7 +176,9 @@ onMounted(async () => {
         }
         options.value = localData;
     }
-    
+
+    // 格式化Options，以保证向下兼容
+    options.value = formatObj(options.value, defaultOptions)
 
     let data = await getRoomGiftData(rid);
     let roomGiftData = {prefix: "https://gfs-op.douyucdn.cn/dygift"};

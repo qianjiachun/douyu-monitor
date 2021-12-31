@@ -15,7 +15,7 @@
             <span class="Barrage-icon Barrage-icon--roomAdmin"></span>
         </span>
         <span v-if="showAvatar" class="item__avatar"><img class="avatar" :src="`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`" loading="lazy" /></span>
-        <span class="item__name">{{data.nn}}：</span>
+        <span :class="`item__name ${data.super==='5' ? 'super-name':'' }`">{{data.nn}}：</span>
         <span :style="`color:${danmakuColor[data.color]};`" class="item__txt">{{data.txt}}</span>
     </div>
 </template>
@@ -28,11 +28,19 @@ let props = defineProps(["data", "mode", "showAnimation", "showLevel", "showNobl
 // 控制日夜模式背景颜色
 function getItemClass(data) {
     let ret = "";
-    if (data.nobleC || data.super == "5") {
-        if (props.mode === "night") {
+    if (props.mode === "night") {
+        if (data.nobleC) {
             ret = "noble-night";
-        } else {
-            ret = "noble-day"
+        }
+        if (data.super == "5") {
+            ret = "super-night";
+        }
+    } else {
+        if (data.nobleC) {
+            ret = "noble-day";
+        }
+        if (data.super == "5") {
+            ret = "super-day";
         }
     }
     return ret;
@@ -76,10 +84,30 @@ function getItemClass(data) {
     }
 }
 .noble-day {
-    background-color:rgb(255,243,223);border-top:1px solid #ffe4b8;border-bottom:1px solid #ffe4b8;
+    background-color:#fff3df;
+    border-top:1px solid #ffe4b8;
+    border-bottom:1px solid #ffe4b8;
 }
 
 .noble-night {
-    background-color:rgb(55,55,55);border-top:1px solid rgb(90,90,90);border-bottom:1px solid rgb(90,90,90);
+    background-color:rgb(55,55,55);
+    border-top:1px solid rgb(90,90,90);
+    border-bottom:1px solid rgb(90,90,90);
+}
+
+.super-day {
+    background-color:#fae9ff;
+    border-top:1px solid #ffe4b8;
+    border-bottom:1px solid #ffe4b8;
+}
+
+.super-night {
+    background-color:rgb(55, 45, 45);
+    border-top:1px solid rgb(90,90,90);
+    border-bottom:1px solid rgb(90,90,90);
+}
+
+.super-name {
+    color: #fe5656 !important;
 }
 </style>

@@ -1,4 +1,22 @@
-## 斗鱼弹幕助手
+<p align="center">
+    <a href="https://github.com/qianjiachun/douyu-monitor">
+        <img src="https://s4.ax1x.com/2021/12/23/TGQyAf.png" width="150" height="150"/>
+    </a>
+    <h3 align="center">Douyu-Monitor</h3>
+    <br>
+    <p align="center">
+        <a href="https://github.com/qianjiachun/douyu-monitor"><img src="https://img.shields.io/github/languages/code-size/qianjiachun/douyu-monitor?color=blueviolet"></a>
+        <a href="https://github.com/qianjiachun/douyu-monitor"><img src="https://img.shields.io/github/stars/qianjiachun/douyu-monitor?color=green"></a>
+        <a href="https://github.com/qianjiachun/douyu-monitor"><img src="https://img.shields.io/github/commit-activity/m/qianjiachun/douyu-monitor?color=9cf"></a>
+        <a href="https://github.com/qianjiachun/douyu-monitor"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+    </p>
+    <p align="center">
+       斗鱼跨平台弹幕助手<br>
+    </p>
+</p>
+
+> `Douyu-Monitor` 是基于 `Vite2.x`+`Vue3.2.x`+`VantUI` 开发的**纯前端**斗鱼弹幕助手，用于查看、展示房间内弹幕/礼物/入场信息等。在性能上，页面无论在任何情况都能**丝滑**展示与操作；在项目结构上，**底层与业务解耦**，**样式与业务解耦**，可以方便地定制各式各样的弹幕样式；在场景上，**支持所有设备**并且**显示/操作一致**，具有灵活和高扩展的特性。
+## 斗鱼跨平台弹幕助手
 
 ### 预览（Demo）
 [https://www.douyuex.com/288016](https://www.douyuex.com/288016)
@@ -31,8 +49,9 @@
 3. `npm run dev`
 
 ## 发布
-1. `npm build`
-2. 在nginx配置中加入以下代码
+1. `npm run build`
+2. 将dist文件夹内容部署至服务器
+3. 在nginx配置中加入以下代码
 ```
 location / {
     try_files $uri $uri/ /index.html;
@@ -88,6 +107,7 @@ export const defaultOptions = {
             level: 0, // 等级
             keywords: "", // 关键词
             nicknames: "", // 关键昵称
+            isFilterRepeat: false, // 过滤重复弹幕，如果下一条内容与上一条一样，则丢弃
         }
     },
     // 入场设置
@@ -97,6 +117,10 @@ export const defaultOptions = {
         show: ["level", "avatar", "noble"],
         // 高亮关键昵称
         keywords: "",
+        // 屏蔽项
+        ban: {
+            level: 0, // 等级
+        }
     },
     // 礼物设置
     gift: {
