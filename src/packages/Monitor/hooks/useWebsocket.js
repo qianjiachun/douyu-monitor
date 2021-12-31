@@ -52,6 +52,9 @@ export function useWebsocket(options, allGiftData) {
                 vip: data.ail, // vip，如果不是undefined则为vip
                 key: data.cid, // 时间戳
             };
+            if (data.ail) {
+                console.log(data)
+            }
             if (danmakuList.value.length + 1 > options.value.threshold) {
                 danmakuList.value.shift();
             }

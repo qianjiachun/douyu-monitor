@@ -29,14 +29,14 @@ let props = defineProps(["data", "mode", "showAnimation", "showLevel", "showNobl
 function getItemClass(data) {
     let ret = "";
     if (props.mode === "night") {
-        if (data.nobleC || data.vip) {
+        if (data.nobleC) {
             ret = "noble-night";
         }
         if (data.super == "5") {
             ret = "super-night";
         }
     } else {
-        if (data.nobleC || data.vip) {
+        if (data.nobleC) {
             ret = "noble-day";
         }
         if (data.super == "5") {
