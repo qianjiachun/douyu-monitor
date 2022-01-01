@@ -100,8 +100,8 @@ export const defaultOptions = {
     // 弹幕设置
     danmaku: {
         // 设置弹幕显示内容，如果在数组里就显示
-        // level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉
-        show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond"],
+        // level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP和超级VIP
+        show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip"],
         // 屏蔽项
         ban: {
             level: 0, // 等级
@@ -156,7 +156,7 @@ let obj = {
     nobleC: data.nc, // 贵族弹幕是否开启，1开
     roomAdmin: data.rg, // 房管，data.rg为4则是房管
     super: data.pg, // 超管，data.pg为5则为超管
-    vip: data.ail, // vip，如果不是undefined则为vip
+    vip: data.ail == "453/" || data.ail == "454/", // vip，如果是 453/则为vip  454/则为超级vip
     key: data.cid, // 时间戳
 };
 
