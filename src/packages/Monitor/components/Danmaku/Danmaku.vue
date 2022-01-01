@@ -12,6 +12,7 @@
             :showDiamond="options.danmaku.show.includes('diamond')"
             :showRoomAdmin="options.danmaku.show.includes('roomAdmin')"
             :showAvatar="options.danmaku.show.includes('avatar')"
+            :showVip="options.danmaku.show.includes('vip')"
         ></Deafult>
         <div v-show="isLock" class="gobottom" @click.stop="goToScrollBottom(dom_danmaku)">回到底部</div>
     </div>
@@ -63,8 +64,6 @@ onMounted(() => {
     flex: v-bind(flexStyle);
     border-bottom: v-bind(borderBottomStyle);
     border-right: v-bind(borderRightStyle);
-    padding: 0 5px;
-    box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: auto;
     content-visibility: auto;

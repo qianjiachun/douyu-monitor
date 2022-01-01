@@ -57,8 +57,6 @@ onMounted(() => {
     flex: v-bind(flexStyle);
     border-bottom: v-bind(borderBottomStyle);
     border-right: v-bind(borderRightStyle);
-    padding: 0 5px;
-    box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: auto;
     content-visibility: auto;

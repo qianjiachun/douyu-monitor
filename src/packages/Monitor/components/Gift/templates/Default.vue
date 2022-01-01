@@ -46,6 +46,8 @@ function getItemClass(item) {
     margin-bottom: 5px;
     justify-content: v-bind(justifyContentStyle);
     text-align: v-bind(textAlignStyle);
+    padding: 0 4px;
+    box-sizing: border-box;
 
     &:first-child {
         margin-top: 5px;

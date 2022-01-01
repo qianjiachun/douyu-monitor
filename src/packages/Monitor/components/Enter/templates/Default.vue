@@ -44,7 +44,8 @@ function getItemClass(item) {
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 5px;
-
+    padding: 0 4px;
+    box-sizing: border-box;
     &:first-child {
         margin-top: 5px;
     }

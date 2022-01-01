@@ -15,7 +15,10 @@
             <span class="Barrage-icon Barrage-icon--roomAdmin"></span>
         </span>
         <span v-if="showAvatar" class="item__avatar"><img class="avatar" :src="`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`" loading="lazy" /></span>
-        <span :class="`item__name ${data.super==='5' ? 'super-name':'' }`">{{data.nn}}：</span>
+        <span :class="`item__name ${data.super==='5' ? 'super-name':'' }`">
+            <span v-if="data.vip && showVip" class="Barrage-roomVipIcon"></span>
+            {{data.nn}}：
+        </span>
         <span :style="`color:${danmakuColor[data.color]};`" class="item__txt">{{data.txt}}</span>
     </div>
 </template>
@@ -23,20 +26,20 @@
 <script setup>
 import {nobleData} from "@/global/utils/dydata/nobleData.js"
 import {danmakuColor} from "@/global/utils/dydata/danmakuColor.js"
-let props = defineProps(["data", "mode", "showAnimation", "showLevel", "showNoble", "showFans", "showDiamond", "showRoomAdmin", "showAvatar"])
+let props = defineProps(["data", "mode", "showAnimation", "showLevel", "showNoble", "showFans", "showDiamond", "showRoomAdmin", "showAvatar", "showVip"])
 
 // 控制日夜模式背景颜色
 function getItemClass(data) {
     let ret = "";
     if (props.mode === "night") {
-        if (data.nobleC) {
+        if (data.nobleC || data.vip) {
             ret = "noble-night";
         }
         if (data.super == "5") {
             ret = "super-night";
         }
     } else {
-        if (data.nobleC) {
+        if (data.nobleC || data.vip) {
             ret = "noble-day";
         }
         if (data.super == "5") {
@@ -53,6 +56,8 @@ function getItemClass(data) {
     vertical-align: middle;
     width: 100%;
     margin-bottom: 5px;
+    padding: 0 4px;
+    box-sizing: border-box;
     &:first-child {
         margin-top: 5px;
     }

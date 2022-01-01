@@ -80,6 +80,7 @@
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
                             <Checkbox name="roomAdmin" shape="square">房管</Checkbox>
                             <Checkbox name="diamond" shape="square">钻粉</Checkbox>
+                            <Checkbox name="vip" shape="square">VIP</Checkbox>
                         </CheckboxGroup>
                     </template>
                 </Field>

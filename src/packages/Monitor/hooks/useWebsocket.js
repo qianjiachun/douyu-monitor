@@ -49,12 +49,9 @@ export function useWebsocket(options, allGiftData) {
                 nobleC: data.nc, // 贵族弹幕是否开启，1开
                 roomAdmin: data.rg, // 房管，data.rg为4则是房管
                 super: data.pg, // 超管，data.pg为5则为超管
-                vip: data.ail, // vip，如果不是undefined则为vip
+                vip: data.ail == "453/" || data.ail == "454/", // vip，如果是 453/ 和 454/ 则为vip
                 key: data.cid, // 时间戳
             };
-            if (data.ail) {
-                console.log(data)
-            }
             if (danmakuList.value.length + 1 > options.value.threshold) {
                 danmakuList.value.shift();
             }
