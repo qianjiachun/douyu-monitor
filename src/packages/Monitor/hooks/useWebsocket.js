@@ -10,6 +10,10 @@ export function useWebsocket(options, allGiftData) {
     let enterList = ref([]);
     let giftList = ref([]);
 
+    let danmakuListSave = [];
+    let enterListSave = [];
+    let giftListSave = [];
+
     const connectWs = (rid) => {
         if (rid === "") {
             return;
@@ -56,6 +60,9 @@ export function useWebsocket(options, allGiftData) {
                 danmakuList.value.shift();
             }
             danmakuList.value.push(obj);
+            if (options.value.isSaveData) {
+                danmakuListSave.push(msg);
+            }
         }
         if ((msgType === "dgb" || msgType === "odfbc" || msgType === "rndfbc") && options.value.switch.includes("gift")) {
             let data = stt.deserialize(msg);
@@ -83,6 +90,9 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 case "odfbc":
                     // 开通钻粉
@@ -99,6 +109,9 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 case "rndfbc":
                     // 续费钻粉
@@ -115,6 +128,9 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 default:
                     break;
@@ -136,6 +152,9 @@ export function useWebsocket(options, allGiftData) {
                 enterList.value.shift();
             }
             enterList.value.push(obj);
+            if (options.value.isSaveData) {
+                enterListSave.push(msg);
+            }
         }
     }
 
@@ -194,6 +213,10 @@ export function useWebsocket(options, allGiftData) {
         return true;
     }
 
+    const checkFansLevelValid = (data) => {
+        
+    }
+
     const checkEnterValid = (data) => {
         // 判断屏蔽等级
         if (Number(data.level) <= Number(options.value.enter.ban.level)) {
@@ -202,5 +225,5 @@ export function useWebsocket(options, allGiftData) {
         return true;
     }
 
-    return { connectWs, danmakuList, enterList, giftList }
+    return { connectWs, danmakuList, enterList, giftList, danmakuListSave, enterListSave, giftListSave }
 }
