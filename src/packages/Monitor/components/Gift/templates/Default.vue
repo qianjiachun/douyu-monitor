@@ -1,40 +1,110 @@
 <template>
     <div :class="`item ${showAnimation?'fadeInLeft' : ''} ${getItemClass(data)}`">
         <div class="item__gift">
-            <img class="avatar" :src="`${'type' in data ? DIAMOND_URL : GIFT_IMG_PREFIX}${'type' in data ? '' : giftData.pic}`" loading="lazy" />
+            <img class="avatar" :src="avatarSrc" loading="lazy" />
         </div>
-        <div class="item__cnt">{{'type' in data ? data.type : giftData.n}}*{{data.gfcnt}}</div>
+        <div class="item__cnt">{{giftName}}</div>
         <div class="item__name">{{data.nn}}</div>
         <div v-if="Number(data.hits)>=5" class="item__hits">累计x{{data.hits}}</div>
     </div>
 </template>
 
 <script setup>
+import {computed} from "vue"
+import {nobleData} from "@/global/utils/dydata/nobleData.js"
 // 钻粉图片
 const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/live-player-aside-master/assets/images/diamonds_banner_logo_c077d7b.gif"
 const GIFT_IMG_PREFIX = "https://gfs-op.douyucdn.cn/dygift"
+const FANS_LEVEL_UP = "https://shark2.douyucdn.cn/front-publish/live-anchor-title-master/assets/images/exp_ca09807.webp"
 
 let props = defineProps(["data", "giftData", "mode", "showAnimation", "totalPrice"])
 
+let avatarSrc = computed(() => {
+    let ret = "";
+    switch (props.data.type) {
+        case "礼物":
+            ret += GIFT_IMG_PREFIX + props.giftData.pic;
+            break;
+        case "钻粉":
+            ret += DIAMOND_URL;
+            break;
+        case "贵族":
+            ret += nobleData.prefix + nobleData[props.data.nl].pic;
+            break;
+        case "粉丝牌升级":
+            ret += FANS_LEVEL_UP;
+            break;
+        default:
+            break;
+    }
+    return ret;
+});
+
+let giftName = computed(() => {
+    let ret = "";
+    switch (props.data.type) {
+        case "礼物":
+            ret = `${props.giftData.n}*${props.data.gfcnt}`;
+            break;
+        case "钻粉":
+            ret = props.data.name;
+            break;
+        case "贵族":
+            ret = props.data.name;
+            break;
+        case "粉丝牌升级":
+            ret = props.data.name;
+            break;
+        default:
+            break;
+    }
+    return ret;
+});
 
 function getItemClass(item) {
-    if ("type" in item) {
-        if (props.mode === "night") {
-            return "highlight-night";
-        } else {
-            return "highlight-day";
-        }
+    let ret = "";
+    switch (props.data.type) {
+        case "礼物":
+            if (Number(props.giftData.pc) * Number(item.gfcnt) >= Number(props.totalPrice) * 100) {
+                if (props.mode === "night") {
+                    ret = "highlight-night";
+                } else {
+                    ret = "highlight-day";
+                }
+            }
+            break;
+        case "钻粉":
+            if (props.mode === "night") {
+                ret = "highlight-night";
+            } else {
+                ret = "highlight-day";
+            }
+            break;
+        case "贵族":
+            if (props.mode === "night") {
+                ret = "highlight-night";
+            } else {
+                ret = "highlight-day";
+            }
+            break;
+        case "粉丝牌升级":
+            // 当粉丝牌升级大于10级则高亮
+            if (item.bl > 10) {
+                if (props.mode === "night") {
+                    ret = "highlight-night";
+                } else {
+                    ret = "highlight-day";
+                }
+            }
+            break;
+        default:
+            break;
     }
-    if (Number(props.giftData.pc) * Number(item.gfcnt) >= Number(props.totalPrice) * 100) {
-        if (props.mode === "night") {
-            return "highlight-night";
-        } else {
-            return "highlight-day";
-        }
-    } else {
-        return "";
-    }
+    return ret;
 }
+
+
+
 </script>
 
 <style lang="scss" scoped>
