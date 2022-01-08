@@ -329,7 +329,7 @@ export function useWebsocket(options, allGiftData) {
 
     const checkFansLevelValid = (level) => {
         // 判断屏蔽粉丝牌升级等级
-        if (Number(options.value.gift.ban.fansLevel) < Number(level)) {
+        if (Number(options.value.gift.ban.fansLevel) > Number(level)) {
             return false;
         }
         return true;
