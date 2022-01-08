@@ -24,6 +24,9 @@
             <div @click="onClickRestOptions">
                 <svg t="1636947206527" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14990" width="24" height="24"><path d="M890.092308 988.002462a37.257846 37.257846 0 0 1-25.67877-27.72677c-53.326769-236.937846-209.526154-305.467077-408.576-368.64l-55.847384 182.744616a37.415385 37.415385 0 0 1-67.741539 8.428307L65.851077 353.516308a37.257846 37.257846 0 0 1 15.281231-53.090462L549.021538 70.656a37.257846 37.257846 0 0 1 40.96 5.198769 37.651692 37.651692 0 0 1 11.500308 39.384616l-47.261538 154.702769c92.317538 34.264615 169.905231 87.985231 230.636307 159.901538 54.429538 64.275692 95.310769 142.966154 121.619693 233.787077 42.771692 147.692308 33.004308 277.897846 31.744 292.312616v0.157538a37.336615 37.336615 0 0 1-34.816 33.634462 40.329846 40.329846 0 0 1-13.39077-1.732923zM352.492308 673.476923l42.692923-139.657846a37.494154 37.494154 0 0 1 46.710154-24.733539c129.969231 39.778462 233.314462 78.769231 314.998153 140.288 35.052308 26.151385 65.851077 56.871385 91.766154 91.608616a733.026462 733.026462 0 0 0-14.493538-58.683077c-53.563077-182.114462-166.990769-300.819692-337.289846-352.886154a38.281846 38.281846 0 0 1-22.291693-18.432 36.312615 36.312615 0 0 1-2.599384-28.356923l32.610461-106.653538-353.28 173.292307L352.492308 673.476923z" fill="#8a8a8a" p-id="14991"></path></svg>
             </div>
+            <div @click="onClickSaveData">
+                <svg t="1641663017225" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3820" width="24" height="24"><path d="M941.248 352L672 82.752A64 64 0 0 0 626.752 64H128a64 64 0 0 0-64 64v768a64 64 0 0 0 64 64h768a64 64 0 0 0 64-64V397.248A64 64 0 0 0 941.248 352zM256 128h48v160H256V128z m112 0H512v160h-144V128zM256 896v-192h512v192H256z m640 0h-64v-224a32 32 0 0 0-32-32H224a32 32 0 0 0-32 32v224H128V128h64v192a32 32 0 0 0 32 32h320a32 32 0 0 0 32-32V128h50.752L896 397.248V896z" p-id="3821" fill="#8a8a8a"></path></svg>
+            </div>
         </div>
         <Tabs v-model:active="activeTab">
             <Tab title="通用">
@@ -64,6 +67,11 @@
                     </template>
                 </Field>
                 <Field v-model="options.threshold" label="数据上限" type="digit" placeholder="当超过上限 旧数据会被删除"></Field>
+                <Field label="数据保存">
+                    <template #input>
+                        <Switch v-model="options.isSaveData" size="20" />
+                    </template>
+                </Field>
             </Tab>
             <Tab title="弹幕">
                 <Field label="占比">
@@ -102,6 +110,7 @@
                 <Field v-model="options.gift.ban.price" label="屏蔽单价<" type="number" placeholder="请输入单价"></Field>
                 <Field v-model="options.gift.totalPrice" label="高亮总价≥" type="number" placeholder="请输入总价"></Field>
                 <Field v-model="options.gift.ban.keywords" label="屏蔽关键词" placeholder="空格隔开 例如:荧光棒 鱼丸"></Field>
+                <Field v-model="options.gift.ban.fansLevel" label="粉丝牌等级≥" type="number" placeholder="屏蔽粉丝牌等级"></Field>
             </Tab>
             <Tab title="进场">
                 <Field label="占比">
@@ -142,6 +151,7 @@ import { useWebsocket } from "../hooks/useWebsocket.js"
 import { giftData } from "@/global/utils/dydata/giftData.js"
 import { saveLocalData, getLocalData, deepCopy, getClassStyle, getStrMiddle, formatObj } from "@/global/utils"
 import { defaultOptions } from '../options'
+import { exportFile, getNowDate } from '../../../global/utils'
 
 const LOCAL_NAME = "monitor_options"
 
@@ -151,7 +161,7 @@ let allGiftData = ref({});
 let isShowOption = ref(false);
 let activeTab = ref(0);
 let { directionStyle, fontSizeStyle, avatarImgSizeStyle} = useNormalStyle(options);
-let { connectWs, danmakuList, enterList, giftList } = useWebsocket(options, allGiftData);
+let { connectWs, danmakuList, enterList, giftList, danmakuListSave, enterListSave, giftListSave } = useWebsocket(options, allGiftData);
 let { toClipboard } = useClipboard();
 
 let maxOrder = computed(() => {
@@ -180,7 +190,6 @@ onMounted(async () => {
 
     // 格式化Options，以保证向下兼容
     options.value = formatObj(options.value, defaultOptions)
-
     let data = await getRoomGiftData(rid);
     let roomGiftData = {prefix: "https://gfs-op.douyucdn.cn/dygift"};
     if ("giftList" in data.data) {
@@ -238,6 +247,13 @@ function onClickRestOptions() {
     .then(() => {
         options.value = deepCopy(defaultOptions);
     }).catch(() => {});
+}
+
+function onClickSaveData() {
+    let time = getNowDate();
+    exportFile(`【弹幕数据】-${time}`, danmakuListSave.join("\n"));
+    exportFile(`【礼物数据】-${time}`, giftListSave.join("\n"));
+    exportFile(`【入场数据】-${time}`, enterListSave.join("\n"));
 }
 
 function onClickShare() {

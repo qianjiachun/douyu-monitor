@@ -167,6 +167,9 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 case "rnewbc":
                     // 续费贵族
@@ -187,11 +190,17 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 case "blab":
                     // 30级以下粉丝牌升级
                     if (data.rid !== window.rid) {
                         return; // 不在本房间 则丢弃
+                    }
+                    if (!checkFansLevelValid(data.bl)) {
+                        return;
                     }
                     obj = {
                         type: "粉丝牌升级",
@@ -207,11 +216,17 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 case "fansupgradebroadcast":
                     // 30以上粉丝牌升级
                     if (data.rid !== window.rid) {
                         return; // 不在本房间 则丢弃
+                    }
+                    if (!checkFansLevelValid(data.otherContent)) {
+                        return;
                     }
                     obj = {
                         type: "粉丝牌升级",
@@ -227,6 +242,9 @@ export function useWebsocket(options, allGiftData) {
                         giftList.value.shift();
                     }
                     giftList.value.push(obj);
+                    if (options.value.isSaveData) {
+                        giftListSave.push(msg);
+                    }
                     break;
                 default:
                     break;
@@ -309,8 +327,12 @@ export function useWebsocket(options, allGiftData) {
         return true;
     }
 
-    const checkFansLevelValid = (data) => {
-        
+    const checkFansLevelValid = (level) => {
+        // 判断屏蔽粉丝牌升级等级
+        if (Number(options.value.gift.ban.fansLevel) < Number(level)) {
+            return false;
+        }
+        return true;
     }
 
     const checkEnterValid = (data) => {

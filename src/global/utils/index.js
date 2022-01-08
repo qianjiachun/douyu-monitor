@@ -51,3 +51,46 @@ export function formatObj(obj, objTemplate) {
 	}
 	return ret;
 }
+
+export function exportFile(filename, filecontent) {
+	//定义文件内容，类型必须为Blob 否则createObjectURL会报错
+	let content = new Blob([filecontent])
+	//生成url对象
+	let urlObject = window.URL || window.webkitURL || window
+	let url = urlObject.createObjectURL(content)
+	//生成<a></a>DOM元素
+	let el = document.createElement('a')
+	//链接赋值
+	el.href = url
+	el.download = filename
+	//必须点击否则不会下载
+	el.click()
+	//移除链接释放资源		
+	urlObject.revokeObjectURL(url)
+}
+
+export function getNowDate() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var d = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    if(month<10){
+        month = "0" + month;
+    }
+    if(d<10){
+        d = "0" + d;
+    }
+    if(hour<10){
+        hour = "0" + hour;
+    }
+    if(minute<10){
+        minute = "0" + hour;
+    }
+    if(second<10){
+        second = "0" + second;
+    }
+    return year + "-" + month + "-" + d + " " +hour + "-" + minute + "-" + second;
+}
