@@ -28,6 +28,7 @@
 4. vite编译优化
 5. lazy-load
 6. content-visibility
+7. brotli
 
 ### 使用方法
 1. 打开任意斗鱼直播间
@@ -97,10 +98,12 @@ export const defaultOptions = {
     transparent: false,
     // 开启动画
     animation: true,
+    // 是否开启数据保存
+    isSaveData: false,
     // 弹幕设置
     danmaku: {
         // 设置弹幕显示内容，如果在数组里就显示
-        // level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP和超级VIP
+        // level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip"],
         // 屏蔽项
         ban: {
@@ -132,6 +135,8 @@ export const defaultOptions = {
             price: 0,
             // 礼物名称
             keywords: "",
+            // 粉丝牌升级显示等级>=
+            fansLevel: 6,
         }
     }
 }
