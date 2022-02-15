@@ -33,7 +33,7 @@ export const defaultOptions = {
     danmaku: {
         // 设置弹幕显示内容，如果在数组里就显示
         // level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉
-        show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip"],
+        show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip", "color"],
         // 屏蔽项
         ban: {
             level: 0, // 等级

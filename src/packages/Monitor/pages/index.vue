@@ -88,6 +88,7 @@
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
                             <Checkbox name="roomAdmin" shape="square">房管</Checkbox>
                             <Checkbox name="diamond" shape="square">钻粉</Checkbox>
+                            <Checkbox name="color" shape="square">颜色</Checkbox>
                             <Checkbox name="vip" shape="square">VIP</Checkbox>
                         </CheckboxGroup>
                     </template>
@@ -250,10 +251,16 @@ function onClickRestOptions() {
 }
 
 function onClickSaveData() {
-    let time = getNowDate();
-    exportFile(`【弹幕数据】-${time}`, danmakuListSave.join("\n"));
-    exportFile(`【礼物数据】-${time}`, giftListSave.join("\n"));
-    exportFile(`【入场数据】-${time}`, enterListSave.join("\n"));
+    Dialog.confirm({
+        title: '保存数据',
+        message: '下载弹幕、礼物、入场数据',
+    })
+    .then(() => {
+        let time = getNowDate();
+        exportFile(`【弹幕数据】-${time}`, danmakuListSave.join("\n"));
+        exportFile(`【礼物数据】-${time}`, giftListSave.join("\n"));
+        exportFile(`【入场数据】-${time}`, enterListSave.join("\n"));
+    }).catch(() => {});
 }
 
 function onClickShare() {
