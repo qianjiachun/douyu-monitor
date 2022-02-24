@@ -2,6 +2,7 @@
     <div ref="dom_enter" class="enter">
         <Deafult
             v-for="item in enterList"
+            v-memo="[options.mode, options.animation, options.enter.show, options.enter.keywords]"
             :data="item"
             :key="item.key"
             :mode="options.mode"

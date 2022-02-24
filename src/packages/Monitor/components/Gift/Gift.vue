@@ -2,6 +2,7 @@
     <div ref="dom_gift" class="gift">
         <Deafult
             v-for="item in giftList"
+            v-memo="[options.mode, options.animation, options.gift.totalPrice]"
             :data="item"
             :key="item.key"
             :giftData="allGiftData[item.gfid]"

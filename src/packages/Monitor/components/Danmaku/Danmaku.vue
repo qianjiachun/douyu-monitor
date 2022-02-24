@@ -2,6 +2,7 @@
     <div ref="dom_danmaku" class="danmaku">
         <Deafult
             v-for="item in danmakuList"
+            v-memo="[options.mode, options.animation, options.danmaku.show]"
             :key="item.key"
             :data="item"
             :mode="options.mode"
