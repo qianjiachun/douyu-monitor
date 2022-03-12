@@ -8,14 +8,14 @@
   },
   "dependencies": {
     "@vant/touch-emulator": "^1.3.2",
-    "vant": "^3.4.2",
-    "vue": "^3.2.29",
+    "vant": "^3.4.5",
+    "vue": "^3.2.31",
     "vue-clipboard3": "^1.0.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.1.0",
-    "sass": "^1.49.0",
-    "vite": "^2.7.13",
+    "@vitejs/plugin-vue": "^2.2.4",
+    "sass": "^1.49.9",
+    "vite": "^2.8.6",
     "vite-plugin-style-import": "^1.4.1"
   }
 }
