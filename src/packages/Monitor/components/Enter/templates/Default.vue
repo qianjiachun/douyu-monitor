@@ -1,9 +1,9 @@
 <template>
     <div :class="`item ${showAnimation?'fadeInLeft' : ''} ${getItemClass(data)}`">
-        <div v-if="showLevel" :class="`item__level ${mode==='night' && Number(data.lv < 70)?'fansLevelNight':''} UserLevel--${data.lv}`"></div>
-        <div v-if="!!data.noble && showNoble" class="item__noble"><img :src="`${data.noble in nobleData ? nobleData.prefix + nobleData[data.noble].pic : ''}`" loading="lazy"/></div>
-        <div v-if="showAvatar" class="item__avatar"><img class="avatar" :src="`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`" loading="lazy" /></div>
-        <div class="item__name"><span>{{data.nn}}</span> 进入了直播间</div>
+        <span v-if="showLevel" :class="`item__level ${mode==='night' && Number(data.lv < 70)?'fansLevelNight':''} UserLevel UserLevel--${data.lv}`"></span>
+        <span v-if="!!data.noble && showNoble" class="item__noble"><img :src="`${data.noble in nobleData ? nobleData.prefix + nobleData[data.noble].pic : ''}`" loading="lazy"/></span>
+        <span v-if="showAvatar" class="item__avatar"><img class="avatar" :src="`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`" loading="lazy" /></span>
+        <span class="item__name"><span>{{data.nn}}</span> 进入了直播间</span>
     </div>
 </template>
 
@@ -40,9 +40,8 @@ function getItemClass(item) {
 <style lang="scss" scoped>
 @import "@/global/styles/themes/index.scss";
 .item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    vertical-align: middle;
+    width: 100%;
     margin-bottom: 5px;
     padding: 0 4px;
     box-sizing: border-box;
@@ -50,13 +49,10 @@ function getItemClass(item) {
         margin-top: 5px;
     }
     >*{
+        vertical-align: middle;
         margin-right: 5px;
     }
 
-    .item__level {
-        width: 40px;
-        height: 16px;
-    }
     .item__name {
         @include fontColor("contentColor");
         span {

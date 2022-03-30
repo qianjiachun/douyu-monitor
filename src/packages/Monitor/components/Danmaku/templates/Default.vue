@@ -62,29 +62,20 @@ function getItemClass(data) {
         margin-top: 5px;
     }
     >* {
+        vertical-align: middle;
         margin-right: 5px;
     }
     >:nth-last-child(1), >:nth-last-child(2) {
         margin-right: 0;
     }
-    .item__level {
-        vertical-align: middle;
-    }
     .item__fans {
         width: 60px;
         position: relative;
-        vertical-align: middle;
-    }
-
-    .item__avatar {
-        vertical-align: middle;
     }
     .item__name {
-        vertical-align: middle;
         @include fontColor("nicknameColor");
     }
     .item__txt {
-        vertical-align: middle;
         @include fontColor("txtColor");
     }
 }

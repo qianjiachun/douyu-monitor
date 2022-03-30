@@ -1,11 +1,11 @@
 <template>
     <div :class="`item ${showAnimation?'fadeInLeft' : ''} ${getItemClass(data)}`">
-        <div class="item__gift">
+        <span class="item__gift">
             <img class="avatar" :src="avatarSrc" loading="lazy" />
-        </div>
-        <div class="item__cnt">{{giftName}}</div>
-        <div class="item__name">{{data.nn}}</div>
-        <div v-if="Number(data.hits)>=5" class="item__hits">累计x{{data.hits}}</div>
+        </span>
+        <span class="item__cnt">{{giftName}}</span>
+        <span class="item__name">{{data.nn}}</span>
+        <span v-if="Number(data.hits)>=5" class="item__hits">累计x{{data.hits}}</span>
     </div>
 </template>
 
@@ -110,12 +110,9 @@ function getItemClass(item) {
 <style lang="scss" scoped>
 @import "@/global/styles/themes/index.scss";
 .item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    vertical-align: middle;
+    width: 100%;
     margin-bottom: 5px;
-    justify-content: v-bind(justifyContentStyle);
-    text-align: v-bind(textAlignStyle);
     padding: 0 4px;
     box-sizing: border-box;
 
@@ -123,6 +120,7 @@ function getItemClass(item) {
         margin-top: 5px;
     }
     >*{
+        vertical-align: middle;
         margin-right: 5px;
     }
     .item__gift {
