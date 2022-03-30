@@ -1,6 +1,6 @@
 <template>
     <div :class="`item ${showAnimation?'fadeInLeft' : ''} ${getItemClass(data)}`">
-        <span v-if="showLevel" :class="`item__level ${mode==='night' && Number(data.lv < 70)?'fansLevelNight':''} UserLevel UserLevel--${data.lv}`"></span>
+        <span v-if="showLevel" :class="`item__level ${mode==='night' && Number(data.lv) < 70 ?'fansLevelNight':''} UserLevel UserLevel--${data.lv}`"></span>
         <span v-if="!!data.noble && showNoble" class="item__noble"><img :src="`${data.noble in nobleData ? nobleData.prefix + nobleData[data.noble].pic : ''}`" loading="lazy"/></span>
         <span v-if="showAvatar" class="item__avatar"><img class="avatar" :src="`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`" loading="lazy" /></span>
         <span class="item__name"><span>{{data.nn}}</span> 进入了直播间</span>

@@ -1,7 +1,7 @@
 <template>
     <div :class="`item ${showAnimation?'fadeInLeft' : ''} ${getItemClass(data)}`">
         <!-- 等级 -->
-        <span v-if="showLevel" :class="`item__level UserLevel ${mode==='night' && Number(data.lv < 70)?'fansLevelNight':''} UserLevel--${data.lv}`"></span>
+        <span v-if="showLevel" :class="`item__level UserLevel ${mode==='night' && Number(data.lv) < 70?'fansLevelNight':''} UserLevel--${data.lv}`"></span>
         <!-- 贵族 -->
         <span v-if="!!data.noble && showNoble" class="item__noble Barrage-icon Barrage-noble">
             <img :src="`${data.noble in nobleData ? nobleData.prefix + nobleData[data.noble].pic : ''}`" loading="lazy"/>

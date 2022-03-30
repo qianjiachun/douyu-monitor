@@ -5,7 +5,7 @@
         </span>
         <span class="item__cnt">{{giftName}}</span>
         <span class="item__name">{{data.nn}}</span>
-        <span v-if="Number(data.hits)>=5" class="item__hits">累计x{{data.hits}}</span>
+        <span v-if="Number(data.hits) >= 5" class="item__hits">累计x{{data.hits}}</span>
     </div>
 </template>
 
