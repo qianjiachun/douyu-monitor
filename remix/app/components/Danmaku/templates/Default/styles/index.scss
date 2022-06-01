@@ -1,0 +1,57 @@
+@import "../../../../../styles/themes/index.scss";
+.danmaku {
+    .item {
+        vertical-align: middle;
+        width: 100%;
+        margin-bottom: 5px;
+        padding: 0 4px;
+        box-sizing: border-box;
+        &:first-child {
+            margin-top: 5px;
+        }
+        >* {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        >:nth-last-child(1), >:nth-last-child(2) {
+            margin-right: 0;
+        }
+        .item__fans {
+            width: 60px;
+            position: relative;
+        }
+        .item__name {
+            @include fontColor("nicknameColor");
+        }
+        .item__txt {
+            @include fontColor("txtColor");
+        }
+    }
+    .noble-day {
+        background-color:#fff3df;
+        border-top:1px solid #ffe4b8;
+        border-bottom:1px solid #ffe4b8;
+    }
+    
+    .noble-night {
+        background-color:rgb(55,55,55);
+        border-top:1px solid rgb(90,90,90);
+        border-bottom:1px solid rgb(90,90,90);
+    }
+    
+    .super-day {
+        background-color:#fae9ff;
+        border-top:1px solid #ffe4b8;
+        border-bottom:1px solid #ffe4b8;
+    }
+    
+    .super-night {
+        background-color:rgb(55, 45, 45);
+        border-top:1px solid rgb(90,90,90);
+        border-bottom:1px solid rgb(90,90,90);
+    }
+    
+    .super-name {
+        color: #fe5656 !important;
+    }
+}

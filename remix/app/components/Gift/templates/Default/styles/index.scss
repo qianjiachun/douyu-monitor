@@ -1,0 +1,40 @@
+@import "../../../../../styles/themes/index.scss";
+.gift {
+    .item {
+        vertical-align: middle;
+        width: 100%;
+        margin-bottom: 5px;
+        padding: 0 4px;
+        box-sizing: border-box;
+    
+        &:first-child {
+            margin-top: 5px;
+        }
+        >*{
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .item__gift {
+            img {
+                border-radius: 10%;
+            }
+        }
+        .item__name {
+            @include fontColor("nicknameColor");
+        }
+        .item__cnt {
+            @include fontColor("contentColor");
+        }
+        .item__hits {
+            @include fontColor("contentColor");
+        }
+    }
+    
+    .highlight-day {
+        background-color:rgb(255,243,223);
+    }
+    
+    .highlight-night {
+        background-color:rgb(55,55,55);border-top:1px solid rgb(90,90,90);border-bottom:1px solid rgb(90,90,90);
+    }
+}
