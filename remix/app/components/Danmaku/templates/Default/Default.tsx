@@ -45,9 +45,9 @@ const Default: FC<IProps> = (props) => {
     }
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, getItemClass(data))}>
-            {data.nn === AUTHOR_NAME && <Tag type="danger" size="medium">作者</Tag>}
             {/* 等级 */}
             {props.showLevel && <span className={clsx("item__level", {"fansLevelNight": props.mode==="night" && Number(data.lv) < 70}, "UserLevel", `UserLevel--${data.lv}`)}></span>}
+            {data.nn === AUTHOR_NAME && <Tag type="danger" size="medium">作者</Tag>}
             {/* 贵族 */}
             {props.showNoble && data.isNoble &&
             <span className="item__noble Barrage-icon Barrage-noble">

@@ -202,6 +202,7 @@ const Index = () => {
 	}
 
     return <>
+        <div className="noblenum"style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>{nobleNum}</div>
         <div className="monitor" style={{flexDirection: options.direction, fontSize: options.fontSize, ...(options.transparent ? {backgroundColor: "transparent"} : {})}} onClick={() => setIsShowOptions(true)}>
             <div style={{width: "100%", height: "100%", background: "transparent", position: "absolute", zIndex: 10, pointerEvents: "none"}} id="effect"></div>
             {options.switch.includes("enter") && <Enter options={options} enterList={enterList}></Enter>}

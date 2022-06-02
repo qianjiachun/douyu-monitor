@@ -66,11 +66,21 @@
     }
 }
 
-.datawrap {
-    width: 100%;
+.noblenum {
     z-index: 1;
     position: fixed;
-    top: 0;
-    background-color: rgba(0,0,0,0.4);
-    color: white;
+    top: 8px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #646566;
+    &::before {
+        display: inline-block;
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgb(0,200,83);
+        margin-right: 4px;
+    }
 }
