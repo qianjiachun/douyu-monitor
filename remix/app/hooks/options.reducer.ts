@@ -116,7 +116,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.threshold = Number(payload);
             break;
         case OPTIONS_ACTION.DANMAKU_SHOW:
-            state.danmaku.show = [...payload];
+            state.danmaku.show = [...payload as IOptionsDanmakuShow[]];
             break;
         case OPTIONS_ACTION.DANMAKU_KEYNICKNAMES:
             state.danmaku.keyNicknames = String(payload).split(",") || [];
@@ -137,7 +137,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.danmaku.ban.isFilterRobot = payload;
             break;
         case OPTIONS_ACTION.ENTER_SHOW:
-            state.enter.show = [...payload];
+            state.enter.show = [...payload as IOptionsEnterShow[]];
             break;
         case OPTIONS_ACTION.ENTER_KEYWORDS:
             state.enter.keywords = String(payload).split(",") || [];

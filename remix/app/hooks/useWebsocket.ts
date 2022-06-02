@@ -9,6 +9,7 @@ const MSG_TYPE: any = {
     danmaku: ["chatmsg"],
     gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast"],
     enter: ["uenter"],
+    data: ["noble_num_info"],
 };
 export enum GIFT_TYPE {
     GIFT = "gift", // 普通礼物
@@ -17,7 +18,11 @@ export enum GIFT_TYPE {
     FANS = "fans", // 粉丝牌
 }
 
-type IMsgType = "danmaku" | "gift" | "enter" | "";
+type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
+interface IDanmakuPerson {
+    num: number; // 总数
+    uid: any; //
+}
 
 const selectMsgType = (msgType: string): IMsgType => {
     if (msgType === "") return "";
@@ -36,6 +41,11 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [danmakuList, setDanmakuList] = useState<IDanmaku[]>([]);
     const [giftList, setGiftList] = useState<IGift[]>([]);
     const [enterList, setEnterList] = useState<IEnter[]>([]);
+    const [nobleNum, setNobleNum] = useState<number>(0);
+    const [danmakuNum, setDanmakuNum] = useState<number>(0);
+    const [totalGiftPrice, setTotalGiftPrice] = useState<number>(0);
+    const [enterNum, setEnterNum] = useState<number>(0);
+    const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
 
     const connectWs = (rid: string): void => {
         if (rid === "") return;
@@ -53,7 +63,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
 
     const msgHandler = (msg: string) => {
         let msgType = selectMsgType(getStrMiddle(msg, "type@=", "/"));
-        if (msgType === "" || !options.current.switch.includes(msgType)) return;
+        if (msgType === "" || (msgType !== "data" && !options.current.switch.includes(msgType))) return;
         //  获得socekt序列化数据
         let data = stt.deserialize(msg);
         switch (msgType) {
@@ -66,12 +76,27 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             case "enter":
                 handleEnter(data);
                 break;
+            case "data":
+                handleData(data);
+                break;
             default:
                 break;
         }
     }
 
     const handleDanmaku = (data: any) => {
+        if (!danmakuPerson.uid?.dmuid) {
+            setDanmakuPerson(prev => {
+                return !prev.uid[data.uid] ? {
+                    num: prev.num + 1,
+                    uid: {
+                        ...prev.uid,
+                        [data.uid]: true,
+                    }
+                } : prev
+            })
+        }
+        setDanmakuNum(prev => prev + 1);
         if (!isDanmakuValid(data)) return;
         let obj: IDanmaku = {
             nn: data.nn,
@@ -104,6 +129,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     const handleEnter = (data: any) => {
+        setEnterNum(prev => prev + 1);
         if (!isEnterValid(data)) return;
         let obj: IEnter = {
             nn: data.nn,
@@ -137,6 +163,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         let tmp: any = {};
         switch (data.type) {
             case "dgb":
+                setTotalGiftPrice(prev => prev + Number(obj.gfcnt) * allGiftData[data.gfid].pc / 10);
                 if (!isGiftValid(data)) return;
                 tmp = {
                     type: GIFT_TYPE.GIFT,
@@ -230,6 +257,11 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         });
     }
 
+    const handleData = (data: any) => {
+        if (data.rid !== window.rid) return;
+        setNobleNum(Number(data.vn));
+    }
+
     const isDanmakuValid = (data: any): boolean => {
         // 判断屏蔽等级
         if (Number(data.level) <= options.current.danmaku.ban.level) return false;
@@ -262,7 +294,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, totalGiftPrice, enterNum, danmakuPerson, danmakuNum
     }
 }
 

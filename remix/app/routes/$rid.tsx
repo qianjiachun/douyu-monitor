@@ -67,7 +67,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, enterList, giftList } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, totalGiftPrice, enterNum, danmakuPerson, danmakuNum } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -320,6 +320,13 @@ const Index = () => {
                     </Field>
                     <Field value={options.enter.keywords.join(" ")} label="关键昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_KEYWORDS, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
                     <Field value={String(options.enter.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
+                </Tabs.TabPane>
+                <Tabs.TabPane title="数据">
+                    <Field label="贵宾数" value={String(nobleNum)} readonly/>
+                    <Field label="弹幕数" value={String(danmakuNum)} readonly/>
+                    <Field label="发言人数" value={String(danmakuPerson.num)} readonly/>
+                    <Field label="总亲密度" value={String(totalGiftPrice)} readonly/>
+                    <Field label="进场人数" value={String(enterNum)} readonly/>
                 </Tabs.TabPane>
             </Tabs>
         </Popup>

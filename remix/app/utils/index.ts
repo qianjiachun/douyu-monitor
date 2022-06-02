@@ -1,4 +1,5 @@
 const LOCAL_NAME = "monitor_options";
+export const AUTHOR_NAME = "小淳丿";
 
 export function redirectUrl(url: string): void {
   const HOSTS = [

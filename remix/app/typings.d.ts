@@ -89,9 +89,12 @@ interface IGift {
 // 主题切换
 type IMode = "day" | "night";
 
+// 每个模块开关，同时指定了顺序。值：["enter"; "gift"; "danmaku", "data"]
+type IOptionsSwitch = "enter" | "gift" | "danmaku";
+
 interface IOptions {
     mode: IMode; // 日间模式还是夜间模式。值：day/night
-    switch: string[]; // 每个模块开关，同时指定了顺序。值：["enter"; "gift"; "danmaku"]
+    switch: IOptionsSwitch[];
     direction: "column" | "row"; // 纵向还是横向排列。值：row/column
     fontSize: number; // 字号大小
     size: Size; // 每个模块的占比%
@@ -100,8 +103,9 @@ interface IOptions {
     threshold: number; // 数据上限，超过上限的数据会被删除
     transparent: boolean; // 是否背景透明
     danmaku: IOptionsDanmaku; // 弹幕设置
-    gift: IOptionsGift;
+    gift: IOptionsGift; // 礼物设置
     enter: IOptionsEnter; // 入场设置
+    // data: IOptionsData; // 数据设置
 }
 
 interface Size {
@@ -110,8 +114,11 @@ interface Size {
     gift: number;
 }
 
+// 弹幕显示元素。值：level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP  color:弹幕颜色
+type IOptionsDanmakuShow = "level" | "avatar" | "fans" | "noble" | "roomAdmin" | "diamond" | "vip" | "color";
+
 interface IOptionsDanmaku {
-    show: string[]; // 弹幕显示元素。值：level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP  color:弹幕颜色
+    show: IOptionsDanmakuShow[];
     keyNicknames: string[]; // 高亮昵称
     ban: IOptionsDanmakuBan;
 }
@@ -123,8 +130,10 @@ interface IOptionsDanmakuBan {
     isFilterRobot: boolean; // 是否过滤机器人弹幕，判断条件为是否有dms属性
 }
 
+// 入场显示元素。值：level:等级  avatar:头像   noble:贵族
+type IOptionsEnterShow = "level" | "avatar" | "noble";
 interface IOptionsEnter {
-    show: string[]; // 入场显示元素。值：level:等级  avatar:头像   noble:贵族
+    show: IOptionsEnterShow[]; 
     keywords: string[]; // 高亮关键昵称
     ban: IOptionsEnterBan;
 }
@@ -145,3 +154,9 @@ interface IOptionsGiftBan {
     keywords: string[]; // 礼物昵称
     fansLevel: number; // 粉丝牌升级显示等级>=
 }
+
+// // 数据显示，值：nobleNum:贵宾数 danmakuNum:弹幕数 enterNum:入场人数 danmakuPersonNum:弹幕人数 totalGiftPrice:总亲密度
+// type IOptionsDataShow = "nobleNum" | "danmakuNum" | "enterNum" | "danmakuPersonNum" | "totalGiftPrice";
+// interface IOptionsData {
+//     show: IOptionsDataShow[];
+// }
