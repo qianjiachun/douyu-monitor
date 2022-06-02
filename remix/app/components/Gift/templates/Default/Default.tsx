@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import { iteratorSymbol } from "immer/dist/internal";
 import type { FC } from "react";
+import { formatTime } from "~/utils";
 
 interface IProps {
     // 礼物数据
@@ -27,6 +29,8 @@ const Default: FC<IProps> = (props) => {
             <span className="item__cnt">{Number(data.gfcnt) !== 0 ? `${data.name}*${data.gfcnt}` : data.name}</span>
             <span className="item__name">{data.nn}</span>
             {Number(data.hits) >= 5 && <span className="item__hits">累计x{data.hits}</span>}
+            <br/>
+            <span className="item__time">{formatTime(String(data.key).split(".")[0])}</span>
         </div>
     )
 }

@@ -1,0 +1,438 @@
+.FansMedal {
+    display: inline-block;
+    vertical-align: middle;
+    width: 60px;
+    height: 19px;
+    margin-top: -3px;
+    overflow: hidden
+}
+
+.FansMedal-name {
+    display: block;
+    margin-left: 20px;
+    margin-top: 3px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #fff;
+    text-align: center
+}
+
+.FansMedalBox-diamondsIcon {
+    width: 27px!important;
+    height: 19px!important;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.is-diamonds {
+    padding-right: 24px
+}
+
+.FansMedal.fansLevel-0 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/0_135d70b.png)
+}
+
+.FansMedal.fansLevel-0,
+.FansMedal.fansLevel-1 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-1 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/1_c07aa22.png)
+}
+
+.FansMedal.fansLevel-2 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/2_9b854b2.png)
+}
+
+.FansMedal.fansLevel-2,
+.FansMedal.fansLevel-3 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-3 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/3_af8309d.png)
+}
+
+.FansMedal.fansLevel-4 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/4_cb3ff7e.png)
+}
+
+.FansMedal.fansLevel-4,
+.FansMedal.fansLevel-5 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-5 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/5_532527c.png)
+}
+
+.FansMedal.fansLevel-6 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/6_5e906ee.png)
+}
+
+.FansMedal.fansLevel-6,
+.FansMedal.fansLevel-7 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-7 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/7_d254011.png)
+}
+
+.FansMedal.fansLevel-8 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/8_3a3778f.png)
+}
+
+.FansMedal.fansLevel-8,
+.FansMedal.fansLevel-9 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-9 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/9_ad44e05.png)
+}
+
+.FansMedal.fansLevel-10 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/10_7e9b00f.png)
+}
+
+.FansMedal.fansLevel-10,
+.FansMedal.fansLevel-11 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-11 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/11_2f6ebce.png)
+}
+
+.FansMedal.fansLevel-12 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/12_71799a1.png)
+}
+
+.FansMedal.fansLevel-12,
+.FansMedal.fansLevel-13 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-13 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/13_2a59ae3.png)
+}
+
+.FansMedal.fansLevel-14 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/14_f8a1ac4.png)
+}
+
+.FansMedal.fansLevel-14,
+.FansMedal.fansLevel-15 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-15 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/15_35c7421.png)
+}
+
+.FansMedal.fansLevel-16 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/16_27ad0b3.png)
+}
+
+.FansMedal.fansLevel-16,
+.FansMedal.fansLevel-17 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-17 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/17_d7d7e74.png)
+}
+
+.FansMedal.fansLevel-18 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/18_dff808c.png)
+}
+
+.FansMedal.fansLevel-18,
+.FansMedal.fansLevel-19 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-19 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/19_c4deff5.png)
+}
+
+.FansMedal.fansLevel-20 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/20_f651aab.png)
+}
+
+.FansMedal.fansLevel-20,
+.FansMedal.fansLevel-21 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-21 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/21_65cc6db.png)
+}
+
+.FansMedal.fansLevel-22 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/22_ff87867.png)
+}
+
+.FansMedal.fansLevel-22,
+.FansMedal.fansLevel-23 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-23 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/23_19ff29b.png)
+}
+
+.FansMedal.fansLevel-24 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/24_94f40fa.png)
+}
+
+.FansMedal.fansLevel-24,
+.FansMedal.fansLevel-25 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-25 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/25_3668710.png)
+}
+
+.FansMedal.fansLevel-26 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/26_ca2405b.png)
+}
+
+.FansMedal.fansLevel-26,
+.FansMedal.fansLevel-27 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-27 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/27_31aadfb.png)
+}
+
+.FansMedal.fansLevel-28 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/28_62caffc.png)
+}
+
+.FansMedal.fansLevel-28,
+.FansMedal.fansLevel-29 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-29 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/29_fecc236.png)
+}
+
+.FansMedal.fansLevel-30 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/30_996b523.png)
+}
+
+.FansMedal.fansLevel-30,
+.FansMedal.fansLevel-31 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-31 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/31_71f9d4d.png)
+}
+
+.FansMedal.fansLevel-32 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/32_8ee4425.png)
+}
+
+.FansMedal.fansLevel-32,
+.FansMedal.fansLevel-33 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-33 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/33_db08206.png)
+}
+
+.FansMedal.fansLevel-34 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/34_92dbed2.png)
+}
+
+.FansMedal.fansLevel-34,
+.FansMedal.fansLevel-35 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-35 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/35_cb82729.png)
+}
+
+.FansMedal.fansLevel-36 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/36_aeb0481.png)
+}
+
+.FansMedal.fansLevel-36,
+.FansMedal.fansLevel-37 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-37 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/37_573f948.png)
+}
+
+.FansMedal.fansLevel-38 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/38_fe61796.png)
+}
+
+.FansMedal.fansLevel-38,
+.FansMedal.fansLevel-39 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-39 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/39_99bbe93.png)
+}
+
+.FansMedal.fansLevel-40 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/40_5f7e491.png)
+}
+
+.FansMedal.fansLevel-40,
+.FansMedal.fansLevel-41 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-41 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/41_e90a755.png)
+}
+
+.FansMedal.fansLevel-42 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/42_9b3c500.png)
+}
+
+.FansMedal.fansLevel-42,
+.FansMedal.fansLevel-43 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-43 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/43_08b80e5.png)
+}
+
+.FansMedal.fansLevel-44 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/44_23e4ffe.png)
+}
+
+.FansMedal.fansLevel-44,
+.FansMedal.fansLevel-45 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-45 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/45_aa25963.png)
+}
+
+.FansMedal.fansLevel-46 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/46_381dc35.png)
+}
+
+.FansMedal.fansLevel-46,
+.FansMedal.fansLevel-47 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-47 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/47_9ad8303.png)
+}
+
+.FansMedal.fansLevel-48 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/48_24d51b4.png)
+}
+
+.FansMedal.fansLevel-48,
+.FansMedal.fansLevel-49 {
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}
+
+.FansMedal.fansLevel-49 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/49_6cfe05c.png)
+}
+
+.FansMedal.fansLevel-50 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/50_0ae4f5e.png);
+    background-repeat: no-repeat;
+    -moz-background-size: 60px 19px;
+    -webkit-background-size: 60px 19px;
+    background-size: 60px 19px
+}

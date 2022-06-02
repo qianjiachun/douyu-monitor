@@ -155,8 +155,14 @@ interface IOptionsGiftBan {
     fansLevel: number; // 粉丝牌升级显示等级>=
 }
 
-// // 数据显示，值：nobleNum:贵宾数 danmakuNum:弹幕数 enterNum:入场人数 danmakuPersonNum:弹幕人数 totalGiftPrice:总亲密度
-// type IOptionsDataShow = "nobleNum" | "danmakuNum" | "enterNum" | "danmakuPersonNum" | "totalGiftPrice";
-// interface IOptionsData {
-//     show: IOptionsDataShow[];
-// }
+interface IGiftStatistics {
+    [key: string]: IGiftStatisticsInfo;
+}
+
+interface IGiftStatisticsInfo {
+    gfid: string; // 礼物ID
+    img: string; // 礼物图片
+    name: string; // 礼物名称
+    price: number; // 价格
+    count: number; // 数量
+}

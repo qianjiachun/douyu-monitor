@@ -28,6 +28,10 @@
         .item__hits {
             @include fontColor("contentColor");
         }
+        .item__time {
+            @include fontColor("contentColor");
+            font-size: 12px;
+        }
     }
     
     .highlight-day {

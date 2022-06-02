@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
-import { Checkbox, Dialog, Field, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
+import { Cell, Checkbox, Dialog, Divider, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
 import { useImmerReducer } from "use-immer";
 import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";
@@ -67,7 +67,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, totalGiftPrice, enterNum, danmakuPerson, danmakuNum } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -324,10 +324,15 @@ const Index = () => {
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
                     <Field label="贵宾数" value={String(nobleNum)} readonly/>
-                    <Field label="弹幕数" value={String(danmakuNum)} readonly/>
-                    <Field label="发言人数" value={String(danmakuPerson.num)} readonly/>
-                    <Field label="总亲密度" value={String(totalGiftPrice)} readonly/>
-                    <Field label="进场人数" value={String(enterNum)} readonly/>
+                    <Field label="弹幕人数" value={String(danmakuPerson.num) + " / " + String(danmakuNum)} readonly/>
+                    {Object.keys(giftStatus).map(key => {
+                        let item = giftStatus[key];
+                        return <Cell key={item.gfid} icon={
+                            <Image src={item.img} width={44} height={44} radius={6}></Image>
+                        }
+                        title={item.name}
+                        label={item.count}></Cell>
+                    })}
                 </Tabs.TabPane>
             </Tabs>
         </Popup>

@@ -1,0 +1,609 @@
+.fansLevelNight{
+    background-image: url(data:image/png;base64,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) !important;
+}
+
+.UserLevel {
+    display: inline-block;
+    width: 40px;
+    height: 16px;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+
+.UserLevel--1,.UserLevel--2,.UserLevel--3,.UserLevel--4,.UserLevel--5,.UserLevel--6,.UserLevel--7,.UserLevel--8,.UserLevel--9,.UserLevel--10,.UserLevel--11,.UserLevel--12,.UserLevel--13,.UserLevel--14,.UserLevel--15,.UserLevel--16,.UserLevel--17,.UserLevel--18,.UserLevel--19,.UserLevel--20,.UserLevel--21,.UserLevel--22,.UserLevel--23,.UserLevel--24,.UserLevel--25,.UserLevel--26,.UserLevel--27,.UserLevel--28,.UserLevel--29,.UserLevel--30,.UserLevel--31,.UserLevel--32,.UserLevel--33,.UserLevel--34,.UserLevel--35,.UserLevel--36,.UserLevel--37,.UserLevel--38,.UserLevel--39,.UserLevel--40,.UserLevel--41,.UserLevel--42,.UserLevel--43,.UserLevel--44,.UserLevel--45,.UserLevel--46,.UserLevel--47,.UserLevel--48,.UserLevel--49,.UserLevel--50,.UserLevel--51,.UserLevel--52,.UserLevel--53,.UserLevel--54,.UserLevel--55,.UserLevel--56,.UserLevel--57,.UserLevel--58,.UserLevel--59,.UserLevel--60,.UserLevel--61,.UserLevel--62,.UserLevel--63,.UserLevel--64,.UserLevel--65,.UserLevel--66,.UserLevel--67,.UserLevel--68,.UserLevel--69 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/sprite.userLevel_cd70fed.png);
+}
+
+.UserLevel--1 {
+    background-position: 0 -16px
+}
+
+.UserLevel--2 {
+    background-position: -80px -128px
+}
+
+.UserLevel--3 {
+    background-position: -40px 0
+}
+
+.UserLevel--4 {
+    background-position: -40px -16px
+}
+
+.UserLevel--5 {
+    background-position: 0 -32px
+}
+
+.UserLevel--6 {
+    background-position: -40px -32px
+}
+
+.UserLevel--7 {
+    background-position: 0 -48px
+}
+
+.UserLevel--8 {
+    background-position: -40px -48px
+}
+
+.UserLevel--9 {
+    background-position: 0 -64px
+}
+
+.UserLevel--10 {
+    background-position: -40px -64px
+}
+
+.UserLevel--11 {
+    background-position: -80px 0
+}
+
+.UserLevel--12 {
+    background-position: -80px -16px
+}
+
+.UserLevel--13 {
+    background-position: -80px -32px
+}
+
+.UserLevel--14 {
+    background-position: -80px -48px
+}
+
+.UserLevel--15 {
+    background-position: -80px -64px
+}
+
+.UserLevel--16 {
+    background-position: 0 -80px
+}
+
+.UserLevel--17 {
+    background-position: -40px -80px
+}
+
+.UserLevel--18 {
+    background-position: -80px -80px
+}
+
+.UserLevel--19 {
+    background-position: 0 -96px
+}
+
+.UserLevel--20 {
+    background-position: -40px -96px
+}
+
+.UserLevel--21 {
+    background-position: -80px -96px
+}
+
+.UserLevel--22 {
+    background-position: -120px 0
+}
+.UserLevel--23 {
+    background-position: -120px -16px
+}
+
+.UserLevel--24 {
+    background-position: -120px -32px
+}
+
+.UserLevel--25 {
+    background-position: -120px -48px
+}
+
+.UserLevel--26 {
+    background-position: -120px -64px
+}
+.UserLevel--27 {
+    background-position: -120px -80px
+}
+
+.UserLevel--28 {
+    background-position: -120px -96px
+}
+
+.UserLevel--29 {
+    background-position: 0 -112px
+}
+
+.UserLevel--30 {
+    background-position: -40px -112px
+}
+
+.UserLevel--31 {
+    background-position: -80px -112px
+}
+
+.UserLevel--32 {
+    background-position: -120px -112px
+}
+
+.UserLevel--33 {
+    background-position: 0 -128px
+}
+
+.UserLevel--34 {
+    background-position: -40px -128px
+}
+
+.UserLevel--35 {
+    background-position: 0 0
+}
+
+.UserLevel--36 {
+    background-position: -120px -128px
+}
+
+.UserLevel--37 {
+    background-position: 0 -144px
+}
+
+.UserLevel--38 {
+    background-position: -40px -144px
+}
+
+.UserLevel--39 {
+    background-position: -80px -144px
+}
+
+.UserLevel--40 {
+    background-position: -120px -144px
+}
+
+.UserLevel--41 {
+    background-position: -160px 0
+}
+
+.UserLevel--42 {
+    background-position: -160px -16px
+}
+
+.UserLevel--43 {
+    background-position: -160px -32px
+}
+
+.UserLevel--44 {
+    background-position: -160px -48px
+}
+
+.UserLevel--45 {
+    background-position: -160px -64px
+}
+.UserLevel--46 {
+    background-position: -160px -80px
+}
+
+.UserLevel--47 {
+    background-position: -160px -96px
+}
+
+.UserLevel--48 {
+    background-position: -160px -112px
+}
+
+.UserLevel--49 {
+    background-position: -160px -128px
+}
+
+.UserLevel--50 {
+    background-position: -160px -144px
+}
+
+.UserLevel--51 {
+    background-position: 0 -160px
+}
+
+.UserLevel--52 {
+    background-position: -40px -160px
+}
+
+.UserLevel--53 {
+    background-position: -80px -160px
+}
+
+.UserLevel--54 {
+    background-position: -120px -160px
+}
+
+.UserLevel--55 {
+    background-position: -160px -160px
+}
+
+.UserLevel--56 {
+    background-position: 0 -176px
+}
+
+.UserLevel--57 {
+    background-position: -40px -176px
+}
+
+.UserLevel--58 {
+    background-position: -80px -176px
+}
+
+.UserLevel--59 {
+    background-position: -120px -176px
+}
+
+.UserLevel--60 {
+    background-position: -160px -176px
+}
+
+.UserLevel--61 {
+    background-position: -200px 0
+}
+
+.UserLevel--62 {
+    background-position: -200px -16px
+}
+
+.UserLevel--63 {
+    background-position: -200px -32px
+}
+
+.UserLevel--64 {
+    background-position: -200px -48px
+}
+
+.UserLevel--65 {
+    background-position: -200px -64px
+}
+
+.UserLevel--66 {
+    background-position: -200px -80px
+}
+
+.UserLevel--67 {
+    background-position: -200px -96px
+}
+
+.UserLevel--68 {
+    background-position: -200px -112px
+}
+
+.UserLevel--69 {
+    background-position: -200px -128px
+}
+
+.UserLevel--70 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/70_9e0c4a3.gif)
+}
+
+.UserLevel--71 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/71_431b41a.gif)
+}
+
+.UserLevel--72 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/72_cc0f0ae.gif)
+}
+
+.UserLevel--73 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/73_390e75f.gif)
+}
+
+.UserLevel--74 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/74_e930944.gif)
+}
+
+.UserLevel--75 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/75_8db9f1c.gif)
+}
+
+.UserLevel--76 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/76_6a754d2.gif)
+}
+
+.UserLevel--77 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/77_511a43e.gif)
+}
+
+.UserLevel--78 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/78_96cf2a1.gif)
+}
+
+.UserLevel--79 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/79_bf8ea41.gif)
+}
+
+.UserLevel--80 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/80_a683067.gif)
+}
+
+.UserLevel--81 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/81_8cfeb3c.gif)
+}
+
+.UserLevel--82 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/82_57f581a.gif)
+}
+
+.UserLevel--83 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/83_2c123e2.gif)
+}
+
+.UserLevel--84 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/84_67c820a.gif)
+}
+
+.UserLevel--85 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/85_548fb0d.gif)
+}
+
+.UserLevel--86 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/86_4c2afa2.gif)
+}
+
+.UserLevel--87 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/87_29587ae.gif)
+}
+
+.UserLevel--88 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/88_791591e.gif)
+}
+.UserLevel--89 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/89_145b015.gif)
+}
+
+.UserLevel--90 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/90_ac42a06.gif)
+}
+
+.UserLevel--91 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/91_46d07df.gif)
+}
+
+.UserLevel--92 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/92_b569c59.gif)
+}
+
+.UserLevel--93 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/93_70b6f7c.gif)
+}
+
+.UserLevel--94 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/94_0923bd9.gif)
+}
+
+.UserLevel--95 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/95_46a80a0.gif)
+}
+
+.UserLevel--96 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/96_1a30913.gif)
+}
+
+.UserLevel--97 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/97_5f8ab40.gif)
+}
+
+.UserLevel--98 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/98_51d1efa.gif)
+}
+
+.UserLevel--99 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/99_9e017b4.gif)
+}
+
+.UserLevel--100 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/100_fd726ff.gif)
+}
+
+.UserLevel--101 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/101_5a3e32d.gif)
+}
+
+.UserLevel--102 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/102_f1992fe.gif)
+}
+
+.UserLevel--103 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/103_28f0900.gif)
+}
+
+.UserLevel--104 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/104_264e6d6.gif)
+}
+
+.UserLevel--105 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/105_d937408.gif)
+}
+
+.UserLevel--106 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/106_240f6f6.gif)
+}
+
+.UserLevel--107 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/107_be332d1.gif)
+}
+
+.UserLevel--108 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/108_1ed704b.gif)
+}
+
+.UserLevel--109 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/109_ae6c0da.gif)
+}
+
+.UserLevel--110 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/110_de935d9.gif)
+}
+
+.UserLevel--111 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/111_79ef6ed.gif)
+}
+
+.UserLevel--112 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/112_4038d2e.gif)
+}
+
+.UserLevel--113 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/113_1aefeaf.gif)
+}
+
+.UserLevel--114 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/114_2363630.gif)
+}
+
+.UserLevel--115 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/115_19bb4b7.gif)
+}
+
+.UserLevel--116 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/116_c375daf.gif)
+}
+
+.UserLevel--117 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/117_6fc53b6.gif)
+}
+
+.UserLevel--118 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/118_a6903f1.gif)
+}
+
+.UserLevel--119 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/119_489ae63.gif)
+}
+
+.UserLevel--120 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/120_469ea68.gif)
+}
+
+.UserLevel--121 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/121_f6b138d.gif)
+}
+
+.UserLevel--122 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/122_b591b57.gif)
+}
+
+.UserLevel--123 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/123_3af17a6.gif)
+}
+
+.UserLevel--124 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/124_fdca954.gif)
+}
+
+.UserLevel--125 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/125_13114e2.gif)
+}
+
+.UserLevel--126 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/126_f506766.gif)
+}
+
+.UserLevel--127 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/127_c068b8b.gif)
+}
+
+.UserLevel--128 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/128_179bb75.gif)
+}
+
+.UserLevel--129 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/129_18f4c34.gif)
+}
+
+.UserLevel--130 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/130_16ddd18.gif)
+}
+
+.UserLevel--131 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/131_8983332.gif)
+}
+
+.UserLevel--132 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/132_db75dff.gif)
+}
+
+.UserLevel--133 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/133_8614495.gif)
+}
+
+.UserLevel--134 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/134_67ff2bf.gif)
+}
+
+.UserLevel--135 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/135_16a4d3e.gif)
+}
+
+.UserLevel--136 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/136_72e7e9a.gif)
+}
+
+.UserLevel--137 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/137_e1906b6.gif)
+}
+
+.UserLevel--138 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/138_5b16b5b.gif)
+}
+.UserLevel--139 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/139_b446a3c.gif)
+}
+
+.UserLevel--140 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/140_ad26d3e.gif)
+}
+
+.UserLevel--141 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/141_ba41504.gif)
+}
+.UserLevel--142 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/142_bf3d140.gif)
+}
+
+.UserLevel--143 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/143_71d2074.gif)
+}
+
+.UserLevel--144 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/144_878240c.gif)
+}
+
+.UserLevel--145 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/145_bf7c511.gif)
+}
+
+.UserLevel--146 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/146_2e078be.gif)
+}
+
+.UserLevel--147 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/147_76309a7.gif)
+}
+
+.UserLevel--148 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/148_66c157a.gif)
+}
+
+.UserLevel--149 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/149_d0aada4.gif)
+}
+
+.UserLevel--150 {
+    background-image: url(https://shark2.douyucdn.cn/front-publish/live-master/assets/images/150_ac3023f.gif)
+}

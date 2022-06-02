@@ -43,9 +43,8 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [enterList, setEnterList] = useState<IEnter[]>([]);
     const [nobleNum, setNobleNum] = useState<number>(0);
     const [danmakuNum, setDanmakuNum] = useState<number>(0);
-    const [totalGiftPrice, setTotalGiftPrice] = useState<number>(0);
-    const [enterNum, setEnterNum] = useState<number>(0);
     const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
+    const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
 
     const connectWs = (rid: string): void => {
         if (rid === "") return;
@@ -129,7 +128,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     const handleEnter = (data: any) => {
-        setEnterNum(prev => prev + 1);
         if (!isEnterValid(data)) return;
         let obj: IEnter = {
             nn: data.nn,
@@ -163,12 +161,34 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         let tmp: any = {};
         switch (data.type) {
             case "dgb":
-                setTotalGiftPrice(prev => prev + Number(obj.gfcnt) * allGiftData[data.gfid].pc / 10);
                 if (!isGiftValid(data)) return;
                 tmp = {
                     type: GIFT_TYPE.GIFT,
                     name: allGiftData[data.gfid].n,
                 };
+                setGiftStatus(prev => {
+                    let key = allGiftData[data.gfid].n + "|" + obj.gfid;
+                    if (key in prev) {
+                        return {
+                            ...prev,
+                            [key]: {
+                                ...prev[key],
+                                count: prev[key].count + Number(obj.gfcnt),
+                            }
+                        }
+                    } else {
+                        return {
+                            ...prev,
+                            [key]: {
+                                name: allGiftData[data.gfid].n,
+                                count: Number(obj.gfcnt),
+                                gfid: data.gfid,
+                                price: Number(allGiftData[data.gfid].pc),
+                                img: allGiftData[data.gfid].pic,
+                            }
+                        }
+                    }
+                })
                 break;
             case "odfbc":
                 // 开通钻粉
@@ -294,7 +314,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, totalGiftPrice, enterNum, danmakuPerson, danmakuNum
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus
     }
 }
 
