@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
-import { Cell, Checkbox, Dialog, Divider, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
+import { Cell, Checkbox, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
 import { useImmerReducer } from "use-immer";
 import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";

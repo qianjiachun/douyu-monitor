@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { Tag } from "react-vant";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { AUTHOR_NAME, formatTime } from "~/utils";
+import { AUTHOR_NAME } from "~/utils";
 
 interface IProps {
     // 弹幕数据
