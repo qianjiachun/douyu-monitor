@@ -22,14 +22,14 @@
     "react": "^18.2.0",
     "react-cool-virtual": "^0.7.0",
     "react-dom": "^18.2.0",
-    "react-vant": "2.0.0-alpha.26",
+    "react-vant": "^2.0.0-alpha.46",
     "use-immer": "^0.7.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.0",
     "@remix-run/eslint-config": "^1.6.0",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.9",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "concurrently": "^7.2.2",
     "eslint": "^8.17.0",
     "sass": "^1.52.3",
