@@ -19,7 +19,7 @@
 ## 斗鱼跨平台弹幕助手
 
 ### 预览（Demo）
-[http://new.douyuex.com/288016](http://new.douyuex.com/288016)
+[https://www.douyuex.com/288016](https://www.douyuex.com/288016)
 
 ### 特性
 1. Remix-SSR
