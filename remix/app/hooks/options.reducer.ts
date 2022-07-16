@@ -119,16 +119,16 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.danmaku.show = [...payload as IOptionsDanmakuShow[]];
             break;
         case OPTIONS_ACTION.DANMAKU_KEYNICKNAMES:
-            state.danmaku.keyNicknames = String(payload).split(",") || [];
+            state.danmaku.keyNicknames = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_LEVEL:
             state.danmaku.ban.level = Number(payload);
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS:
-            state.danmaku.ban.keywords = String(payload).split(",") || [];
+            state.danmaku.ban.keywords = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES:
-            state.danmaku.ban.nicknames = String(payload).split(",") || [];
+            state.danmaku.ban.nicknames = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_ISFILTERREPEAT:
             state.danmaku.ban.isFilterRepeat = payload;
@@ -140,7 +140,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.enter.show = [...payload as IOptionsEnterShow[]];
             break;
         case OPTIONS_ACTION.ENTER_KEYWORDS:
-            state.enter.keywords = String(payload).split(",") || [];
+            state.enter.keywords = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.ENTER_BAN_LEVEL:
             state.enter.ban.level = Number(payload);
@@ -152,7 +152,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.gift.ban.price = Number(payload);
             break;
         case OPTIONS_ACTION.GIFT_BAN_KEYWORDS:
-            state.gift.ban.keywords = String(payload).split(",") || [];
+            state.gift.ban.keywords = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.GIFT_BAN_FANSLEVEL:
             state.gift.ban.fansLevel = Number(payload);
