@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import type { FC } from "react";
-import { Tag } from "react-vant";
 import { nobleData } from "~/resources/nobleData";
 
 interface IProps {
