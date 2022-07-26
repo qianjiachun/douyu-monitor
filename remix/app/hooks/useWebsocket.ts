@@ -303,7 +303,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
 
     const isGiftValid = (data: any): boolean => {
         let giftData = allGiftData[data.gfid];
-        console.log(giftData, options.current.gift.ban.keywords, isArrayInText(options.current.gift.ban.keywords, giftData.n))
         if (giftData) {
             // 屏蔽单价
             if (giftData.pc < Number(options.current.gift.ban.price) * 100) return false;

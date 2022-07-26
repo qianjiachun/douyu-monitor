@@ -1,9 +1,7 @@
 import clsx from "clsx";
 import type { FC } from "react";
-import { Tag } from "react-vant";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { AUTHOR_NAME } from "~/utils";
 
 interface IProps {
     // 弹幕数据
@@ -35,7 +33,7 @@ interface IProps {
 const Default: FC<IProps> = (props) => {
     const {data} = props;
     const getItemClass = (data: IDanmaku): string => {
-        if (data.isSuper || data.nn === AUTHOR_NAME) {
+        if (data.isSuper) {
             return props.mode === "night" ? "super-night" : "super-day";
         } else if (data.isNoble || data.isVip || props.isHighlight) {
             return props.mode === "night" ? "noble-night" : "noble-day";
@@ -47,7 +45,6 @@ const Default: FC<IProps> = (props) => {
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, getItemClass(data))}>
             {/* 等级 */}
             {props.showLevel && <span className={clsx("item__level", {"fansLevelNight": props.mode==="night" && Number(data.lv) < 70}, "UserLevel", `UserLevel--${data.lv}`)}></span>}
-            {data.nn === AUTHOR_NAME && <Tag type="danger" size="medium">作者</Tag>}
             {/* 贵族 */}
             {props.showNoble && data.isNoble &&
             <span className="item__noble Barrage-icon Barrage-noble">
