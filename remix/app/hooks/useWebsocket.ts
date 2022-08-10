@@ -42,7 +42,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [giftList, setGiftList] = useState<IGift[]>([]);
     const [enterList, setEnterList] = useState<IEnter[]>([]);
     const [nobleNum, setNobleNum] = useState<number>(0);
-    const [prevNobleNum, setPrevNobleNum] = useState<number>(0);
     const [danmakuNum, setDanmakuNum] = useState<number>(0);
     const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
     const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
@@ -281,7 +280,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const handleData = (data: any) => {
         if (data.rid !== window.rid) return;
         setNobleNum(num => {
-            setPrevNobleNum(num);
             return Number(data.vn);
         });
     }
@@ -318,7 +316,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, prevNobleNum
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus
     }
 }
 

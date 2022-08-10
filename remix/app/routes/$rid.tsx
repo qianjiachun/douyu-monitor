@@ -10,7 +10,7 @@ import stylesRoomAdmin from "~/resources/roomAdmin.css";
 import stylesUserLevel from "~/resources/userLevel.css";
 import stylesMonitor from "~/styles/monitor.css";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
@@ -67,7 +67,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, prevNobleNum } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -145,10 +145,6 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [giftList])
 
-    const nobleNumDiff = useMemo(() => {
-        return nobleNum - prevNobleNum;
-    }, [nobleNum, prevNobleNum])
-
 	const onClickRestOptions = () => {
 		Dialog.confirm({
 			title: '提示',
@@ -208,13 +204,6 @@ const Index = () => {
     return <>
         <div className="noblenum"style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
             <span>{nobleNum}</span>
-            <span className="nobleNum__diff">
-            {prevNobleNum > 0 && nobleNum !== prevNobleNum && (nobleNumDiff > 0 
-            ?
-            <span style={{color: "#d81e06"}}><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4887"><path d="M573.056 272l308.8 404.608A76.8 76.8 0 0 1 820.736 800H203.232a76.8 76.8 0 0 1-61.056-123.392L450.976 272a76.8 76.8 0 0 1 122.08 0z" p-id="4888"></path></svg>{Math.abs(nobleNumDiff)}</span>
-            :
-            <span style={{color: "#0e932e"}}><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3694"><path d="M573.056 752l308.8-404.608A76.8 76.8 0 0 0 820.736 224H203.232a76.8 76.8 0 0 0-61.056 123.392l308.8 404.608a76.8 76.8 0 0 0 122.08 0z" p-id="3695"></path></svg>{Math.abs(nobleNumDiff)}</span>)}
-            </span>
         </div>
         <div className="monitor" style={{flexDirection: options.direction, fontSize: options.fontSize, ...(options.transparent ? {backgroundColor: "transparent"} : {})}} onClick={() => setIsShowOptions(true)}>
             <div style={{width: "100%", height: "100%", background: "transparent", position: "absolute", zIndex: 10, pointerEvents: "none"}} id="effect"></div>
