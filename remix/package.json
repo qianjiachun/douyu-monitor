@@ -22,7 +22,7 @@
     "react": "^18.2.0",
     "react-cool-virtual": "^0.7.0",
     "react-dom": "^18.2.0",
-    "react-vant": "^2.0.0-alpha.46",
+    "react-vant": "^3.0.0-rc.9",
     "use-immer": "^0.7.0"
   },
   "devDependencies": {
