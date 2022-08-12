@@ -27,6 +27,9 @@ export const meta: MetaFunction = () => ({
 	charset: "utf-8",
 	title: "DouyuEX弹幕助手",
 	viewport: "width=device-width,initial-scale=1",
+    description: "斗鱼弹幕助手，用于查看、展示房间内弹幕、礼物、入场信息",
+    keywords: "douyu, douyuex, 斗鱼, 斗鱼插件, 斗鱼弹幕助手, 斗鱼OBS",
+    author: "小淳"
 });
 
 export const links: LinksFunction = () => {
@@ -67,7 +70,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelList } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;

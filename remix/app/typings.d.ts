@@ -166,3 +166,10 @@ interface IGiftStatisticsInfo {
     price: number; // 价格
     count: number; // 数量
 }
+
+type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
+
+interface IPanelData {
+    msgType: IMsgType;
+    data: IDanmaku | IGift | IEnter | null;
+}
