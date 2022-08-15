@@ -70,7 +70,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelList } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -328,8 +328,8 @@ const Index = () => {
                     <Field value={String(options.enter.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
-                    <Field label="贵宾数" value={String(nobleNum)} readonly/>
-                    <Field label="弹幕人数" value={String(danmakuPerson.num) + " / " + String(danmakuNum)} readonly/>
+                    <Field label="贵宾数" value={String(nobleNum)} readOnly/>
+                    <Field label="弹幕人数" value={String(danmakuPerson.num) + " / " + String(danmakuNum)} readOnly/>
                     {Object.keys(giftStatus).map(key => {
                         let item = giftStatus[key];
                         return <Cell key={item.gfid} icon={

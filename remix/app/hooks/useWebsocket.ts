@@ -40,7 +40,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [danmakuList, setDanmakuList] = useState<IDanmaku[]>([]);
     const [giftList, setGiftList] = useState<IGift[]>([]);
     const [enterList, setEnterList] = useState<IEnter[]>([]);
-    const [panelList, setPanelList] = useState<IPanelData[]>([]);
     const [nobleNum, setNobleNum] = useState<number>(0);
     const [danmakuNum, setDanmakuNum] = useState<number>(0);
     const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
@@ -119,14 +118,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             // 过滤机器人弹幕
             if (options.current.danmaku.ban.isFilterRobot && !data.dms) return list;
             
-            setPanelList(panelList => {
-                let panelObj: IPanelData = {msgType: "danmaku", data: obj};
-                if (panelList.length > options.current.threshold) {
-                    return [...panelList.splice(1), panelObj];
-                } else {
-                    return [...panelList, panelObj];
-                }
-            });
             if (list.length > options.current.threshold) {
                 return [...list.splice(1), obj];
             } else {
@@ -145,14 +136,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             nobleLv: data.nl,
             key: new Date().getTime() + Math.random(),
         }
-        setPanelList(panelList => {
-            let panelObj: IPanelData = {msgType: "enter", data: obj};
-            if (panelList.length > options.current.threshold) {
-                return [...panelList.splice(1), panelObj];
-            } else {
-                return [...panelList, panelObj];
-            }
-        });
         setEnterList(list => {
             if (list.length > options.current.threshold) {
                 return [...list.splice(1), obj];
@@ -285,14 +268,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 return;
         }
         obj = {...obj, ...tmp};
-        setPanelList(panelList => {
-            let panelObj: IPanelData = {msgType: "gift", data: obj};
-            if (panelList.length > options.current.threshold) {
-                return [...panelList.splice(1), panelObj];
-            } else {
-                return [...panelList, panelObj];
-            }
-        });
         setGiftList(list => {
             if (list.length > options.current.threshold) {
                 return [...list.splice(1), obj];
@@ -341,7 +316,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus
     }
 }
 

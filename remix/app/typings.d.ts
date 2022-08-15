@@ -168,8 +168,3 @@ interface IGiftStatisticsInfo {
 }
 
 type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
-
-interface IPanelData {
-    msgType: IMsgType;
-    data: IDanmaku | IGift | IEnter | null;
-}
