@@ -92,7 +92,11 @@ type IMode = "day" | "night";
 // 每个模块开关，同时指定了顺序。值：["enter"; "gift"; "danmaku", "data"]
 type IOptionsSwitch = "enter" | "gift" | "danmaku";
 
+// 显示模式，default是指斗鱼弹幕助手模式，panel是用于OBS展示用的模式
+type IShowMode = "default" | "panel";
+
 interface IOptions {
+    showMode: IShowMode; // 显示模式。值：default/panel
     mode: IMode; // 日间模式还是夜间模式。值：day/night
     switch: IOptionsSwitch[];
     direction: "column" | "row"; // 纵向还是横向排列。值：row/column

@@ -245,6 +245,12 @@ const Index = () => {
             </div>
             <Tabs>
                 <Tabs.TabPane title="通用">
+                    <Field label="模式">
+                        <Radio.Group value={options.showMode} defaultValue="column" direction="horizontal" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_MODE, payload: v})}>
+                            <Radio name="default">默认</Radio>
+                            <Radio name="panel">面板</Radio>
+                        </Radio.Group>
+                    </Field>
                     <Field label="布局">
                         <Checkbox.Group value={options.switch} direction="horizontal" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SWITCH, payload: v})}>
                             <Checkbox shape="square" name="enter">进场</Checkbox>

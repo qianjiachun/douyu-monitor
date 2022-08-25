@@ -3,6 +3,7 @@ import { formatObj } from "~/utils";
 enum OPTIONS_ACTION {
     RESET = "reset", // 恢复默认设置
     SET = "set", // 设置options的值，用于初始化options
+    SHOW_MODE = "showMode",
     MODE = "mode",
     SWITCH = "switch",
     DIRECTION = "direction",
@@ -37,6 +38,7 @@ interface IOptionsAction {
 
 // 默认配置，遵循数据驱动视图
 const defaultOptions: IOptions = {
+    showMode: "default",
     mode: "day",
     switch: ["enter", "gift", "danmaku"],
     direction: "column",
@@ -88,6 +90,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             return defaultOptions;
         case OPTIONS_ACTION.SET:
             return formatObj(payload, defaultOptions);
+        case OPTIONS_ACTION.SHOW_MODE:
+            state.showMode = payload;
+            break;
         case OPTIONS_ACTION.MODE:
             state.mode = payload;
             break;
