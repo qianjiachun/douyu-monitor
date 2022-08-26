@@ -1,7 +1,7 @@
 import { getStrMiddle, isArrayInText } from "~/utils";
 import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
-import type { MutableRefObject } from "react";
+import { MutableRefObject, useCallback } from "react";
 import { useState } from "react";
 import { nobleData } from "~/resources/nobleData";
 
@@ -44,6 +44,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [danmakuNum, setDanmakuNum] = useState<number>(0);
     const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
     const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
+    const [panelDataList, setPanelDataList] = useState<IPanelData[]>([]);
 
     const connectWs = (rid: string): void => {
         if (rid === "") return;
@@ -58,6 +59,23 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         ws?.close();
         ws = null;
     }
+
+    const addPanelData = useCallback((type: IMsgType, data: IGift | IDanmaku | IEnter) => {
+        setPanelDataList(list => {
+            if (list.length > 0 && type === "danmaku") {
+                // 过滤重复弹幕
+                if (list[list.length - 1].type === "danmaku" && options.current.danmaku.ban.isFilterRepeat && (list[list.length - 1].data as IDanmaku).txt === (data as IDanmaku).txt) {
+                    return list;
+                }
+            }
+            const obj = {type, data};
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), obj];
+            } else {
+                return [...list, obj];
+            }
+        });
+    }, [options]);
 
     const msgHandler = (msg: string) => {
         let msgType = selectMsgType(getStrMiddle(msg, "type@=", "/"));
@@ -112,19 +130,26 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isVip: data.ail == "453/" || data.ail == "454/",
             key: data.cid,
         };
-        setDanmakuList(list => {
-            // 过滤重复弹幕
-            if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) return list;
-            // 过滤机器人弹幕
-            if (options.current.danmaku.ban.isFilterRobot && !data.dms) return list;
-            
-            if (list.length > options.current.threshold) {
-                return [...list.splice(1), obj];
-            } else {
-                return [...list, obj];
-            }
-
-        });
+        // 过滤机器人弹幕
+        if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
+        switch (options.current.showMode) {
+            case "default":
+                setDanmakuList(list => {
+                    // 过滤重复弹幕
+                    if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) return list;
+                    if (list.length >= options.current.threshold) {
+                        return [...list.splice(1), obj];
+                    } else {
+                        return [...list, obj];
+                    }
+                });
+                break;
+            case "panel":
+                addPanelData("danmaku", obj);
+                break;
+            default:
+                break;
+        }
     }
 
     const handleEnter = (data: any) => {
@@ -136,13 +161,22 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             nobleLv: data.nl,
             key: new Date().getTime() + Math.random(),
         }
-        setEnterList(list => {
-            if (list.length > options.current.threshold) {
-                return [...list.splice(1), obj];
-            } else {
-                return [...list, obj];
-            }
-        });
+        switch (options.current.showMode) {
+            case "default":
+                setEnterList(list => {
+                    if (list.length >= options.current.threshold) {
+                        return [...list.splice(1), obj];
+                    } else {
+                        return [...list, obj];
+                    }
+                });
+                break;
+            case "panel":
+                addPanelData("enter", obj);
+                break;
+            default:
+                break;
+        }
     }
 
     const handleGift = (data: any) => {
@@ -268,13 +302,22 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 return;
         }
         obj = {...obj, ...tmp};
-        setGiftList(list => {
-            if (list.length > options.current.threshold) {
-                return [...list.splice(1), obj];
-            } else {
-                return [...list, obj];
-            }
-        });
+        switch (options.current.showMode) {
+            case "default":
+                setGiftList(list => {
+                    if (list.length >= options.current.threshold) {
+                        return [...list.splice(1), obj];
+                    } else {
+                        return [...list, obj];
+                    }
+                });
+                break;
+            case "panel":
+                addPanelData("gift", obj);
+                break;
+            default:
+                break;
+        }
     }
 
     const handleData = (data: any) => {
@@ -316,7 +359,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList
     }
 }
 

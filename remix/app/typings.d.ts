@@ -172,3 +172,8 @@ interface IGiftStatisticsInfo {
 }
 
 type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
+
+interface IPanelData {
+    type: IMsgType;
+    data: IGift | IDanmaku | IEnter;
+}

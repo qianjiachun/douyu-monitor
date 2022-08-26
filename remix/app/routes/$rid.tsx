@@ -70,7 +70,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -119,6 +119,10 @@ const Index = () => {
 		optionsRef.current = options;
 		saveLocalOptions(options);
 	}, [options]);
+
+    useEffect(() => {
+        console.log(panelDataList);
+    }, [panelDataList])
 
     useEffect(() => {
         if (!options.gift.showEffect) return;
