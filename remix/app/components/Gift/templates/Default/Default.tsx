@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { iteratorSymbol } from "immer/dist/internal";
 import type { FC } from "react";
+import { memo, useMemo } from "react";
 import { formatTime } from "~/utils";
 
 interface IProps {
@@ -18,11 +18,11 @@ interface IProps {
 
 const Default: FC<IProps> = (props) => {
     const {data, giftData} = props;
-    const getItemClass = (): string => {
+    const itemClass = useMemo(() => {
         return props.isHighlight ? `highlight-${props.mode}` : "";
-    }
+    }, [props]);
     return (
-        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, getItemClass())}>
+        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             <span className="item__gift">
                 <img className="avatar" src={giftData.pic} loading="lazy" alt=""/>
             </span>
@@ -35,4 +35,4 @@ const Default: FC<IProps> = (props) => {
     )
 }
 
-export default Default;
+export default memo(Default);

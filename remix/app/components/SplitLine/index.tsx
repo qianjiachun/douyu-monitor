@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { FC } from "react";
 
 interface IProps {
@@ -21,4 +22,4 @@ const SplitLine: FC<IProps> = (props) => {
 };
 
 
-export default SplitLine;
+export default memo(SplitLine);

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { memo, useMemo } from "react";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
@@ -32,17 +33,17 @@ interface IProps {
 
 const Default: FC<IProps> = (props) => {
     const {data} = props;
-    const getItemClass = (data: IDanmaku): string => {
-        if (data.isSuper) {
+    const itemClass = useMemo(() => {
+        if (props.data.isSuper) {
             return props.mode === "night" ? "super-night" : "super-day";
-        } else if (data.isNoble || data.isVip || props.isHighlight) {
+        } else if (props.data.isNoble || props.data.isVip || props.isHighlight) {
             return props.mode === "night" ? "noble-night" : "noble-day";
         } else {
             return "";
         }
-    }
+    }, [props]);
     return (
-        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, getItemClass(data))}>
+        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
             {props.showLevel && <span className={clsx("item__level", {"fansLevelNight": props.mode==="night" && Number(data.lv) < 70}, "UserLevel", `UserLevel--${data.lv}`)}></span>}
             {/* 贵族 */}
@@ -76,4 +77,4 @@ const Default: FC<IProps> = (props) => {
     )
 }
 
-export default Default;
+export default memo(Default);

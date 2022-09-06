@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { FC } from "react";
+import { memo, useMemo } from "react";
 import { nobleData } from "~/resources/nobleData";
 
 interface IProps {
@@ -21,17 +22,17 @@ interface IProps {
 
 const Default: FC<IProps> = (props) => {
     const {data} = props;
-    const getItemClass = (data: IEnter): string => {
+    const itemClass = useMemo(() => {
         if (props.isHighlight) {
             return `highlight-${props.mode}`;
         }
-        if (data.nobleLv) {
+        if (props.data.nobleLv) {
             return `noble-${props.mode}`;
         }
         return "";
-    }
+    }, [props]);
     return (
-        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, getItemClass(data))}>
+        <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
             {props.showLevel && <span className={clsx("item__level", {"fansLevelNight": props.mode==="night" && Number(data.lv) < 70}, "UserLevel", `UserLevel--${data.lv}`)}></span>}
             {/* 贵族 */}
@@ -44,4 +45,4 @@ const Default: FC<IProps> = (props) => {
     )
 }
 
-export default Default;
+export default memo(Default);
