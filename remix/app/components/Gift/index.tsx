@@ -1,5 +1,5 @@
-import type { FC} from "react";
-import { useEffect, useRef } from "react";
+import type { FC } from "react";
+import { useEffect, useRef, memo, useCallback } from "react";
 import { useScroll } from "~/hooks/useScroll";
 import { GIFT_TYPE } from "~/hooks/useWebsocket";
 import { nobleData } from "~/resources/nobleData";
@@ -24,17 +24,22 @@ const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
 	const wrapRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		onScrollUpdate(wrapRef.current);
-	}, [giftList, onScrollUpdate]);
+	}, [onScrollUpdate]);
+
+	const onScrollEvent = useCallback(() => {
+		onScroll(wrapRef.current);
+	}, [onScroll]);
 
 	useEffect(() => {
 		if (!wrapRef.current) return
-		wrapRef.current.addEventListener("mousewheel", () => {
-			onScroll(wrapRef.current);
-		})
-		wrapRef.current.addEventListener("touchmove", () => {
-			onScroll(wrapRef.current);
-		})
-	}, [onScroll]);
+		const wrap = wrapRef.current;
+		wrap.addEventListener("mousewheel", onScrollEvent);
+		wrap.addEventListener("touchmove", onScrollEvent);
+		return () => {
+			wrap.removeEventListener("mousewheel", onScrollEvent);
+			wrap.removeEventListener("touchmove", onScrollEvent);
+		}
+	}, [onScroll, onScrollEvent]);
 
 	const checkHighlight = (data: IGift) => {
 		// 判断是否需要高亮
@@ -89,4 +94,4 @@ const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
 	)
 }
 
-export default Gift;
+export default memo(Gift);

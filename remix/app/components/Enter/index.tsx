@@ -1,5 +1,5 @@
-import type { FC} from "react";
-import { useEffect, useRef } from "react";
+import type { FC } from "react";
+import { useEffect, useRef, memo, useCallback } from "react";
 import { useScroll } from "~/hooks/useScroll";
 import { getFlexStyle, isArrayInText } from "~/utils";
 import Default from "./templates/Default/Default";
@@ -16,17 +16,23 @@ const Enter: FC<IProps> = ({options, enterList}) => {
 	const wrapRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		onScrollUpdate(wrapRef.current)
-	}, [enterList, onScrollUpdate]);
+	}, [onScrollUpdate]);
+
+	const onScrollEvent = useCallback(() => {
+		onScroll(wrapRef.current);
+	}, [onScroll]);
 
 	useEffect(() => {
 		if (!wrapRef.current) return
-		wrapRef.current.addEventListener("mousewheel", () => {
-			onScroll(wrapRef.current);
-		})
-		wrapRef.current.addEventListener("touchmove", () => {
-			onScroll(wrapRef.current);
-		})
-	}, [onScroll]);
+		const wrap = wrapRef.current;
+		wrap.addEventListener("mousewheel", onScrollEvent);
+		wrap.addEventListener("touchmove", onScrollEvent);
+		return () => {
+			wrap.removeEventListener("mousewheel", onScrollEvent);
+			wrap.removeEventListener("touchmove", onScrollEvent);
+		}
+	}, [onScroll, onScrollEvent]);
+	
 	return (
 		<div ref={wrapRef} className={FLAG} style={getFlexStyle(options, FLAG)}>
 			{enterList.map(item => {
@@ -45,4 +51,4 @@ const Enter: FC<IProps> = ({options, enterList}) => {
 	)
 }
 
-export default Enter;
+export default memo(Enter);
