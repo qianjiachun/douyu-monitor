@@ -12,9 +12,9 @@
     "sass": "sass --no-source-map --style compressed app/:app/"
   },
   "dependencies": {
-    "@remix-run/node": "^1.7.0",
-    "@remix-run/react": "^1.7.0",
-    "@remix-run/serve": "^1.7.0",
+    "@remix-run/node": "^1.7.2",
+    "@remix-run/react": "^1.7.2",
+    "@remix-run/serve": "^1.7.2",
     "@vant/touch-emulator": "^1.4.0",
     "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.2",
@@ -26,14 +26,14 @@
     "use-immer": "^0.7.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.7.0",
-    "@remix-run/eslint-config": "^1.7.0",
-    "@types/react": "^18.0.17",
+    "@remix-run/dev": "^1.7.2",
+    "@remix-run/eslint-config": "^1.7.2",
+    "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "concurrently": "^7.3.0",
-    "eslint": "^8.22.0",
-    "sass": "^1.54.5",
-    "typescript": "^4.8.2"
+    "concurrently": "^7.4.0",
+    "eslint": "^8.24.0",
+    "sass": "^1.55.0",
+    "typescript": "^4.8.3"
   },
   "engines": {
     "node": ">=14"
