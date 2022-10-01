@@ -31,6 +31,7 @@ enum OPTIONS_ACTION {
     GIFT_SHOWEFFECT = "gift_showEffect",
     SHOW_STATUS = "show_status",
     SUPERCHAT_PRICE = "superchat_price",
+    SUPERCHAT_KEYWORD = "superchat_keyword",
 }
 
 interface IOptionsAction {
@@ -84,6 +85,7 @@ const defaultOptions: IOptions = {
         }
     },
     superchat: {
+        keyword: "#sc",
         price: 30,
     }
 };
@@ -176,6 +178,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.SHOW_STATUS:
             state.showStatus = payload;
+            break;
+        case OPTIONS_ACTION.SUPERCHAT_KEYWORD:
+            state.superchat.keyword = payload;
             break;
         case OPTIONS_ACTION.SUPERCHAT_PRICE:
             state.superchat.price = Number(payload);

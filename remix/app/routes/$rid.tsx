@@ -353,6 +353,7 @@ const Index = () => {
                     })}
                 </Tabs.TabPane>
                 <Tabs.TabPane title="SC">
+                    <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
                     <Field value={String(options.superchat.price)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_PRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
                 </Tabs.TabPane>
             </Tabs>

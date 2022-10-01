@@ -184,5 +184,6 @@ interface IPanelData {
 }
 
 interface IOptionsSuperchat {
+    keyword: string; // 触发关键词
     price: number; // superchat起步价（贡献值）
 }

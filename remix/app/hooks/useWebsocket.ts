@@ -143,11 +143,12 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         };
         // 过滤机器人弹幕
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
+        // #region superchat
         const superchatData = superchatMap[data.uid];
-        if (superchatData && superchatData.count >= 1) {
+        if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
             delete superchatMap[data.uid];
             setSuperchatList(list => {
-                const scObj = {...obj, price: superchatData.price};
+                const scObj = {...obj, txt: obj.txt.replace(new RegExp(options.current.superchat.keyword, "g"), "").trim(), price: superchatData.price};
                 if (list.length >= options.current.threshold) {
                     return [...list.splice(1), scObj];
                 } else {
@@ -155,6 +156,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 }
             });
         }
+        //#endregion
         switch (options.current.showMode) {
             case "default":
                 setDanmakuList(list => {
