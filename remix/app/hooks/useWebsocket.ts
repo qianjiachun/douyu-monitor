@@ -1,7 +1,8 @@
 import { getStrMiddle, isArrayInText } from "~/utils";
 import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
-import { MutableRefObject, useCallback } from "react";
+import type { MutableRefObject } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import { nobleData } from "~/resources/nobleData";
 
@@ -22,6 +23,13 @@ interface IDanmakuPerson {
     num: number; // 总数
     uid: any; //
 }
+
+interface ISuperchatMapItem {
+    count: number;
+    price: number;
+}
+
+let superchatMap: Record<string, ISuperchatMapItem> = {};
 
 const selectMsgType = (msgType: string): IMsgType => {
     if (msgType === "") return "";
@@ -45,6 +53,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [danmakuPerson, setDanmakuPerson] = useState<IDanmakuPerson>({num: 0, uid: {}});
     const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
     const [panelDataList, setPanelDataList] = useState<IPanelData[]>([]);
+    const [superchatList, setSuperchatList] = useState<ISuperchat[]>([]);
 
     const connectWs = (rid: string): void => {
         if (rid === "") return;
@@ -101,18 +110,20 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     const handleDanmaku = (data: any) => {
-        if (!danmakuPerson.uid?.dmuid) {
-            setDanmakuPerson(prev => {
-                return !prev.uid[data.uid] ? {
-                    num: prev.num + 1,
-                    uid: {
-                        ...prev.uid,
-                        [data.uid]: true,
-                    }
-                } : prev
-            })
+        if (options.current.showStatus) {
+            if (!danmakuPerson.uid?.dmuid) {
+                setDanmakuPerson(prev => {
+                    return !prev.uid[data.uid] ? {
+                        num: prev.num + 1,
+                        uid: {
+                            ...prev.uid,
+                            [data.uid]: true,
+                        }
+                    } : prev
+                })
+            }
+            setDanmakuNum(prev => prev + 1);
         }
-        setDanmakuNum(prev => prev + 1);
         if (!isDanmakuValid(data)) return;
         let obj: IDanmaku = {
             nn: data.nn,
@@ -132,6 +143,18 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         };
         // 过滤机器人弹幕
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
+        const superchatData = superchatMap[data.uid];
+        if (superchatData && superchatData.count >= 1) {
+            delete superchatMap[data.uid];
+            setSuperchatList(list => {
+                const scObj = {...obj, price: superchatData.price};
+                if (list.length >= options.current.threshold) {
+                    return [...list.splice(1), scObj];
+                } else {
+                    return [...list, scObj];
+                }
+            });
+        }
         switch (options.current.showMode) {
             case "default":
                 setDanmakuList(list => {
@@ -200,29 +223,39 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                     type: GIFT_TYPE.GIFT,
                     name: allGiftData[data.gfid].n,
                 };
-                setGiftStatus(prev => {
-                    let key = allGiftData[data.gfid].n + "|" + obj.gfid;
-                    if (key in prev) {
-                        return {
-                            ...prev,
-                            [key]: {
-                                ...prev[key],
-                                count: prev[key].count + Number(obj.gfcnt),
+
+                // #region superchat
+                const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 10;
+                const uid = data.uid;
+                if (totalGiftPrice >= options.current.superchat.price * 100) {
+                    superchatMap[uid] = {count: 1, price: totalGiftPrice};
+                }
+                // #endregion
+                if (options.current.showStatus) {
+                    setGiftStatus(prev => {
+                        let key = allGiftData[data.gfid].n + "|" + obj.gfid;
+                        if (key in prev) {
+                            return {
+                                ...prev,
+                                [key]: {
+                                    ...prev[key],
+                                    count: prev[key].count + Number(obj.gfcnt),
+                                }
+                            }
+                        } else {
+                            return {
+                                ...prev,
+                                [key]: {
+                                    name: allGiftData[data.gfid].n,
+                                    count: Number(obj.gfcnt),
+                                    gfid: data.gfid,
+                                    price: Number(allGiftData[data.gfid].pc),
+                                    img: allGiftData[data.gfid].pic,
+                                }
                             }
                         }
-                    } else {
-                        return {
-                            ...prev,
-                            [key]: {
-                                name: allGiftData[data.gfid].n,
-                                count: Number(obj.gfcnt),
-                                gfid: data.gfid,
-                                price: Number(allGiftData[data.gfid].pc),
-                                img: allGiftData[data.gfid].pic,
-                            }
-                        }
-                    }
-                })
+                    });
+                }
                 break;
             case "odfbc":
                 // 开通钻粉
@@ -359,7 +392,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList, superchatList
     }
 }
 

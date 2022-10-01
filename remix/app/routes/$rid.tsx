@@ -70,7 +70,7 @@ const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList, superchatList } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
 
     let effectTimer: NodeJS.Timeout;
@@ -121,8 +121,8 @@ const Index = () => {
 	}, [options]);
 
     useEffect(() => {
-        console.log(panelDataList);
-    }, [panelDataList])
+        console.log(superchatList);
+    }, [superchatList])
 
     useEffect(() => {
         if (!options.gift.showEffect) return;
@@ -338,6 +338,9 @@ const Index = () => {
                     <Field value={String(options.enter.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
+                    <Field label="开启统计">
+                        <Switch size={20} checked={options.showStatus} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_STATUS, payload: v})} />
+                    </Field>
                     <Field label="贵宾数" value={String(nobleNum)} readOnly/>
                     <Field label="弹幕人数" value={String(danmakuPerson.num) + " / " + String(danmakuNum)} readOnly/>
                     {Object.keys(giftStatus).map(key => {
@@ -348,6 +351,9 @@ const Index = () => {
                         title={item.name}
                         label={item.count}></Cell>
                     })}
+                </Tabs.TabPane>
+                <Tabs.TabPane title="SC">
+                    <Field value={String(options.superchat.price)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_PRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
                 </Tabs.TabPane>
             </Tabs>
         </Popup>

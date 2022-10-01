@@ -29,6 +29,8 @@ enum OPTIONS_ACTION {
     GIFT_BAN_FANSLEVEL = "gift_ban_fansLevel",
     GIFT_FANSLEVEL = "gift_fansLevel",
     GIFT_SHOWEFFECT = "gift_showEffect",
+    SHOW_STATUS = "show_status",
+    SUPERCHAT_PRICE = "superchat_price",
 }
 
 interface IOptionsAction {
@@ -52,6 +54,7 @@ const defaultOptions: IOptions = {
     threshold: 200,
     transparent: false,
     animation: true,
+    showStatus: true,
     danmaku: {
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip", "color"],
         keyNicknames: [],
@@ -79,6 +82,9 @@ const defaultOptions: IOptions = {
             keywords: [],
             fansLevel: 6,
         }
+    },
+    superchat: {
+        price: 30,
     }
 };
 
@@ -167,6 +173,12 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.GIFT_SHOWEFFECT:
             state.gift.showEffect = payload;
+            break;
+        case OPTIONS_ACTION.SHOW_STATUS:
+            state.showStatus = payload;
+            break;
+        case OPTIONS_ACTION.SUPERCHAT_PRICE:
+            state.superchat.price = Number(payload);
             break;
         default:
             break;

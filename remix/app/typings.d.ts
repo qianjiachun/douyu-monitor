@@ -86,6 +86,10 @@ interface IGift {
     key: string | number; // 唯一标识
 }
 
+interface ISuperchat extends IDanmaku {
+    price: number; // 贡献值
+}
+
 // 主题切换
 type IMode = "day" | "night";
 
@@ -109,7 +113,8 @@ interface IOptions {
     danmaku: IOptionsDanmaku; // 弹幕设置
     gift: IOptionsGift; // 礼物设置
     enter: IOptionsEnter; // 入场设置
-    // data: IOptionsData; // 数据设置
+    showStatus: boolean; // 是否开启统计数据
+    superchat: IOptionsSuperchat; // superchat设置
 }
 
 interface Size {
@@ -176,4 +181,8 @@ type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
 interface IPanelData {
     type: IMsgType;
     data: IGift | IDanmaku | IEnter;
+}
+
+interface IOptionsSuperchat {
+    price: number; // superchat起步价（贡献值）
 }
