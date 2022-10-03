@@ -94,7 +94,7 @@ interface ISuperchat extends IDanmaku {
 type IMode = "day" | "night";
 
 // 每个模块开关，同时指定了顺序。值：["enter"; "gift"; "danmaku", "data"]
-type IOptionsSwitch = "enter" | "gift" | "danmaku";
+type IOptionsSwitch = "enter" | "gift" | "danmaku" | "superchat";
 
 // 显示模式，default是指斗鱼弹幕助手模式，panel是用于OBS展示用的模式
 type IShowMode = "default" | "panel";
@@ -105,7 +105,7 @@ interface IOptions {
     switch: IOptionsSwitch[];
     direction: "column" | "row"; // 纵向还是横向排列。值：row/column
     fontSize: number; // 字号大小
-    size: Size; // 每个模块的占比%
+    size: ISize; // 每个模块的占比%
     align: "left" | "right"; // 设置左右对齐。值：left/right
     animation: boolean; // 是否开启动画
     threshold: number; // 数据上限，超过上限的数据会被删除
@@ -117,10 +117,11 @@ interface IOptions {
     superchat: IOptionsSuperchat; // superchat设置
 }
 
-interface Size {
+interface ISize {
     danmaku: number;
     enter: number;
     gift: number;
+    superchat: number;
 }
 
 // 弹幕显示元素。值：level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP  color:弹幕颜色
@@ -186,4 +187,19 @@ interface IPanelData {
 interface IOptionsSuperchat {
     keyword: string; // 触发关键词
     price: number; // superchat起步价（贡献值）
+    options: ISuperchatOption[];
+}
+
+interface ISuperchatOption {
+    // 颜色配置项
+    bgColor: ISuperchatOptionColor;
+    // 最低触发价格
+    minPrice: number;
+    // 停留时间（秒）
+    time: number;
+}
+
+interface ISuperchatOptionColor {
+    header: string;
+    body: string;
 }

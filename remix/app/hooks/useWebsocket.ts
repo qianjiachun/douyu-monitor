@@ -1,4 +1,4 @@
-import { getStrMiddle, isArrayInText } from "~/utils";
+import { getRandom, getStrMiddle, isArrayInText } from "~/utils";
 import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
 import type { MutableRefObject } from "react";
@@ -145,17 +145,24 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
         // #region superchat
         const superchatData = superchatMap[data.uid];
-        if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
-            delete superchatMap[data.uid];
-            setSuperchatList(list => {
-                const scObj = {...obj, txt: obj.txt.replace(new RegExp(options.current.superchat.keyword, "g"), "").trim(), price: superchatData.price};
-                if (list.length >= options.current.threshold) {
-                    return [...list.splice(1), scObj];
-                } else {
-                    return [...list, scObj];
-                }
-            });
-        }
+        // if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
+        //     delete superchatMap[data.uid];
+        //     setSuperchatList(list => {
+        //         const scObj = {...obj, txt: obj.txt.replace(new RegExp(options.current.superchat.keyword, "g"), "").trim(), price: superchatData.price};
+        //         if (list.length >= options.current.threshold) {
+        //             return [...list.splice(1), scObj];
+        //         } else {
+        //             return [...list, scObj];
+        //         }
+        //     });
+        // }
+        setSuperchatList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), {...obj, price: getRandom(30, 1200)}];
+            } else {
+                return [...list, {...obj, price: getRandom(30, 1200)}];
+            }
+        });
         //#endregion
         switch (options.current.showMode) {
             case "default":

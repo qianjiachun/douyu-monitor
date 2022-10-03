@@ -3,6 +3,7 @@
 @import "../components/Danmaku/templates/Default/styles/index.scss";
 @import "../components/Enter/templates/Default/styles/index.scss";
 @import "../components/Gift/templates/Default/styles/index.scss";
+@import "../components/Superchat/templates/Default/styles/index.scss";
 .monitor {
     @include backgroundColor("backgroundColor");
     width: 100%;
@@ -27,7 +28,7 @@
         border-radius: 50%;
     }
 
-    .danmaku, .enter, .gift {
+    .danmaku, .enter, .gift, .superchat {
         overflow-x: hidden;
         overflow-y: auto;
         content-visibility: auto;

@@ -21,6 +21,7 @@ import Enter from "~/components/Enter";
 import Gift from "~/components/Gift";
 import SplitLine from "~/components/SplitLine";
 import copy from "copy-to-clipboard";
+import Superchat from "~/components/Superchat";
 
 
 export const meta: MetaFunction = () => ({
@@ -108,6 +109,10 @@ const Index = () => {
 
 	useEffect(() => {
 		document.documentElement.style.setProperty('--avatarSize', String(options.fontSize * 2) + "px");
+	}, [options.fontSize]);
+
+    useEffect(() => {
+		document.documentElement.style.setProperty('--scAvatarSize', String(options.fontSize * 3 - 2) + "px");
 	}, [options.fontSize]);
 
 	useEffect(() => {
@@ -219,6 +224,8 @@ const Index = () => {
             {options.switch.includes("gift") && <Gift options={options} giftList={giftList} allGiftData={allGift}></Gift>}
             {options.switch.length > 2 && <SplitLine order={4} transparent={options.transparent} direction={options.direction}></SplitLine>}
             {options.switch.includes("danmaku") && <Danmaku options={options} danmakuList={danmakuList}></Danmaku>}
+            {options.switch.length > 2 && <SplitLine order={6} transparent={options.transparent} direction={options.direction}></SplitLine>}
+            {options.switch.includes("superchat") && <Superchat options={options} superchatList={superchatList}></Superchat>}
         </div>
         <Popup className="popup" visible={isShowOptions} position="bottom" style={{height: "60%"}} onClose={() => setIsShowOptions(false)}>
             <div className="popup-top">
@@ -260,6 +267,7 @@ const Index = () => {
                             <Checkbox shape="square" name="enter">进场</Checkbox>
                             <Checkbox shape="square" name="gift">礼物</Checkbox>
                             <Checkbox shape="square" name="danmaku">弹幕</Checkbox>
+                            <Checkbox shape="square" name="superchat">Superchat</Checkbox>
                         </Checkbox.Group>
                     </Field>
                     <Field label="方向">
@@ -337,6 +345,23 @@ const Index = () => {
                     <Field value={options.enter.keywords.join(" ")} label="关键昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_KEYWORDS, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
                     <Field value={String(options.enter.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
                 </Tabs.TabPane>
+                <Tabs.TabPane title="SC">
+                    <Field label="占比">
+                        <Slider disabled={options.switch[options.switch.length-1] === "superchat"} value={options.size.superchat} onChange={(v: number) => dispatchOptions({type: OPTIONS_ACTION.SIZE, payload: {superchat: v}})}/>
+                    </Field>
+                    <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
+                    <Field value={String(options.superchat.price)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_PRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
+                    <Field
+                    tooltip="minPrice: 高于这个价格则执行这个配置；time: 停留时间"
+                    value={JSON.stringify(options.superchat.options,null,"\t")}
+                    onChange={(v) => dispatchOptions({
+                        type: OPTIONS_ACTION.SUPERCHAT_OPTIONS,
+                        payload: JSON.parse(v)
+                    })}
+                    label="配置"
+                    type="textarea"
+                    placeholder="请输入json配置" />
+                </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
                     <Field label="开启统计">
                         <Switch size={20} checked={options.showStatus} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_STATUS, payload: v})} />
@@ -351,10 +376,6 @@ const Index = () => {
                         title={item.name}
                         label={item.count}></Cell>
                     })}
-                </Tabs.TabPane>
-                <Tabs.TabPane title="SC">
-                    <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
-                    <Field value={String(options.superchat.price)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_PRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
                 </Tabs.TabPane>
             </Tabs>
         </Popup>

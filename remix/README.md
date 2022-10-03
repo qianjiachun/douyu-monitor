@@ -71,7 +71,7 @@ interface IOptions {
     switch: string[]; // 每个模块开关，同时指定了顺序。值：["enter"; "gift"; "danmaku"]
     direction: "column" | "row"; // 纵向还是横向排列。值：row/column
     fontSize: number; // 字号大小
-    size: Size; // 每个模块的占比%
+    size: ISize; // 每个模块的占比%
     align: "left" | "right"; // 设置左右对齐。值：left/right
     animation: boolean; // 是否开启动画
     threshold: number; // 数据上限，超过上限的数据会被删除

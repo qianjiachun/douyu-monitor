@@ -32,6 +32,7 @@ enum OPTIONS_ACTION {
     SHOW_STATUS = "show_status",
     SUPERCHAT_PRICE = "superchat_price",
     SUPERCHAT_KEYWORD = "superchat_keyword",
+    SUPERCHAT_OPTIONS = "superchat_options",
 }
 
 interface IOptionsAction {
@@ -43,13 +44,14 @@ interface IOptionsAction {
 const defaultOptions: IOptions = {
     showMode: "default",
     mode: "day",
-    switch: ["enter", "gift", "danmaku"],
+    switch: ["enter", "gift", "danmaku", "superchat"],
     direction: "column",
     fontSize: 14,
     size: {
         enter: 15,
         gift: 25,
         danmaku: 30,
+        superchat: 30
     },
     align: "left",
     threshold: 200,
@@ -87,6 +89,56 @@ const defaultOptions: IOptions = {
     superchat: {
         keyword: "#sc",
         price: 30,
+        options: [
+            {
+                minPrice: 30,
+                time: 10,
+                bgColor: {
+                    header: "rgb(21,101,192)",
+                    body: "rgb(30,136,229)"
+                }
+            },
+            {
+                minPrice: 50,
+                time: 10,
+                bgColor: {
+                    header: "rgb(0,191,165)",
+                    body: "rgb(29,233,182)"
+                }
+            },
+            {
+                minPrice: 100,
+                time: 10,
+                bgColor: {
+                    header: "rgb(255,179,0)",
+                    body: "rgb(255,202,40)"
+                }
+            },
+            {
+                minPrice: 200,
+                time: 10,
+                bgColor: {
+                    header: "rgb(230,81,0)",
+                    body: "rgb(245,124,0)"
+                }
+            },
+            {
+                minPrice: 500,
+                time: 10,
+                bgColor: {
+                    header: "rgb(194,24,91)",
+                    body: "rgb(233,30,99)"
+                }
+            },
+            {
+                minPrice: 1000,
+                time: 10,
+                bgColor: {
+                    header: "rgb(208,0,0)",
+                    body: "rgb(230,33,23)"
+                }
+            },
+        ]
     }
 };
 
@@ -184,6 +236,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.SUPERCHAT_PRICE:
             state.superchat.price = Number(payload);
+            break;
+        case OPTIONS_ACTION.SUPERCHAT_OPTIONS:
+            state.superchat.options = payload;
             break;
         default:
             break;

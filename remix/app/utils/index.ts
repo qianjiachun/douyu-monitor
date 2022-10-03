@@ -126,7 +126,7 @@ export function getStrMiddle(str: string, before: string, after: string): string
 	return m ? m[1] : "";
 }
 
-export function getFlexStyle (options: IOptions, flag: "danmaku" | "gift" | "enter") {
+export function getFlexStyle (options: IOptions, flag: IOptionsSwitch) {
 	return {
 		flex: options.switch[options.switch.length - 1] === flag ? "1" : `0 0 ${options.size[flag]}%`,
 		order: options.switch.indexOf(flag) * 2 + 1
@@ -191,4 +191,15 @@ export function formatTime(timestamp: number | string, format: string = "yyyy-MM
     }
   }
   return format;
+}
+
+export function getSuperchatOption(options: ISuperchatOption[], price: number): ISuperchatOption | null {
+  // 请确保options里的minPrice是从大到小排列
+  for (let i = 0; i < options.length; i++) {
+    const item = options[i];
+    if (price >= item.minPrice) {
+      return item;
+    }
+  }
+  return null;
 }
