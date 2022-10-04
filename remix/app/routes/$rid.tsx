@@ -305,6 +305,7 @@ const Index = () => {
                             <Checkbox name="diamond" shape="square">钻粉</Checkbox>
                             <Checkbox name="color" shape="square">颜色</Checkbox>
                             <Checkbox name="vip" shape="square">VIP</Checkbox>
+                            <Checkbox name="time" shape="square">时间</Checkbox>
                         </Checkbox.Group>
                     </Field>
                     <Field value={String(options.danmaku.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
@@ -340,6 +341,7 @@ const Index = () => {
                             <Checkbox name="level" shape="square">等级</Checkbox>
                             <Checkbox name="noble" shape="square">贵族</Checkbox>
                             <Checkbox name="avatar" shape="square">头像</Checkbox>
+                            <Checkbox name="time" shape="square">时间</Checkbox>
                         </Checkbox.Group>
                     </Field>
                     <Field value={options.enter.keywords.join(" ")} label="关键昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.ENTER_KEYWORDS, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
@@ -349,8 +351,16 @@ const Index = () => {
                     <Field label="占比">
                         <Slider disabled={options.switch[options.switch.length-1] === "superchat"} value={options.size.superchat} onChange={(v: number) => dispatchOptions({type: OPTIONS_ACTION.SIZE, payload: {superchat: v}})}/>
                     </Field>
+                    <Field label="显示">
+                        <Checkbox.Group value={options.superchat.show} direction="horizontal" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_SHOW, payload: v})}>
+                            <Checkbox name="noble" shape="square">贵族</Checkbox>
+                            <Checkbox name="fans" shape="square">粉丝牌</Checkbox>
+                            <Checkbox name="roomAdmin" shape="square">房管</Checkbox>
+                            <Checkbox name="diamond" shape="square">钻粉</Checkbox>
+                        </Checkbox.Group>
+                    </Field>
                     <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
-                    <Field value={String(options.superchat.price)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_PRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
+                    <Field value={String(options.superchat.minPrice)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_MINPRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
                     <Field
                     tooltip="minPrice: 高于这个价格则执行这个配置；time: 停留时间"
                     value={JSON.stringify(options.superchat.options,null,"\t")}

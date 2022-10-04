@@ -43,10 +43,11 @@ const Superchat: FC<IProps> = ({options, superchatList}) => {
         superchatList.map(item => {
           return <Default key={item.key}
 					option={getSuperchatOption(superchatOptions, item.price)}
-					price={item.price}
-					avatar={item.avatar}
-					nickname={item.nn}
-					txt={item.txt}
+					data={item}
+					showNoble={options.superchat.show.includes("noble")}
+					showFans={options.superchat.show.includes("fans")}
+					showDiamond={options.superchat.show.includes("diamond")}
+					showRoomAdmin={options.superchat.show.includes("roomAdmin")}
           showAnimation={options.animation}></Default>
         })
       }

@@ -139,7 +139,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isRoomAdmin: data.rg == "4",
             isSuper: data.pg == "5",
             isVip: data.ail == "453/" || data.ail == "454/",
-            key: data.cid,
+            key: new Date().getTime() + Math.random(),
         };
         // 过滤机器人弹幕
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
@@ -158,9 +158,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         // }
         setSuperchatList(list => {
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), {...obj, price: getRandom(30, 1200)}];
+                return [...list.splice(1), {...obj, price: getRandom(50, 1200)}];
             } else {
-                return [...list, {...obj, price: getRandom(30, 1200)}];
+                return [...list, {...obj, price: getRandom(50, 1200)}];
             }
         });
         //#endregion
@@ -236,7 +236,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 // #region superchat
                 const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 10;
                 const uid = data.uid;
-                if (totalGiftPrice >= options.current.superchat.price * 100) {
+                if (totalGiftPrice >= options.current.superchat.minPrice * 100) {
                     superchatMap[uid] = {count: 1, price: totalGiftPrice};
                 }
                 // #endregion

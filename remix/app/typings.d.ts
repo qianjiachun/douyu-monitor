@@ -124,8 +124,8 @@ interface ISize {
     superchat: number;
 }
 
-// 弹幕显示元素。值：level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP  color:弹幕颜色
-type IOptionsDanmakuShow = "level" | "avatar" | "fans" | "noble" | "roomAdmin" | "diamond" | "vip" | "color";
+// 弹幕显示元素。值：level:等级  avatar:头像  fans:粉丝牌  noble:贵族  roomAdmin:房管  diamond:钻粉  vip:VIP  color:弹幕颜色 time:时间
+type IOptionsDanmakuShow = "level" | "avatar" | "fans" | "noble" | "roomAdmin" | "diamond" | "vip" | "color" | "time";
 
 interface IOptionsDanmaku {
     show: IOptionsDanmakuShow[];
@@ -141,7 +141,7 @@ interface IOptionsDanmakuBan {
 }
 
 // 入场显示元素。值：level:等级  avatar:头像   noble:贵族
-type IOptionsEnterShow = "level" | "avatar" | "noble";
+type IOptionsEnterShow = "level" | "avatar" | "noble" | "time";
 interface IOptionsEnter {
     show: IOptionsEnterShow[]; 
     keywords: string[]; // 高亮关键昵称
@@ -184,10 +184,13 @@ interface IPanelData {
     data: IGift | IDanmaku | IEnter;
 }
 
+type IOptionsSuperchatShow = "fans" | "noble" | "roomAdmin" | "diamond";
+
 interface IOptionsSuperchat {
     keyword: string; // 触发关键词
-    price: number; // superchat起步价（贡献值）
-    options: ISuperchatOption[];
+    minPrice: number; // superchat起步价（贡献值）
+    options: ISuperchatOption[]; // sc的配置项
+    show: IOptionsSuperchatShow[];
 }
 
 interface ISuperchatOption {

@@ -48,6 +48,7 @@ const Danmaku: FC<IProps> = ({options, danmakuList}) => {
 				showAvatar={options.danmaku.show.includes("avatar")}
 				showVip={options.danmaku.show.includes("vip")}
 				showColor={options.danmaku.show.includes("color")}
+				showTime={options.danmaku.show.includes("time")}
 				isHighlight={isArrayInText(options.danmaku.keyNicknames, item.nn)}
 				></Default>
 			})}

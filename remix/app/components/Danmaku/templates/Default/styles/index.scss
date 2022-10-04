@@ -26,6 +26,10 @@
         .item__txt {
             @include fontColor("txtColor");
         }
+        .item__time {
+            @include fontColor("contentColor");
+            font-size: 12px;
+        }
     }
     .noble-day {
         background-color:#fff3df;

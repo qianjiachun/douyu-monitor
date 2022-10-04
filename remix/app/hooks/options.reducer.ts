@@ -30,7 +30,8 @@ enum OPTIONS_ACTION {
     GIFT_FANSLEVEL = "gift_fansLevel",
     GIFT_SHOWEFFECT = "gift_showEffect",
     SHOW_STATUS = "show_status",
-    SUPERCHAT_PRICE = "superchat_price",
+    SUPERCHAT_MINPRICE = "superchat_minPrice",
+    SUPERCHAT_SHOW = "superchat_show",
     SUPERCHAT_KEYWORD = "superchat_keyword",
     SUPERCHAT_OPTIONS = "superchat_options",
 }
@@ -88,10 +89,11 @@ const defaultOptions: IOptions = {
     },
     superchat: {
         keyword: "#sc",
-        price: 30,
+        show: ["fans", "noble", "roomAdmin", "diamond"],
+        minPrice: 50,
         options: [
             {
-                minPrice: 30,
+                minPrice: 50,
                 time: 10,
                 bgColor: {
                     header: "rgb(21,101,192)",
@@ -99,7 +101,7 @@ const defaultOptions: IOptions = {
                 }
             },
             {
-                minPrice: 50,
+                minPrice: 100,
                 time: 10,
                 bgColor: {
                     header: "rgb(0,191,165)",
@@ -107,15 +109,7 @@ const defaultOptions: IOptions = {
                 }
             },
             {
-                minPrice: 100,
-                time: 10,
-                bgColor: {
-                    header: "rgb(255,179,0)",
-                    body: "rgb(255,202,40)"
-                }
-            },
-            {
-                minPrice: 200,
+                minPrice: 300,
                 time: 10,
                 bgColor: {
                     header: "rgb(230,81,0)",
@@ -234,11 +228,14 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
         case OPTIONS_ACTION.SUPERCHAT_KEYWORD:
             state.superchat.keyword = payload;
             break;
-        case OPTIONS_ACTION.SUPERCHAT_PRICE:
-            state.superchat.price = Number(payload);
+        case OPTIONS_ACTION.SUPERCHAT_MINPRICE:
+            state.superchat.minPrice = Number(payload);
             break;
         case OPTIONS_ACTION.SUPERCHAT_OPTIONS:
             state.superchat.options = payload;
+            break;
+        case OPTIONS_ACTION.SUPERCHAT_SHOW:
+            state.superchat.show = [...payload as IOptionsSuperchatShow[]];
             break;
         default:
             break;

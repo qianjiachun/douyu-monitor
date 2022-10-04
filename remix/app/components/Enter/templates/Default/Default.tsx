@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { FC } from "react";
 import { memo, useMemo } from "react";
 import { nobleData } from "~/resources/nobleData";
+import { formatTime } from "~/utils";
 
 interface IProps {
     // 进场数据
@@ -16,6 +17,8 @@ interface IProps {
     showNoble?: boolean;
     // 是否显示用户头像
     showAvatar?: boolean;
+    // 是否显示时间
+    showTime?: boolean;
     // 是否高亮
     isHighlight?: boolean;
 }
@@ -41,6 +44,7 @@ const Default: FC<IProps> = (props) => {
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt=""/></span>}
             {/* 昵称 */}
             <span className="item__name"><span>{data.nn}</span> 进入了直播间</span>
+            {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
         </div>
     )
 }

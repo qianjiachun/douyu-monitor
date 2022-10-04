@@ -44,6 +44,7 @@ const Enter: FC<IProps> = ({options, enterList}) => {
 				showLevel={options.enter.show.includes("level")}
 				showNoble={options.enter.show.includes("noble")}
 				showAvatar={options.enter.show.includes("avatar")}
+				showTime={options.enter.show.includes("time")}
 				></Default>
 			})}
 			{isLock && <div className="gobottom" onClick={(e) => {e.stopPropagation();goToScrollBottom(wrapRef.current)}}>回到底部</div>}

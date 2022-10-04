@@ -3,6 +3,7 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
+import { formatTime } from "~/utils";
 
 interface IProps {
     // 弹幕数据
@@ -27,6 +28,8 @@ interface IProps {
     showVip?: boolean;
     // 是否显示弹幕颜色
     showColor?: boolean;
+    // 是否显示时间
+    showTime?: boolean;
     // 是否高亮
     isHighlight?: boolean;
 }
@@ -47,7 +50,7 @@ const Default: FC<IProps> = (props) => {
             {/* 等级 */}
             {props.showLevel && <span className={clsx("item__level", {"fansLevelNight": props.mode==="night" && Number(data.lv) < 70}, "UserLevel", `UserLevel--${data.lv}`)}></span>}
             {/* 贵族 */}
-            {props.showNoble && data.isNoble &&
+            {props.showNoble && !!props.data.nobleLv &&
             <span className="item__noble Barrage-icon Barrage-noble">
                 <img src={`${data.nobleLv in nobleData.data ? nobleData.prefix + nobleData.data[data.nobleLv].pic : ""}`} alt="" loading="lazy"/>
             </span>}
@@ -73,6 +76,7 @@ const Default: FC<IProps> = (props) => {
             </span>
             {/* 弹幕 */}
             <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">{data.txt}</span>
+            {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
         </div>
     )
 }

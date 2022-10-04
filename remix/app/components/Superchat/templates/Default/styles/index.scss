@@ -20,11 +20,18 @@
           .item__header {
             display: flex;
             align-items: center;
+            .item__name span {
+              margin-right: 4px;
+            }
             .item__avatar {
               margin-right: 16px;
               width: var(--scAvatarSize, 40px);
               height: var(--scAvatarSize, 40px);
               border-radius: 50%;
+            }
+            .item__fans {
+                width: 60px;
+                position: relative;
             }
             .item__info {
               flex: 1;
@@ -34,6 +41,7 @@
           }
           .item__body {
             font-size: calc(100% + 1px);
+            word-break: break-word;
           }
         }
     }
