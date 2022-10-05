@@ -203,3 +203,7 @@ export function getSuperchatOption(options: ISuperchatOption[], price: number): 
   }
   return null;
 }
+
+export function deepCopy<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value));
+}

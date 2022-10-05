@@ -30,7 +30,6 @@ enum OPTIONS_ACTION {
     GIFT_FANSLEVEL = "gift_fansLevel",
     GIFT_SHOWEFFECT = "gift_showEffect",
     SHOW_STATUS = "show_status",
-    SUPERCHAT_MINPRICE = "superchat_minPrice",
     SUPERCHAT_SHOW = "superchat_show",
     SUPERCHAT_KEYWORD = "superchat_keyword",
     SUPERCHAT_OPTIONS = "superchat_options",
@@ -90,46 +89,45 @@ const defaultOptions: IOptions = {
     superchat: {
         keyword: "#sc",
         show: ["fans", "noble", "roomAdmin", "diamond"],
-        minPrice: 50,
         options: [
             {
-                minPrice: 50,
-                time: 10,
+                minPrice: 1000,
+                time: 200,
                 bgColor: {
-                    header: "rgb(21,101,192)",
-                    body: "rgb(30,136,229)"
-                }
-            },
-            {
-                minPrice: 100,
-                time: 10,
-                bgColor: {
-                    header: "rgb(0,191,165)",
-                    body: "rgb(29,233,182)"
-                }
-            },
-            {
-                minPrice: 300,
-                time: 10,
-                bgColor: {
-                    header: "rgb(230,81,0)",
-                    body: "rgb(245,124,0)"
+                    header: "rgb(208,0,0)",
+                    body: "rgb(230,33,23)"
                 }
             },
             {
                 minPrice: 500,
-                time: 10,
+                time: 100,
                 bgColor: {
                     header: "rgb(194,24,91)",
                     body: "rgb(233,30,99)"
                 }
             },
             {
-                minPrice: 1000,
+                minPrice: 300,
+                time: 30,
+                bgColor: {
+                    header: "rgb(230,81,0)",
+                    body: "rgb(245,124,0)"
+                }
+            },
+            {
+                minPrice: 100,
+                time: 20,
+                bgColor: {
+                    header: "rgb(0,191,165)",
+                    body: "rgb(29,233,182)"
+                }
+            },
+            {
+                minPrice: 50,
                 time: 10,
                 bgColor: {
-                    header: "rgb(208,0,0)",
-                    body: "rgb(230,33,23)"
+                    header: "rgb(21,101,192)",
+                    body: "rgb(30,136,229)"
                 }
             },
         ]
@@ -227,9 +225,6 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.SUPERCHAT_KEYWORD:
             state.superchat.keyword = payload;
-            break;
-        case OPTIONS_ACTION.SUPERCHAT_MINPRICE:
-            state.superchat.minPrice = Number(payload);
             break;
         case OPTIONS_ACTION.SUPERCHAT_OPTIONS:
             state.superchat.options = payload;

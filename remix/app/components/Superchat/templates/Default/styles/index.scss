@@ -4,7 +4,7 @@
         vertical-align: middle;
         width: 100%;
         margin-bottom: 5px;
-        padding: 0 4px;
+        padding: 4px 8px;
         box-sizing: border-box;
         
         .item__wrap {
@@ -20,7 +20,7 @@
           .item__header {
             display: flex;
             align-items: center;
-            .item__name span {
+            .item__name span, .item__name div {
               margin-right: 4px;
             }
             .item__avatar {

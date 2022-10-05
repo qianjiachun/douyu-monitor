@@ -4,6 +4,10 @@
 @import "../components/Enter/templates/Default/styles/index.scss";
 @import "../components/Gift/templates/Default/styles/index.scss";
 @import "../components/Superchat/templates/Default/styles/index.scss";
+html, body {
+    width: 100%;
+    height: 100%;
+}
 .monitor {
     @include backgroundColor("backgroundColor");
     width: 100%;
@@ -37,6 +41,11 @@
             text-align: var(--textAlign, "left");
         }
     }
+}
+
+.superchat-panel {
+    background-color: transparent;
+    margin: 8px;
 }
 
 .popup {

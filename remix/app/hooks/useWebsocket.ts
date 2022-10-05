@@ -1,7 +1,8 @@
-import { getRandom, getStrMiddle, isArrayInText } from "~/utils";
+import { getStrMiddle, getSuperchatOption, isArrayInText } from "~/utils";
 import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
-import type { MutableRefObject } from "react";
+import type { MutableRefObject} from "react";
+import { useEffect } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 import { nobleData } from "~/resources/nobleData";
@@ -54,6 +55,26 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
     const [panelDataList, setPanelDataList] = useState<IPanelData[]>([]);
     const [superchatList, setSuperchatList] = useState<ISuperchat[]>([]);
+    const [superchatPanelList, setSuperchatPanelList] = useState<ISuperchat[]>([]);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setSuperchatPanelList(list => {
+                return list.filter(item => {
+                    let now = new Date().getTime();
+                    let superchatOption = getSuperchatOption(options.current.superchat.options, item.price);
+                    if (superchatOption) {
+                        return (item.time + superchatOption.time * 1000) >= now
+                    } else {
+                        return false;
+                    }
+                })
+            })
+        }, 1000);
+        return () => {
+            clearInterval(timer);
+        }
+    }, [options]);
 
     const connectWs = (rid: string): void => {
         if (rid === "") return;
@@ -69,22 +90,22 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         ws = null;
     }
 
-    const addPanelData = useCallback((type: IMsgType, data: IGift | IDanmaku | IEnter) => {
-        setPanelDataList(list => {
-            if (list.length > 0 && type === "danmaku") {
-                // 过滤重复弹幕
-                if (list[list.length - 1].type === "danmaku" && options.current.danmaku.ban.isFilterRepeat && (list[list.length - 1].data as IDanmaku).txt === (data as IDanmaku).txt) {
-                    return list;
-                }
-            }
-            const obj = {type, data};
-            if (list.length >= options.current.threshold) {
-                return [...list.splice(1), obj];
-            } else {
-                return [...list, obj];
-            }
-        });
-    }, [options]);
+    // const addPanelData = useCallback((type: IMsgType, data: IGift | IDanmaku | IEnter | ISuperchat) => {
+    //     setPanelDataList(list => {
+    //         if (list.length > 0 && type === "danmaku") {
+    //             // 过滤重复弹幕
+    //             if (list[list.length - 1].type === "danmaku" && options.current.danmaku.ban.isFilterRepeat && (list[list.length - 1].data as IDanmaku).txt === (data as IDanmaku).txt) {
+    //                 return list;
+    //             }
+    //         }
+    //         const obj = {type, data};
+    //         if (list.length >= options.current.threshold) {
+    //             return [...list.splice(1), obj];
+    //         } else {
+    //             return [...list, obj];
+    //         }
+    //     });
+    // }, [options]);
 
     const msgHandler = (msg: string) => {
         let msgType = selectMsgType(getStrMiddle(msg, "type@=", "/"));
@@ -145,43 +166,39 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
         // #region superchat
         const superchatData = superchatMap[data.uid];
-        // if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
-        //     delete superchatMap[data.uid];
-        //     setSuperchatList(list => {
-        //         const scObj = {...obj, txt: obj.txt.replace(new RegExp(options.current.superchat.keyword, "g"), "").trim(), price: superchatData.price};
-        //         if (list.length >= options.current.threshold) {
-        //             return [...list.splice(1), scObj];
-        //         } else {
-        //             return [...list, scObj];
-        //         }
-        //     });
-        // }
-        setSuperchatList(list => {
+        if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
+            delete superchatMap[data.uid];
+            const scObj: ISuperchat = {
+                ...obj,
+                txt: obj.txt.replace(new RegExp(options.current.superchat.keyword, "g"), "").trim(),
+                price: superchatData.price,
+                time: new Date().getTime()
+            };
+            setSuperchatList(list => {
+                if (list.length >= options.current.threshold) {
+                    return [...list.splice(1), scObj];
+                } else {
+                    return [...list, scObj];
+                }
+            });
+            setSuperchatPanelList(list => {
+                if (list.length >= options.current.threshold) {
+                    return [...list.splice(1), scObj];
+                } else {
+                    return [...list, scObj];
+                }
+            });
+        }
+        //#endregion
+        setDanmakuList(list => {
+            // 过滤重复弹幕
+            if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) return list;
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), {...obj, price: getRandom(50, 1200)}];
+                return [...list.splice(1), obj];
             } else {
-                return [...list, {...obj, price: getRandom(50, 1200)}];
+                return [...list, obj];
             }
         });
-        //#endregion
-        switch (options.current.showMode) {
-            case "default":
-                setDanmakuList(list => {
-                    // 过滤重复弹幕
-                    if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) return list;
-                    if (list.length >= options.current.threshold) {
-                        return [...list.splice(1), obj];
-                    } else {
-                        return [...list, obj];
-                    }
-                });
-                break;
-            case "panel":
-                addPanelData("danmaku", obj);
-                break;
-            default:
-                break;
-        }
     }
 
     const handleEnter = (data: any) => {
@@ -193,22 +210,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             nobleLv: data.nl,
             key: new Date().getTime() + Math.random(),
         }
-        switch (options.current.showMode) {
-            case "default":
-                setEnterList(list => {
-                    if (list.length >= options.current.threshold) {
-                        return [...list.splice(1), obj];
-                    } else {
-                        return [...list, obj];
-                    }
-                });
-                break;
-            case "panel":
-                addPanelData("enter", obj);
-                break;
-            default:
-                break;
-        }
+        setEnterList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), obj];
+            } else {
+                return [...list, obj];
+            }
+        });
     }
 
     const handleGift = (data: any) => {
@@ -234,9 +242,10 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 };
 
                 // #region superchat
-                const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 10;
+                const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 100;
                 const uid = data.uid;
-                if (totalGiftPrice >= options.current.superchat.minPrice * 100) {
+                const superchatMinPrice = options.current.superchat.options[options.current.superchat.options.length - 1]?.minPrice;
+                if (superchatMinPrice && totalGiftPrice >= superchatMinPrice) {
                     superchatMap[uid] = {count: 1, price: totalGiftPrice};
                 }
                 // #endregion
@@ -344,22 +353,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 return;
         }
         obj = {...obj, ...tmp};
-        switch (options.current.showMode) {
-            case "default":
-                setGiftList(list => {
-                    if (list.length >= options.current.threshold) {
-                        return [...list.splice(1), obj];
-                    } else {
-                        return [...list, obj];
-                    }
-                });
-                break;
-            case "panel":
-                addPanelData("gift", obj);
-                break;
-            default:
-                break;
-        }
+        setGiftList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), obj];
+            } else {
+                return [...list, obj];
+            }
+        });
     }
 
     const handleData = (data: any) => {
@@ -401,7 +401,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList, superchatList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList, superchatList, superchatPanelList
     }
 }
 
