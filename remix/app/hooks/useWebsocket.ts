@@ -3,6 +3,10 @@ import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
 import type { MutableRefObject} from "react";
 import { useEffect } from "react";
+<<<<<<< HEAD
+=======
+import { useCallback } from "react";
+>>>>>>> 6748f03404c12923db4cf087c1865527e846ab37
 import { useState } from "react";
 import { nobleData } from "~/resources/nobleData";
 
