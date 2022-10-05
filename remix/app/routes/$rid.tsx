@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, saveLocalOptions } from "~/utils";
+import { deepCopy, getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, getSuperchatOption, saveLocalOptions } from "~/utils";
 import "@vant/touch-emulator";
 // import styleVantBase from "react-vant/es/styles/base.css";
 import stylesVant from "react-vant/lib/index.css";
@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
-import { Cell, Checkbox, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
+import { Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
 import { useImmerReducer } from "use-immer";
 import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";
@@ -22,6 +22,7 @@ import Gift from "~/components/Gift";
 import SplitLine from "~/components/SplitLine";
 import copy from "copy-to-clipboard";
 import Superchat from "~/components/Superchat";
+import SuperchatItem from "~/components/Superchat/templates/Default/Default";
 
 
 export const meta: MetaFunction = () => ({
@@ -67,12 +68,28 @@ interface ILoaderProps {
 	allGift: IGiftData;
 	exoptions: any;
 }
+
+type ISuperchatSettingDialogDataType = "bgColor.header" | "bgColor.body" | "minPrice" | "time";
+interface ISuperchatSettingDialogData {
+    index: number;
+    type: ISuperchatSettingDialogDataType;
+    title: string;
+    value: string;
+}
+
 const Index = () => {
 	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, panelDataList, superchatList } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList } = useWebsocket(optionsRef, allGift);
 	const [isShowOptions, setIsShowOptions] = useState(false);
+    const [isShowSuperchatSettingDialog, setIsShowSuperchatSettingDialog] = useState(false);
+    const [superchatSettingDialogData, setSuperchatSettingDialogData] = useState<ISuperchatSettingDialogData>({
+        type: "minPrice",
+        title: "",
+        value: "",
+        index: 0,
+    });
 
     let effectTimer: NodeJS.Timeout;
 
@@ -124,10 +141,6 @@ const Index = () => {
 		optionsRef.current = options;
 		saveLocalOptions(options);
 	}, [options]);
-
-    useEffect(() => {
-        console.log(superchatList);
-    }, [superchatList])
 
     useEffect(() => {
         if (!options.gift.showEffect) return;
@@ -200,6 +213,34 @@ const Index = () => {
 		}).catch(() => {});
 	}
 
+    const onClickSuperchatSetting = (index: number, type: ISuperchatSettingDialogDataType, title: string, value: string) => {
+        setSuperchatSettingDialogData({index, title, value, type});
+        setIsShowSuperchatSettingDialog(true);
+    }
+
+    const onConfirmSuperchatSetting = () => {
+        let newSuperchatOptions = deepCopy(options.superchat.options);
+        switch (superchatSettingDialogData.type) {
+            case "bgColor.body":
+                newSuperchatOptions[superchatSettingDialogData.index].bgColor.body = superchatSettingDialogData.value;
+                break;
+            case "bgColor.header":
+                newSuperchatOptions[superchatSettingDialogData.index].bgColor.header = superchatSettingDialogData.value;
+                break;
+            case "minPrice":
+                newSuperchatOptions[superchatSettingDialogData.index].minPrice = Number(superchatSettingDialogData.value);
+                break;
+            case "time":
+                newSuperchatOptions[superchatSettingDialogData.index].time = Number( superchatSettingDialogData.value);
+                break;
+            default:
+                break;
+        }
+        newSuperchatOptions = newSuperchatOptions.sort((a, b) => b.minPrice - a.minPrice);
+        dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_OPTIONS, payload: newSuperchatOptions});
+        setIsShowSuperchatSettingDialog(false);
+    }
+
 	const logInfo = () => {
 		console.log(`%c
 	______                    _____)
@@ -214,19 +255,54 @@ const Index = () => {
 	}
 
     return <>
-        <div className="noblenum"style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
-            <span>{nobleNum}</span>
-        </div>
-        <div className="monitor" style={{flexDirection: options.direction, fontSize: options.fontSize, ...(options.transparent ? {backgroundColor: "transparent"} : {})}} onClick={() => setIsShowOptions(true)}>
-            <div style={{width: "100%", height: "100%", background: "transparent", position: "absolute", zIndex: 10, pointerEvents: "none"}} id="effect"></div>
-            {options.switch.includes("enter") && <Enter options={options} enterList={enterList}></Enter>}
-            {options.switch.length > 1 && <SplitLine order={2} transparent={options.transparent} direction={options.direction}></SplitLine>}
-            {options.switch.includes("gift") && <Gift options={options} giftList={giftList} allGiftData={allGift}></Gift>}
-            {options.switch.length > 2 && <SplitLine order={4} transparent={options.transparent} direction={options.direction}></SplitLine>}
-            {options.switch.includes("danmaku") && <Danmaku options={options} danmakuList={danmakuList}></Danmaku>}
-            {options.switch.length > 2 && <SplitLine order={6} transparent={options.transparent} direction={options.direction}></SplitLine>}
-            {options.switch.includes("superchat") && <Superchat options={options} superchatList={superchatList}></Superchat>}
-        </div>
+        {
+            options.showMode === "default" &&
+            <div className="noblenum"style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
+                <span>{nobleNum}</span>
+            </div>
+        }
+        {
+            options.showMode === "default" ? 
+            <div className="monitor" style={{flexDirection: options.direction, fontSize: options.fontSize, ...(options.transparent ? {backgroundColor: "transparent"} : {})}} onClick={() => setIsShowOptions(true)}>
+                <div style={{width: "100%", height: "100%", background: "transparent", position: "absolute", zIndex: 10, pointerEvents: "none"}} id="effect"></div>
+                {options.switch.includes("enter") && <Enter options={options} enterList={enterList}></Enter>}
+                {options.switch.length > 1 && <SplitLine order={2} transparent={options.transparent} direction={options.direction}></SplitLine>}
+                {options.switch.includes("gift") && <Gift options={options} giftList={giftList} allGiftData={allGift}></Gift>}
+                {options.switch.length > 2 && <SplitLine order={4} transparent={options.transparent} direction={options.direction}></SplitLine>}
+                {options.switch.includes("danmaku") && <Danmaku options={options} danmakuList={danmakuList}></Danmaku>}
+                {options.switch.length > 2 && <SplitLine order={6} transparent={options.transparent} direction={options.direction}></SplitLine>}
+                {options.switch.includes("superchat") && <Superchat options={options} superchatList={superchatList}></Superchat>}
+            </div>
+            :
+            <div style={{width: "100%", height: "100%"}} onClick={() => setIsShowOptions(true)}>
+                {superchatPanelList.length > 0 &&
+                <div className="superchat superchat-panel">
+                    <SuperchatItem
+                    option={getSuperchatOption(options.superchat.options, superchatPanelList[superchatPanelList.length - 1].price)}
+                    data={superchatPanelList[superchatPanelList.length - 1]}
+                    showNoble={options.superchat.show.includes("noble")}
+                    showFans={options.superchat.show.includes("fans")}
+                    showDiamond={options.superchat.show.includes("diamond")}
+                    showRoomAdmin={options.superchat.show.includes("roomAdmin")}
+                    showAnimation={options.animation} />
+                </div>
+                }
+            </div>
+        }
+        <Dialog
+            visible={isShowSuperchatSettingDialog}
+            title={`修改${superchatSettingDialogData.title}`}
+            showCancelButton
+            onConfirm={onConfirmSuperchatSetting}
+            onCancel={() => setIsShowSuperchatSettingDialog(false)}
+        >
+            <Field value={String(superchatSettingDialogData.value)} label={superchatSettingDialogData.title} onChange={(v) => setSuperchatSettingDialogData(data => {
+                return {
+                    ...data,
+                    value: String(v)
+                }
+            })} placeholder="请输入" />
+        </Dialog>
         <Popup className="popup" visible={isShowOptions} position="bottom" style={{height: "60%"}} onClose={() => setIsShowOptions(false)}>
             <div className="popup-top">
                 <div className="douyuex">
@@ -259,7 +335,8 @@ const Index = () => {
                     <Field label="模式">
                         <Radio.Group value={options.showMode} defaultValue="column" direction="horizontal" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_MODE, payload: v})}>
                             <Radio name="default">默认</Radio>
-                            <Radio name="panel">面板</Radio>
+                            <Radio name="superchat">SuperChat插件</Radio>
+                            {/* <Radio name="panel">面板</Radio> */}
                         </Radio.Group>
                     </Field>
                     <Field label="布局">
@@ -360,8 +437,22 @@ const Index = () => {
                         </Checkbox.Group>
                     </Field>
                     <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
-                    <Field value={String(options.superchat.minPrice)} label="礼物价格≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_MINPRICE, payload: Number(v)})} placeholder="请输入触发sc的最低价格" />
-                    <Field
+                    <Collapse initExpanded={["1"]}>
+                        <Collapse.Item title={`配置（${options.superchat.options.length}） 点击颜色或文字可修改`} name="1">
+                            {options.superchat.options.map((item, index) => {
+                                return <Cell icon={
+                                    <div style={{cursor: "pointer", borderRadius: "4px", overflow: "hidden", display: "flex", flexDirection: "column", width: "24px", height: "24px"}}>
+                                        <div style={{backgroundColor: item.bgColor.header, height: "50%", width: "100%"}} onClick={() => onClickSuperchatSetting(index, "bgColor.header", "标题背景色", item.bgColor.header)}></div>
+                                        <div style={{backgroundColor: item.bgColor.body, height: "50%", width: "100%"}} onClick={() => onClickSuperchatSetting(index, "bgColor.body", "内容背景色", item.bgColor.body)}></div>
+                                    </div>
+                                } style={{display: "flex", alignItems: "center"}} key={item.minPrice + index}>
+                                    <span style={{cursor: "pointer", marginRight: "4px"}} onClick={() => onClickSuperchatSetting(index, "minPrice", "价值≥￥", String(item.minPrice))}>价值≥￥{item.minPrice}</span>
+                                    <span style={{cursor: "pointer", marginRight: "4px"}} onClick={() => onClickSuperchatSetting(index, "time", "停留时间(秒)", String(item.time))}>停留{item.time}秒</span>
+                                </Cell>
+                            })}
+                        </Collapse.Item>
+                    </Collapse>
+                    {/* <Field
                     tooltip="minPrice: 高于这个价格则执行这个配置；time: 停留时间"
                     value={JSON.stringify(options.superchat.options,null,"\t")}
                     onChange={(v) => dispatchOptions({
@@ -370,7 +461,7 @@ const Index = () => {
                     })}
                     label="配置"
                     type="textarea"
-                    placeholder="请输入json配置" />
+                    placeholder="请输入json配置" /> */}
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
                     <Field label="开启统计">

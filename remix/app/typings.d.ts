@@ -88,6 +88,7 @@ interface IGift {
 
 interface ISuperchat extends IDanmaku {
     price: number; // 贡献值
+    time: number; // 创建时间
 }
 
 // 主题切换
@@ -97,7 +98,7 @@ type IMode = "day" | "night";
 type IOptionsSwitch = "enter" | "gift" | "danmaku" | "superchat";
 
 // 显示模式，default是指斗鱼弹幕助手模式，panel是用于OBS展示用的模式
-type IShowMode = "default" | "panel";
+type IShowMode = "default" | "panel" | "superchat";
 
 interface IOptions {
     showMode: IShowMode; // 显示模式。值：default/panel
@@ -177,7 +178,7 @@ interface IGiftStatisticsInfo {
     count: number; // 数量
 }
 
-type IMsgType = "danmaku" | "gift" | "enter" | "data" | "";
+type IMsgType = "danmaku" | "gift" | "enter" | "data" | "superchat" | "";
 
 interface IPanelData {
     type: IMsgType;
@@ -188,7 +189,6 @@ type IOptionsSuperchatShow = "fans" | "noble" | "roomAdmin" | "diamond";
 
 interface IOptionsSuperchat {
     keyword: string; // 触发关键词
-    minPrice: number; // superchat起步价（贡献值）
     options: ISuperchatOption[]; // sc的配置项
     show: IOptionsSuperchatShow[];
 }
