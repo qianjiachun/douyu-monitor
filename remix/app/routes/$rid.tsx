@@ -143,7 +143,7 @@ const Index = () => {
 	}, [options]);
 
     useEffect(() => {
-        if (!options.gift.showEffect) return;
+        if (!options.gift.showEffect || options.showMode === "superchat") return;
         let giftMsgInfo = giftList[giftList.length - 1];
         if (!giftMsgInfo || giftMsgInfo.type !== "gift") return;
         let svga = allGift[giftMsgInfo.gfid]?.svga;
