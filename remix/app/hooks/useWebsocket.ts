@@ -107,7 +107,8 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     // }, [options]);
 
     const msgHandler = (msg: string) => {
-        let msgType = selectMsgType(getStrMiddle(msg, "type@=", "/"));
+        let typeStr = getStrMiddle(msg, "type@=", "/");
+        let msgType = selectMsgType(typeStr);
         if (msgType === "" || (msgType !== "data" && !options.current.switch.includes(msgType))) return;
         //  获得socekt序列化数据
         let data = stt.deserialize(msg);
