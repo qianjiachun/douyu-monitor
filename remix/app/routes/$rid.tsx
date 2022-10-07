@@ -277,14 +277,17 @@ const Index = () => {
             <div style={{width: "100%", height: "100%"}} onClick={() => setIsShowOptions(true)}>
                 {superchatPanelList.length > 0 &&
                 <div className="superchat superchat-panel">
-                    <SuperchatItem
-                    option={getSuperchatOption(options.superchat.options, superchatPanelList[superchatPanelList.length - 1].price)}
-                    data={superchatPanelList[superchatPanelList.length - 1]}
-                    showNoble={options.superchat.show.includes("noble")}
-                    showFans={options.superchat.show.includes("fans")}
-                    showDiamond={options.superchat.show.includes("diamond")}
-                    showRoomAdmin={options.superchat.show.includes("roomAdmin")}
-                    showAnimation={options.animation} />
+                    {superchatPanelList.sort((a, b) => b.price - a.price).map(item => {
+                        return <SuperchatItem
+                        key={item.key}
+                        option={getSuperchatOption(options.superchat.options, item.price)}
+                        data={item}
+                        showNoble={options.superchat.show.includes("noble")}
+                        showFans={options.superchat.show.includes("fans")}
+                        showDiamond={options.superchat.show.includes("diamond")}
+                        showRoomAdmin={options.superchat.show.includes("roomAdmin")}
+                        showAnimation={options.animation} />
+                    })}
                 </div>
                 }
             </div>

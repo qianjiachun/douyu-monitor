@@ -15,7 +15,7 @@ class Ex_WebSocket_UnLogin {
             this.ws.onopen = () => {
                 this.ws.send(WebSocket_Packet("type@=loginreq/roomid@=" + rid));
                 this.ws.send(WebSocket_Packet("type@=joingroup/rid@=" + rid + "/gid@=-9999/"));
-                this.ws.send(WebSocket_Packet("type@=sub/mt@=asr_caption/"));
+                // this.ws.send(WebSocket_Packet("type@=sub/mt@=asr_caption/"));
                 this.timer = setInterval(() => {
                     this.ws.send(WebSocket_Packet("type@=mrkl/"));
                 }, 40000)
