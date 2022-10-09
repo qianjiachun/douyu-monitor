@@ -461,7 +461,7 @@ const Index = () => {
                             })}
                         </Collapse.Item>
                     </Collapse>
-                    <Field
+                    {/* <Field
                     tooltip="minPrice: 高于这个价格则执行这个配置；time: 停留时间"
                     value={JSON.stringify(options.superchat.options,null,"\t")}
                     onChange={(v) => dispatchOptions({
@@ -470,7 +470,7 @@ const Index = () => {
                     })}
                     label="配置"
                     type="textarea"
-                    placeholder="请输入json配置" />
+                    placeholder="请输入json配置" /> */}
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
                     <Field label="开启统计">
