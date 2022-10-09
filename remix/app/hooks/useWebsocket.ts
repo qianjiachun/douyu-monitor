@@ -245,7 +245,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 100;
                 const uid = data.uid;
                 const superchatMinPrice = options.current.superchat.options[options.current.superchat.options.length - 1]?.minPrice;
-                if (superchatMinPrice && totalGiftPrice >= superchatMinPrice) {
+                if (totalGiftPrice >= superchatMinPrice) {
                     superchatMap[uid] = {count: 1, price: totalGiftPrice};
                 }
                 // #endregion

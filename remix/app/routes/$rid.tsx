@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
-import { Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs } from "react-vant";
+import { Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs, Toast } from "react-vant";
 import { useImmerReducer } from "use-immer";
 import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";
@@ -343,7 +343,13 @@ const Index = () => {
                         </Radio.Group>
                     </Field>
                     <Field label="布局">
-                        <Checkbox.Group value={options.switch} direction="horizontal" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SWITCH, payload: v})}>
+                        <Checkbox.Group value={options.switch} direction="horizontal" onChange={(v) => {
+                            if (v.includes("superchat") && !(v.includes("gift") && v.includes("danmaku"))) {
+                                Toast.fail("开启sc需要同时开启礼物和弹幕");
+                                return;
+                            }
+                            dispatchOptions({type: OPTIONS_ACTION.SWITCH, payload: v})
+                        }}>
                             <Checkbox shape="square" name="enter">进场</Checkbox>
                             <Checkbox shape="square" name="gift">礼物</Checkbox>
                             <Checkbox shape="square" name="danmaku">弹幕</Checkbox>
@@ -455,7 +461,7 @@ const Index = () => {
                             })}
                         </Collapse.Item>
                     </Collapse>
-                    {/* <Field
+                    <Field
                     tooltip="minPrice: 高于这个价格则执行这个配置；time: 停留时间"
                     value={JSON.stringify(options.superchat.options,null,"\t")}
                     onChange={(v) => dispatchOptions({
@@ -464,7 +470,7 @@ const Index = () => {
                     })}
                     label="配置"
                     type="textarea"
-                    placeholder="请输入json配置" /> */}
+                    placeholder="请输入json配置" />
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
                     <Field label="开启统计">
