@@ -105,6 +105,8 @@ const Index = () => {
             effectTimer = setTimeout(() => {
                 player.stopAnimation();
                 player.clear();
+                player = null;
+                parser = null;
             }, stayTime * 1000);
         });
     }

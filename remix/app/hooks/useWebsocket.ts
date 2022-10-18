@@ -30,6 +30,7 @@ interface ISuperchatMapItem {
 }
 
 let superchatMap: Record<string, ISuperchatMapItem> = {};
+const stt = new STT();
 
 const selectMsgType = (msgType: string): IMsgType => {
     if (msgType === "") return "";
@@ -43,8 +44,6 @@ const selectMsgType = (msgType: string): IMsgType => {
 
 const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftData) => {
     let ws: Ex_WebSocket_UnLogin | null = null;
-    let stt = new STT();
-
     const [danmakuList, setDanmakuList] = useState<IDanmaku[]>([]);
     const [giftList, setGiftList] = useState<IGift[]>([]);
     const [enterList, setEnterList] = useState<IEnter[]>([]);
@@ -166,7 +165,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
         // #region superchat
         const superchatData = superchatMap[data.uid];
-        if (obj.txt.includes(options.current.superchat.keyword) && superchatData && superchatData.count >= 1) {
+        if (superchatData && superchatData.count >= 1 && obj.txt.includes(options.current.superchat.keyword)) {
             delete superchatMap[data.uid];
             const scObj: ISuperchat = {
                 ...obj,
@@ -242,11 +241,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 };
 
                 // #region superchat
-                const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 100;
-                const uid = data.uid;
-                const superchatMinPrice = options.current.superchat.options[options.current.superchat.options.length - 1]?.minPrice;
-                if (totalGiftPrice >= superchatMinPrice) {
-                    superchatMap[uid] = {count: 1, price: totalGiftPrice};
+                if (options.current.switch.includes("superchat")) {
+                    const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 100;
+                    const uid = data.uid;
+                    const superchatMinPrice = options.current.superchat.options[options.current.superchat.options.length - 1]?.minPrice;
+                    if (totalGiftPrice >= superchatMinPrice) {
+                        superchatMap[uid] = {count: 1, price: totalGiftPrice};
+                    }
                 }
                 // #endregion
                 if (options.current.showStatus) {
