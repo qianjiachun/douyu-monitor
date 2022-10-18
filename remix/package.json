@@ -9,7 +9,8 @@
     "dev": "concurrently \"npm run sass:dev\" \"remix dev\"",
     "start": "set PORT=7001 && remix-serve build",
     "sass:dev": "sass --watch --no-source-map --style compressed app/:app/",
-    "sass": "sass --no-source-map --style compressed app/:app/"
+    "sass": "sass --no-source-map --style compressed app/:app/",
+    "memlab": "node memlab/index.js"
   },
   "dependencies": {
     "@remix-run/node": "^1.7.2",
@@ -19,6 +20,7 @@
     "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.2",
     "immer": "^9.0.15",
+    "memlab": "^1.1.29",
     "react": "^18.2.0",
     "react-cool-virtual": "^0.7.0",
     "react-dom": "^18.2.0",
