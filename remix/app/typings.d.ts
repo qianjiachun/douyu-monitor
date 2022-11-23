@@ -191,6 +191,7 @@ interface IOptionsSuperchat {
     keyword: string; // 触发关键词
     options: ISuperchatOption[]; // sc的配置项
     show: IOptionsSuperchatShow[];
+    speak: boolean; // 是否语音播报
 }
 
 interface ISuperchatOption {

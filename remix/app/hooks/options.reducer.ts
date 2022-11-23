@@ -33,6 +33,7 @@ enum OPTIONS_ACTION {
     SUPERCHAT_SHOW = "superchat_show",
     SUPERCHAT_KEYWORD = "superchat_keyword",
     SUPERCHAT_OPTIONS = "superchat_options",
+    SUPERCHAT_SPEAK = "superchat_speak"
 }
 
 interface IOptionsAction {
@@ -89,6 +90,7 @@ const defaultOptions: IOptions = {
     superchat: {
         keyword: "#sc",
         show: ["fans", "noble", "roomAdmin", "diamond"],
+        speak: false,
         options: [
             {
                 minPrice: 1000,
@@ -231,6 +233,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.SUPERCHAT_SHOW:
             state.superchat.show = [...payload as IOptionsSuperchatShow[]];
+            break;
+        case OPTIONS_ACTION.SUPERCHAT_SPEAK:
+            state.superchat.speak = payload;
             break;
         default:
             break;

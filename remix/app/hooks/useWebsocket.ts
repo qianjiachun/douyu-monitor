@@ -1,4 +1,4 @@
-import { getStrMiddle, getSuperchatOption, isArrayInText } from "~/utils";
+import { getStrMiddle, getSuperchatOption, isArrayInText, speakText } from "~/utils";
 import { Ex_WebSocket_UnLogin } from "~/utils/libs/websocket";
 import { STT } from "~/utils/libs/stt";
 import type { MutableRefObject} from "react";
@@ -174,6 +174,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 time: new Date().getTime()
             };
             setSuperchatList(list => {
+                if (options.current.superchat.speak) {
+                    speakText(`${scObj.nn}说：${scObj.txt}`);
+                }
                 if (list.length >= options.current.threshold) {
                     return [...list.splice(1), scObj];
                 } else {

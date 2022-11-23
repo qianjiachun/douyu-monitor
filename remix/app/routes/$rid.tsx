@@ -448,6 +448,9 @@ const Index = () => {
                         </Checkbox.Group>
                     </Field>
                     <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
+                    <Field label="语音播报">
+                        <Switch size={20} checked={options.superchat.speak} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_SPEAK, payload: v})} />
+                    </Field>
                     <Collapse initExpanded={["1"]}>
                         <Collapse.Item title={`配置（${options.superchat.options.length}） 点击颜色或文字可修改`} name="1">
                             {options.superchat.options.map((item, index) => {
