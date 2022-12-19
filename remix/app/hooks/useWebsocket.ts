@@ -11,6 +11,7 @@ const MSG_TYPE: any = {
     gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast"],
     enter: ["uenter"],
     data: ["noble_num_info"],
+    fansPaper: ["fansPaper"]
 };
 export enum GIFT_TYPE {
     GIFT = "gift", // 普通礼物
@@ -108,7 +109,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     const msgHandler = (msg: string) => {
         let typeStr = getStrMiddle(msg, "type@=", "/");
         let msgType = selectMsgType(typeStr);
-        if (msgType === "" || (msgType !== "data" && !options.current.switch.includes(msgType))) return;
+        if (msgType === "") return;
         //  获得socekt序列化数据
         let data = stt.deserialize(msg);
         switch (msgType) {
@@ -124,6 +125,8 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             case "data":
                 handleData(data);
                 break;
+            case "fansPaper":
+                handleFansPaper(data);
             default:
                 break;
         }
@@ -199,6 +202,55 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 return [...list.splice(1), obj];
             } else {
                 return [...list, obj];
+            }
+        });
+    }
+
+    const handleFansPaper = (data: any) => {
+        if (data.chatmsg.length === 0) return;
+        let chatmsg = data.chatmsg[0];
+        let textLevel = 0;
+        for (let i = 1; i <= 5; i++) {
+            if (data[`txt${i}`]) {
+                textLevel = -i;
+            }
+        }
+        if (textLevel === 0) {
+            textLevel = -1;
+        }
+        let scObj: ISuperchat = {
+            txt: chatmsg.txt,
+            price: textLevel,
+            time: new Date().getTime(),
+            nn: chatmsg.nn,
+            avatar: "",
+            lv: chatmsg.level,
+            color: "",
+            fansName: chatmsg.bnn,
+            fansLv: chatmsg.bl,
+            isDiamond: false,
+            nobleLv: "0",
+            isNoble: !!chatmsg.nc,
+            isRoomAdmin: false,
+            isSuper: false,
+            isVip: false,
+            key: new Date().getTime() + Math.random(),
+        };
+        setSuperchatList(list => {
+            if (options.current.superchat.speak) {
+                speakText(`${scObj.nn}说：${scObj.txt}`);
+            }
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+        setSuperchatPanelList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
             }
         });
     }

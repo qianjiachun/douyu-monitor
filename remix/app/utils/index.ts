@@ -195,11 +195,15 @@ export function formatTime(timestamp: number | string, format: string = "yyyy-MM
 
 export function getSuperchatOption(options: ISuperchatOption[], price: number): ISuperchatOption | null {
   // 请确保options里的minPrice是从大到小排列
-  for (let i = 0; i < options.length; i++) {
-    const item = options[i];
-    if (price >= item.minPrice) {
-      return item;
+  if (price >= 0) {
+    for (let i = 0; i < options.length; i++) {
+      const item = options[i];
+      if (price >= item.minPrice) {
+        return item;
+      }
     }
+  } else {
+    return options[Math.abs(price) - 1];
   }
   return null;
 }

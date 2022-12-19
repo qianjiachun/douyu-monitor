@@ -178,7 +178,7 @@ interface IGiftStatisticsInfo {
     count: number; // 数量
 }
 
-type IMsgType = "danmaku" | "gift" | "enter" | "data" | "superchat" | "";
+type IMsgType = "danmaku" | "gift" | "enter" | "data" | "superchat" | "fansPaper" | "";
 
 interface IPanelData {
     type: IMsgType;

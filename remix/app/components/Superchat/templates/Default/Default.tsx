@@ -26,12 +26,12 @@ const Default: FC<IProps> = (props) => {
     <div className={clsx("item", { fadeInLeft: props.showAnimation })}>
       <div className="item__wrap">
         <div style={props.option ? {backgroundColor: props.option.bgColor.header} : {}} className="item__header">
-          <img className="item__avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt="" />
+          { data.price > 0 ? <img className="item__avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt="" /> : <></>}
           <div className="item__info">
             <div className="item__name">
               <span>{data.nn}</span>
               {/* 贵族 */}
-              {props.showNoble && !!props.data.nobleLv &&
+              {props.showNoble && !!props.data.nobleLv && data.price > 0 &&
               <span className="item__noble Barrage-icon Barrage-noble">
                   <img src={`${data.nobleLv in nobleData.data ? nobleData.prefix + nobleData.data[data.nobleLv].pic : ""}`} alt="" loading="lazy"/>
               </span>}
@@ -43,12 +43,12 @@ const Default: FC<IProps> = (props) => {
                   {data.isDiamond && props.showDiamond && <img className="FansMedalBox-diamondsIcon" src="https://sta-op.douyucdn.cn/douyu/2021/08/05/02304a1c04587e43ac626ce5ce07d935.png" alt="" loading="lazy"/>}
               </div>}
               {/* 房管 */}
-              {props.showRoomAdmin && data.isRoomAdmin &&
+              {props.showRoomAdmin && data.isRoomAdmin && data.price > 0 &&
               <span className="item__roomAdmin">
                   <span className="Barrage-icon Barrage-icon--roomAdmin"></span>
               </span>}
             </div>
-            <span>￥{data.price}</span>
+            {data.price > 0 ? <span>￥{data.price}</span> : <sub>超级留言</sub>}
           </div>
         </div>
         <div style={props.option ? {backgroundColor: props.option.bgColor.body} : {}} className="item__body">

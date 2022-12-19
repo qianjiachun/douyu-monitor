@@ -52,7 +52,7 @@ const defaultOptions: IOptions = {
         enter: 15,
         gift: 25,
         danmaku: 30,
-        superchat: 30
+        superchat: 30,
     },
     align: "left",
     threshold: 200,
