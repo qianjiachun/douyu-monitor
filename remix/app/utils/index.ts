@@ -203,7 +203,7 @@ export function getSuperchatOption(options: ISuperchatOption[], price: number): 
       }
     }
   } else {
-    return options[Math.abs(price) - 1];
+    return options.reverse()[Math.abs(price) - 1];
   }
   return null;
 }
