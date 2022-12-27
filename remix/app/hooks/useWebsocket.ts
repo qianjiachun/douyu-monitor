@@ -11,7 +11,8 @@ const MSG_TYPE: any = {
     gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast"],
     enter: ["uenter"],
     data: ["noble_num_info"],
-    fansPaper: ["fansPaper"]
+    fansPaper: ["fansPaper"],
+    professgiftsrc: ["professgiftsrc"]
 };
 export enum GIFT_TYPE {
     GIFT = "gift", // 普通礼物
@@ -127,6 +128,8 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 break;
             case "fansPaper":
                 handleFansPaper(data);
+            case "professgiftsrc":
+                handleProfessGiftSrc(data);
             default:
                 break;
         }
@@ -231,6 +234,47 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isDiamond: false,
             nobleLv: "0",
             isNoble: !!chatmsg.nc,
+            isRoomAdmin: false,
+            isSuper: false,
+            isVip: false,
+            key: new Date().getTime() + Math.random(),
+        };
+        setSuperchatList(list => {
+            if (options.current.superchat.speak) {
+                speakText(`${scObj.nn}说：${scObj.txt}`);
+            }
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+        setSuperchatPanelList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+    }
+    
+    const handleProfessGiftSrc = (data: any) => {
+        let textLevel = -3;
+        let txt = `${data.txt1} ${data.otherContent}`;
+        let avatar = data.avatar.length >= 2 ? `${data.avatar[0]}//${data.avatar[1]}` : "";
+        let scObj: ISuperchat = {
+            txt: txt,
+            price: textLevel,
+            time: new Date().getTime(),
+            nn: data.userName,
+            avatar: avatar,
+            lv: "",
+            color: "",
+            fansName: "",
+            fansLv: "",
+            isDiamond: false,
+            nobleLv: "0",
+            isNoble: false,
             isRoomAdmin: false,
             isSuper: false,
             isVip: false,

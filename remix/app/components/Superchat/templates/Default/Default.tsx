@@ -26,7 +26,7 @@ const Default: FC<IProps> = (props) => {
     <div className={clsx("item", { fadeInLeft: props.showAnimation })}>
       <div className="item__wrap">
         <div style={props.option ? {backgroundColor: props.option.bgColor.header} : {}} className="item__header">
-          { data.price > 0 ? <img className="item__avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt="" /> : <></>}
+          { data.avatar !== "" ? <img className="item__avatar" src={data.avatar.includes("http") ? data.avatar : `https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt="" /> : <></>}
           <div className="item__info">
             <div className="item__name">
               <span>{data.nn}</span>
