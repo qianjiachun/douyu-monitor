@@ -260,7 +260,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     
     const handleProfessGiftSrc = (data: any) => {
         let textLevel = -3;
-        let txt = `${data.txt1} ${data.otherContent}`;
+        let txt = "";
+        if (data.txt1) {
+            txt += data.txt1 + " ";
+        }
+        if (data.otherContent) {
+            txt += data.otherContent;
+        }
         let avatar = data.avatar.length >= 2 ? `${data.avatar[0]}//${data.avatar[1]}` : "";
         let scObj: ISuperchat = {
             txt: txt,
