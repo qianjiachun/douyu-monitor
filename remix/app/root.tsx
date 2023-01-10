@@ -18,6 +18,7 @@ export default function App() {
     <html lang="zh">
       <head>
         <Meta />
+        <meta httpEquiv="cleartype" content="on" />
         <Links />
       </head>
       <body>
