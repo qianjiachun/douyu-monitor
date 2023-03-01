@@ -258,8 +258,8 @@ const Index = () => {
 
     return <>
         {
-            options.showMode === "default" &&
-            <div className="noblenum"style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
+            options.showMode === "default" && options.showNobleNum &&
+            <div className="noblenum" style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
                 <span>{nobleNum}</span>
             </div>
         }
@@ -478,6 +478,9 @@ const Index = () => {
                     placeholder="请输入json配置" /> */}
                 </Tabs.TabPane>
                 <Tabs.TabPane title="数据">
+                    <Field label="显示贵宾数">
+                        <Switch size={20} checked={options.showNobleNum} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_AUDIENCE, payload: v})} />
+                    </Field>
                     <Field label="开启统计">
                         <Switch size={20} checked={options.showStatus} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SHOW_STATUS, payload: v})} />
                     </Field>

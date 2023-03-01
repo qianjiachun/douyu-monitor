@@ -116,6 +116,7 @@ interface IOptions {
     enter: IOptionsEnter; // 入场设置
     showStatus: boolean; // 是否开启统计数据
     superchat: IOptionsSuperchat; // superchat设置
+    showNobleNum: boolean; // 是否显示贵宾数
 }
 
 interface ISize {

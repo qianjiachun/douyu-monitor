@@ -33,7 +33,8 @@ enum OPTIONS_ACTION {
     SUPERCHAT_SHOW = "superchat_show",
     SUPERCHAT_KEYWORD = "superchat_keyword",
     SUPERCHAT_OPTIONS = "superchat_options",
-    SUPERCHAT_SPEAK = "superchat_speak"
+    SUPERCHAT_SPEAK = "superchat_speak",
+    SHOW_AUDIENCE = "show_audience"
 }
 
 interface IOptionsAction {
@@ -59,6 +60,7 @@ const defaultOptions: IOptions = {
     transparent: false,
     animation: true,
     showStatus: true,
+    showNobleNum: true,
     danmaku: {
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip", "color"],
         keyNicknames: [],
@@ -236,6 +238,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.SUPERCHAT_SPEAK:
             state.superchat.speak = payload;
+            break;
+        case OPTIONS_ACTION.SHOW_AUDIENCE:
+            state.showNobleNum = payload;
             break;
         default:
             break;
