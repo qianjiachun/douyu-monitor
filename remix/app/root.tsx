@@ -4,7 +4,7 @@ import { redirectUrl } from "./utils";
 
 const baidu = async () => {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?08e7914364d68dc91825b4cc6d5cd3c9";
+  hm.src = "https://hm.baidu.com/hm.js?4668119c12746d0d0def8951fac0792e";
   var s: any = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 }
