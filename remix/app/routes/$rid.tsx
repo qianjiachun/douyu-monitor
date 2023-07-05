@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { deepCopy, getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, getSuperchatOption, saveLocalOptions } from "~/utils";
+import { apiGetGiftPreInfo, deepCopy, getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, getRoomGiftDataV2, getSuperchatOption, saveLocalOptions } from "~/utils";
 import "@vant/touch-emulator";
 // import styleVantBase from "react-vant/es/styles/base.css";
 import stylesVant from "react-vant/lib/index.css";
@@ -53,8 +53,9 @@ export const loader: LoaderFunction = async ({params, request}) => {
 	let roomId = "";
 	if (rid) {
 		roomId = (await getRealRid(rid)) || rid;
-		let ret: any = await Promise.allSettled([getRoomGiftData(roomId), getBagGiftData()]);
-		allGift = {...ret[0].value, ...ret[1].value};
+        let preInfo = await apiGetGiftPreInfo(rid);
+		let ret: any = await Promise.allSettled([getRoomGiftData(roomId), getBagGiftData(), getRoomGiftDataV2(preInfo)]);
+		allGift = {...ret[0].value, ...ret[1].value, ...ret[2].value};
 	}
 	return {
 		rid: roomId || rid,

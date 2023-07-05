@@ -23,6 +23,66 @@ export function redirectUrl(url: string): void {
   }
 }
 
+export function apiGetGiftPreInfo(rid: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    fetch(`https://gift.douyucdn.cn/japi/reward/giftv2/preInfo/pc/v2?rid=${rid}&userLevel=135&version=8.6.2.2`, { method: "GET" })
+      .then(res => res.json())
+      .then(ret => {
+        if (!ret?.data || ret?.error !== 0) {
+          resolve("");
+        }
+        let giftPreInfo = ret?.data?.giftPreInfo;
+        let giftIdsExpand = ["22484", "22483"]; // 高等级专属礼物
+        let giftId = 22484;
+        for (let i = 0; i < 1000; i++) {
+          giftId++;
+          giftIdsExpand.push(String(giftId));
+        }
+        giftPreInfo = giftPreInfo.replace(/-{2}$/, "-" + giftIdsExpand.join("_") + "-");
+        resolve(giftPreInfo);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export function getRoomGiftDataV2(preInfo: string): Promise<IGiftData> {
+  return new Promise((resolve, reject) => {
+    fetch(`https://gift.douyucdn.cn/japi/reward/giftv2/list/details/pc/v2?giftPreInfo=${preInfo}&userLevel=150`, {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((ret) => {
+        let roomGiftData: IGiftData = {};
+        if ("giftList" in ret.data) {
+          for (let i = 0; i < ret.data.giftList.length; i++) {
+            let item = ret.data.giftList[i];
+            let svga = "";
+            for (const key in item.effectInfo) {
+              if (item.effectInfo[key]?.animation?.svga && item.effectInfo[key]?.animation?.svga !== "") {
+                svga = item.effectInfo[key].animation.svga;
+                break;
+              }
+            }
+            roomGiftData[item.id] = {
+              n: item.name,
+              pic: "https://gfs-op.douyucdn.cn/dygift" + item.basicInfo.focusPic,
+              pc: item.priceInfo.price,
+              svga: "https://gfs-op.douyucdn.cn/dygift" + svga,
+            };
+          }
+        }
+        resolve(roomGiftData);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export function getRoomGiftData(rid: string): Promise<IGiftData> {
   return new Promise((resolve, reject) => {
     fetch("https://gift.douyucdn.cn/api/gift/v2/web/list?rid=" + rid, {
