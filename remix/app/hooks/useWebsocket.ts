@@ -19,6 +19,7 @@ export enum GIFT_TYPE {
     DIAMOND = "diamond", // 钻粉
     NOBLE = "noble", // 贵族
     FANS = "fans", // 粉丝牌
+    UNKNOWN = "unknown" // 未知
 }
 
 interface IDanmakuPerson {
@@ -340,6 +341,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         switch (data.type) {
             case "dgb":
                 if (!isGiftValid(data)) return;
+                if (!allGiftData[data.gfid]) {
+                    tmp = {
+                        type: GIFT_TYPE.UNKNOWN,
+                        name: "未知礼物，请到斗鱼查看"
+                    }
+                    break;
+                }
                 tmp = {
                     type: GIFT_TYPE.GIFT,
                     name: allGiftData[data.gfid].n,
