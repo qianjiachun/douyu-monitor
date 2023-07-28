@@ -91,7 +91,7 @@ const defaultOptions: IOptions = {
     },
     superchat: {
         keyword: "#sc",
-        show: ["fans", "noble", "roomAdmin", "diamond"],
+        show: ["fans", "noble", "roomAdmin", "diamond", "time"],
         speak: false,
         options: [
             {

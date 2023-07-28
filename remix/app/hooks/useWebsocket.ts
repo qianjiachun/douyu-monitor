@@ -12,7 +12,8 @@ const MSG_TYPE: any = {
     enter: ["uenter"],
     data: ["noble_num_info"],
     fansPaper: ["fansPaper"],
-    professgiftsrc: ["professgiftsrc"]
+    professgiftsrc: ["professgiftsrc"],
+    voiceDanmu: ["voiceDanmu"]
 };
 export enum GIFT_TYPE {
     GIFT = "gift", // 普通礼物
@@ -109,11 +110,12 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     // }, [options]);
 
     const msgHandler = (msg: string) => {
-        let typeStr = getStrMiddle(msg, "type@=", "/");
+        let m = `gbtemp@=2/uid@=259170291/cet@=30/now@=1690527134106/btype@=voiceDanmu/chatmsg@=nn@A=鲸落余生繁似锦@Sbnn@A=女流@Slevel@A=28@Sbrid@A=156277@Sbl@A=20@Stype@A=chatmsg@Srid@A=156277@Sht@A=@Sds@A=@Suid@A=259170291@Stxt@A=66姐 芭比超好看@Shidenick@A=0@Snc@A=0@Sifs@A=1@Sic@A=avatar_v3@AS201910@ASa140c3d2471e4a8ea0eef744828eb262@Shb@A=@Snl@A=0@S/range@=2/cprice@=1000/cmgType@=1/type@=comm_chatmsg/rid@=156277/`
+        let typeStr = getStrMiddle(m, "type@=", "/");
         let msgType = selectMsgType(typeStr);
         if (msgType === "") return;
         //  获得socekt序列化数据
-        let data = stt.deserialize(msg);
+        let data = stt.deserialize(m);
         switch (msgType) {
             case "danmaku":
                 handleDanmaku(data)
@@ -129,8 +131,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 break;
             case "fansPaper":
                 handleFansPaper(data);
+                break;
             case "professgiftsrc":
                 handleProfessGiftSrc(data);
+                break;
+            case "voiceDanmu":
+                handleVoiceDanmu(data);
+                break;
             default:
                 break;
         }
@@ -285,6 +292,44 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isRoomAdmin: false,
             isSuper: false,
             isVip: false,
+            key: new Date().getTime() + Math.random(),
+        };
+        setSuperchatList(list => {
+            if (options.current.superchat.speak) {
+                speakText(`${scObj.nn}说：${scObj.txt}`);
+            }
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+        setSuperchatPanelList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+    }
+    
+    const handleVoiceDanmu = (data: any) => {
+        let scObj: ISuperchat = {
+            txt: data.chatmsg.txt,
+            price: Number(data.cprice) / 100,
+            time: new Date().getTime(),
+            nn: data.chatmsg.nn,
+            avatar: data.chatmsg.ic,
+            lv: data.chatmsg.level,
+            color: "",
+            fansName: data.chatmsg.bnn,
+            fansLv: data.chatmsg.bl,
+            isDiamond: !!data.chatmsg.diaf,
+            nobleLv: data.chatmsg.nl,
+            isNoble: !!data.chatmsg.nc,
+            isRoomAdmin: data.chatmsg.rg == "4",
+            isSuper: data.chatmsg.pg == "5",
+            isVip: data.chatmsg.ail == "453/" || data.chatmsg.ail == "454/",
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {
