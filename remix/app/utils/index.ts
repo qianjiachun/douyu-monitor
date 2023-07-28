@@ -255,20 +255,23 @@ export function formatTime(timestamp: number | string, format: string = "yyyy-MM
 
 export function getSuperchatOption(options: ISuperchatOption[], price: number): ISuperchatOption | null {
   // 请确保options里的minPrice是从大到小排列
+  let ret: ISuperchatOption | null = null;
   if (price >= 0) {
     for (let i = 0; i < options.length; i++) {
       const item = options[i];
       if (price >= item.minPrice) {
-        return item;
+        ret = item;
+        break;
       }
     }
+    if (!ret) ret = options[options.length - 1];
   } else {
     let index = Math.abs(price) - 1;
     if (index < options.length) {
       return [...options].reverse()[index];
     }
   }
-  return null;
+  return ret;
 }
 
 export function deepCopy<T>(value: T): T {
