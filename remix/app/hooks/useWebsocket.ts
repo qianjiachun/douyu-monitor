@@ -12,7 +12,8 @@ const MSG_TYPE: any = {
     enter: ["uenter"],
     data: ["noble_num_info"],
     fansPaper: ["fansPaper"],
-    professgiftsrc: ["professgiftsrc"]
+    professgiftsrc: ["professgiftsrc"],
+    voiceDanmu: ["voiceDanmu"]
 };
 export enum GIFT_TYPE {
     GIFT = "gift", // 普通礼物
@@ -129,8 +130,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 break;
             case "fansPaper":
                 handleFansPaper(data);
+                break;
             case "professgiftsrc":
                 handleProfessGiftSrc(data);
+                break;
+            case "voiceDanmu":
+                handleVoiceDanmu(data);
+                break;
             default:
                 break;
         }
@@ -285,6 +291,44 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isRoomAdmin: false,
             isSuper: false,
             isVip: false,
+            key: new Date().getTime() + Math.random(),
+        };
+        setSuperchatList(list => {
+            if (options.current.superchat.speak) {
+                speakText(`${scObj.nn}说：${scObj.txt}`);
+            }
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+        setSuperchatPanelList(list => {
+            if (list.length >= options.current.threshold) {
+                return [...list.splice(1), scObj];
+            } else {
+                return [...list, scObj];
+            }
+        });
+    }
+    
+    const handleVoiceDanmu = (data: any) => {
+        let scObj: ISuperchat = {
+            txt: data.chatmsg.txt,
+            price: Number(data.cprice) / 100,
+            time: new Date().getTime(),
+            nn: data.chatmsg.nn,
+            avatar: data.chatmsg.ic,
+            lv: data.chatmsg.level,
+            color: "",
+            fansName: data.chatmsg.bnn,
+            fansLv: data.chatmsg.bl,
+            isDiamond: !!data.chatmsg.diaf,
+            nobleLv: data.chatmsg.nl,
+            isNoble: !!data.chatmsg.nc,
+            isRoomAdmin: data.chatmsg.rg == "4",
+            isSuper: data.chatmsg.pg == "5",
+            isVip: data.chatmsg.ail == "453/" || data.chatmsg.ail == "454/",
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {

@@ -5,7 +5,7 @@ class STT {
 
     unescape(v) {
         if (!v) return
-        return v.toString().replace(/@A/g, '@').replace(/@S/g, '/')
+        return v.toString().replace(/@S/g, '/').replace(/@A/g, '@')
     }
 
     // serialize(raw) {

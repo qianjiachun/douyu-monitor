@@ -179,14 +179,14 @@ interface IGiftStatisticsInfo {
     count: number; // 数量
 }
 
-type IMsgType = "danmaku" | "gift" | "enter" | "data" | "superchat" | "fansPaper" | "professgiftsrc" | "";
+type IMsgType = "danmaku" | "gift" | "enter" | "data" | "superchat" | "fansPaper" | "professgiftsrc" | "voiceDanmu" | "";
 
 interface IPanelData {
     type: IMsgType;
     data: IGift | IDanmaku | IEnter;
 }
 
-type IOptionsSuperchatShow = "fans" | "noble" | "roomAdmin" | "diamond";
+type IOptionsSuperchatShow = "fans" | "noble" | "roomAdmin" | "diamond" | "time";
 
 interface IOptionsSuperchat {
     keyword: string; // 触发关键词

@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { FC } from "react";
 import { memo } from "react";
 import { nobleData } from "~/resources/nobleData";
+import { formatTime } from "~/utils";
 
 interface IProps {
   // sc配置信息
@@ -18,6 +19,8 @@ interface IProps {
   showDiamond?: boolean; 
   // 是否显示房管图标
   showRoomAdmin?: boolean;
+  // 是否显示时间
+  showTime?: boolean;
 }
 
 const Default: FC<IProps> = (props) => {
@@ -31,7 +34,7 @@ const Default: FC<IProps> = (props) => {
             <div className="item__name">
               <span>{data.nn}</span>
               {/* 贵族 */}
-              {props.showNoble && !!props.data.nobleLv && data.price > 0 &&
+              {props.showNoble && !!props.data.nobleLv && data.price > 0 && data.nobleLv in nobleData.data &&
               <span className="item__noble Barrage-icon Barrage-noble">
                   <img src={`${data.nobleLv in nobleData.data ? nobleData.prefix + nobleData.data[data.nobleLv].pic : ""}`} alt="" loading="lazy"/>
               </span>}
@@ -47,6 +50,7 @@ const Default: FC<IProps> = (props) => {
               <span className="item__roomAdmin">
                   <span className="Barrage-icon Barrage-icon--roomAdmin"></span>
               </span>}
+              {props.showTime && <span style={{float: "right", fontSize: "9px"}}>{formatTime(String(data.key).split(".")[0])}</span>}
             </div>
             {data.price > 0 ? <span>￥{data.price}</span> : <sub>超级留言</sub>}
           </div>

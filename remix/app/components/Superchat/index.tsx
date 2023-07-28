@@ -44,7 +44,8 @@ const Superchat: FC<IProps> = ({options, superchatList}) => {
 					showFans={options.superchat.show.includes("fans")}
 					showDiamond={options.superchat.show.includes("diamond")}
 					showRoomAdmin={options.superchat.show.includes("roomAdmin")}
-          showAnimation={options.animation}></Default>
+          showAnimation={options.animation}
+					showTime={options.superchat.show.includes("time")}></Default>
         })
       }
 			{isLock && <div className="gobottom" onClick={(e) => {e.stopPropagation();goToScrollBottom(wrapRef.current)}}>回到底部</div>}

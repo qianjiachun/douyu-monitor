@@ -446,6 +446,7 @@ const Index = () => {
                             <Checkbox name="fans" shape="square">粉丝牌</Checkbox>
                             <Checkbox name="roomAdmin" shape="square">房管</Checkbox>
                             <Checkbox name="diamond" shape="square">钻粉</Checkbox>
+                            <Checkbox name="time" shape="square">时间</Checkbox>
                         </Checkbox.Group>
                     </Field>
                     <Field value={options.superchat.keyword} label="触发关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.SUPERCHAT_KEYWORD, payload: v})} placeholder="请输入触发sc的关键词" />
