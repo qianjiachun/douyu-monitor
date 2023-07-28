@@ -110,11 +110,12 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     // }, [options]);
 
     const msgHandler = (msg: string) => {
-        let typeStr = getStrMiddle(msg, "type@=", "/");
+        let m = `gbtemp@=2/uid@=259170291/cet@=30/now@=1690527134106/btype@=voiceDanmu/chatmsg@=nn@A=鲸落余生繁似锦@Sbnn@A=女流@Slevel@A=28@Sbrid@A=156277@Sbl@A=20@Stype@A=chatmsg@Srid@A=156277@Sht@A=@Sds@A=@Suid@A=259170291@Stxt@A=66姐 芭比超好看@Shidenick@A=0@Snc@A=0@Sifs@A=1@Sic@A=avatar_v3@AS201910@ASa140c3d2471e4a8ea0eef744828eb262@Shb@A=@Snl@A=0@S/range@=2/cprice@=1000/cmgType@=1/type@=comm_chatmsg/rid@=156277/`
+        let typeStr = getStrMiddle(m, "type@=", "/");
         let msgType = selectMsgType(typeStr);
         if (msgType === "") return;
         //  获得socekt序列化数据
-        let data = stt.deserialize(msg);
+        let data = stt.deserialize(m);
         switch (msgType) {
             case "danmaku":
                 handleDanmaku(data)
