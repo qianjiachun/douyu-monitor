@@ -1,5 +1,5 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { apiGetGiftPreInfo, deepCopy, getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, getRoomGiftDataV2, getSuperchatOption, saveLocalOptions } from "~/utils";
 import "@vant/touch-emulator";
 // import styleVantBase from "react-vant/es/styles/base.css";
@@ -49,24 +49,24 @@ export const loader: LoaderFunction = async ({params, request}) => {
 	const { rid } = params;
 	const url = new URL(request.url);
 	const exoptions = url.searchParams.get("exoptions");
-	let allGift: IGiftData = {};
+	let allGiftData: IGiftData = {};
 	let roomId = "";
 	if (rid) {
 		roomId = (await getRealRid(rid)) || rid;
         let preInfo = await apiGetGiftPreInfo(rid);
 		let ret: any = await Promise.allSettled([getRoomGiftData(roomId), getBagGiftData(), getRoomGiftDataV2(preInfo)]);
-		allGift = {...ret[0].value, ...ret[1].value, ...ret[2].value};
+		allGiftData = {...ret[0].value, ...ret[1].value, ...ret[2].value};
 	}
 	return {
 		rid: roomId || rid,
-		allGift,
+		allGiftData,
 		exoptions,
 	}
 }
 
 interface ILoaderProps {
 	rid: string;
-	allGift: IGiftData;
+	allGiftData: IGiftData;
 	exoptions: any;
 }
 
@@ -79,7 +79,9 @@ interface ISuperchatSettingDialogData {
 }
 
 const Index = () => {
-	const { rid, allGift, exoptions } = useLoaderData<ILoaderProps>();
+	const { rid, allGiftData, exoptions } = useLoaderData<ILoaderProps>();
+    const [allGift, setAllGift] = useState(allGiftData);
+    const fetcher = useFetcher<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
 	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList } = useWebsocket(optionsRef, allGift);
@@ -117,11 +119,23 @@ const Index = () => {
 		initOptions();
 		window.rid = rid;
 		connectWs(rid);
+        // 每隔24小时重新获取当前直播间礼物数据
+        const timer = setInterval(() => fetcher.load(`/${rid}`), 24 * 3600 * 1000);
 		return () => {
+            clearInterval(timer);
 			closeWs();
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+	    // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+    useEffect(() => {
+        if (fetcher.data) setAllGift(fetcher.data.allGiftData);
+    }, [fetcher.data]);
+
+    useEffect(() => {
+        allGift && console.log(`当前直播间${rid}礼物数据：`, allGift);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allGift])
 
 	useEffect(() => {
 		window.document.documentElement.setAttribute("data-theme", options.mode);
