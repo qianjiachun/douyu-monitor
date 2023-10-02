@@ -119,8 +119,8 @@ const Index = () => {
 		initOptions();
 		window.rid = rid;
 		connectWs(rid);
-        // 每隔24小时重新获取当前直播间礼物数据
-        const timer = setInterval(() => fetcher.load(`/${rid}`), 24 * 3600 * 1000);
+        // 每隔8小时重新获取当前直播间礼物数据
+        const timer = setInterval(() => fetcher.load(`/${rid}`), 8 * 3600 * 1000);
 		return () => {
             clearInterval(timer);
 			closeWs();
