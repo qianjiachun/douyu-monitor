@@ -413,8 +413,9 @@ const Index = () => {
                     </Field>
                     <Field value={String(options.danmaku.ban.level)} type="digit" label="屏蔽等级≤" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_LEVEL, payload: Number(v)})} placeholder="请输入屏蔽的等级" />
                     <Field value={options.danmaku.ban.keywords.join(" ")} label="屏蔽关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: v})} placeholder="空格隔开 例如:弹幕1 弹幕2" />
-                    <Field value={options.danmaku.ban.nicknames.join(" ")} label="屏蔽昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: v})} placeholder="模糊匹配 空格隔开 例如:昵称1 昵称2" />
-                    <Field value={options.danmaku.keyNicknames.join(" ")} label="高亮昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: v})} placeholder="模糊匹配 空格隔开 例如:昵称1 昵称2" />
+                    <Field value={options.danmaku.ban.nicknames.join(" ")} label="屏蔽昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
+                    <Field value={options.danmaku.keyNicknames.join(" ")} label="高亮昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
+                    <Field value={options.danmaku.fansKeywords.join(" ")} label="只看粉丝牌" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_FANSKEYWORDS, payload: v})} placeholder="空格隔开 例如:粉丝牌名称1 粉丝牌名称2" />
                     <Field label="过滤机器人">
                         <Switch size={20} checked={options.danmaku.ban.isFilterRobot} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_ISFILTEROBOT, payload: v})} />
                     </Field>
