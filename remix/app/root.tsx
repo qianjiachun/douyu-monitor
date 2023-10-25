@@ -27,7 +27,7 @@ export default function App() {
         <Scripts />
         <script crossOrigin="anonymous" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" src="https://lib.baomitu.com/jszip/3.7.1/jszip.min.js"></script>
         <script crossOrigin="anonymous" integrity="sha384-sLhugvyb7QXT38D573of73nmwbSPlCWTaRKJfuBgGCyoWijHVim5MtXquZN4VU0+" src="https://lib.baomitu.com/jszip-utils/0.1.0/jszip-utils.min.js"></script>
-        <script crossOrigin="anonymous" src="https://cdn.jsdelivr.net/npm/svgaplayerweb@2.3.2/build/svga.min.js"></script>
+        <script crossOrigin="anonymous" src="https://fastly.jsdelivr.net/npm/svgaplayerweb@2.3.2/build/svga.min.js"></script>
         <LiveReload />
       </body>
     </html>
