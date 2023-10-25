@@ -170,6 +170,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
             isSuper: data.pg == "5",
             isVip: data.ail == "453/" || data.ail == "454/",
             key: new Date().getTime() + Math.random(),
+            repeatCount: 1
         };
         // 过滤机器人弹幕
         if (options.current.danmaku.ban.isFilterRobot && !data.dms) return;
@@ -203,8 +204,15 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         }
         //#endregion
         setDanmakuList(list => {
-            // 过滤重复弹幕
-            if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) return list;
+            // 优化重复弹幕
+            if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) {
+                return list.map((item, index, array) => {
+                    if (index === array.length - 1 && "repeatCount" in item) {
+                      return { ...item, repeatCount: item.repeatCount + 1 };
+                    }
+                    return item;
+                });
+            };
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), obj];
             } else {

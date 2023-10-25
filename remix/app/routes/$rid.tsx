@@ -420,7 +420,7 @@ const Index = () => {
                     <Field label="过滤机器人">
                         <Switch size={20} checked={options.danmaku.ban.isFilterRobot} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_ISFILTEROBOT, payload: v})} />
                     </Field>
-                    <Field label="过滤重复">
+                    <Field label="优化重复">
                         <Switch size={20} checked={options.danmaku.ban.isFilterRepeat} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_ISFILTERREPEAT, payload: v})} />
                     </Field>
                 </Tabs.TabPane> 

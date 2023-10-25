@@ -75,7 +75,11 @@ const Default: FC<IProps> = (props) => {
                 {data.nn}：
             </span>
             {/* 弹幕 */}
-            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">{data.txt}</span>
+            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">
+                {data.txt}
+                {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
+            </span>
+            
             {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
         </div>
     )

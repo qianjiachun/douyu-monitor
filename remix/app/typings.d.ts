@@ -63,6 +63,7 @@ interface IDanmaku {
     isSuper: boolean; // 超管，data.pg为5则为超管
     isVip: boolean; // vip，如果是 453/则为vip  454/则为超级vip
     key: string | number; // 唯一标识
+    repeatCount: number; // 重复次数
 }
 
 interface IEnter {
@@ -86,7 +87,7 @@ interface IGift {
     key: string | number; // 唯一标识
 }
 
-interface ISuperchat extends IDanmaku {
+interface ISuperchat extends Omit<IDanmaku, "repeatCount"> {
     price: number; // 贡献值
     time: number; // 创建时间
 }
