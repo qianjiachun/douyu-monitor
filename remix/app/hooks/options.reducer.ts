@@ -187,7 +187,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.danmaku.keyNicknames = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.DANMAKU_FANSKEYWORDS:
-            state.danmaku.fansKeywords = String(payload).split(" ") || [];
+            state.danmaku.fansKeywords = payload !== "" ? String(payload).split(" ") || [] : [];
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_LEVEL:
             state.danmaku.ban.level = Number(payload);
