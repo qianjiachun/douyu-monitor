@@ -21,6 +21,7 @@ enum OPTIONS_ACTION {
     DANMAKU_BAN_NICKNAMES = "danmaku_ban_nicknames",
     DANMAKU_BAN_ISFILTERREPEAT = "danmaku_ban_isFilterRepeat",
     DANMAKU_BAN_ISFILTEROBOT = "danmaku_ban_isFilterRobot",
+    DANMAKU_BAN_FANSLEVEL = "danmaku_ban_fansLevel",
     ENTER_SHOW = "enter_show",
     ENTER_KEYWORDS = "enter_keywords",
     ENTER_BAN_LEVEL = "enter_ban_level",
@@ -72,6 +73,7 @@ const defaultOptions: IOptions = {
             nicknames: [],
             isFilterRepeat: false,
             isFilterRobot: false,
+            fansLevel: 0
         }
     },
     enter: {
@@ -189,6 +191,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_LEVEL:
             state.danmaku.ban.level = Number(payload);
+            break;
+        case OPTIONS_ACTION.DANMAKU_BAN_FANSLEVEL:
+            state.danmaku.ban.fansLevel = Number(payload);
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS:
             state.danmaku.ban.keywords = String(payload).split(" ") || [];

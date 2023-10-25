@@ -536,6 +536,8 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         if (isArrayInText(options.current.danmaku.ban.nicknames, data.nn)) return false;
         // 判断只显示的粉丝牌名称
         if (options.current.danmaku.fansKeywords.length > 0 && !isArrayInText(options.current.danmaku.fansKeywords, data.bnn)) return false;
+        // 判断粉丝牌等级
+        if (options.current.danmaku.ban.fansLevel > 0 && Number(data.bl) < options.current.danmaku.ban.fansLevel) return false;
         return true;
     }
 

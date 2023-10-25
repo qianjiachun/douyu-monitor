@@ -141,6 +141,7 @@ interface IOptionsDanmakuBan {
     nicknames: string[]; // 关键昵称
     isFilterRepeat: boolean; // 是否过滤重复弹幕，如果下一条内容与上一条一样，则丢弃
     isFilterRobot: boolean; // 是否过滤机器人弹幕，判断条件为是否有dms属性
+    fansLevel: number; // 屏蔽粉丝牌等级小于
 }
 
 // 入场显示元素。值：level:等级  avatar:头像   noble:贵族

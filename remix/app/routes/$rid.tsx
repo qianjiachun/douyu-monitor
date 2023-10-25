@@ -416,6 +416,7 @@ const Index = () => {
                     <Field value={options.danmaku.ban.nicknames.join(" ")} label="屏蔽昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
                     <Field value={options.danmaku.keyNicknames.join(" ")} label="高亮昵称" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: v})} placeholder="空格隔开 例如:昵称1 昵称2" />
                     <Field value={options.danmaku.fansKeywords.join(" ")} label="只看粉丝牌" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_FANSKEYWORDS, payload: v})} placeholder="空格隔开 例如:粉丝牌名称1 粉丝牌名称2" />
+                    <Field value={String(options.danmaku.ban.fansLevel)} type="digit" label="粉丝牌等级≥" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_FANSLEVEL, payload: Number(v)})} placeholder="请输入屏蔽的粉丝牌等级" />
                     <Field label="过滤机器人">
                         <Switch size={20} checked={options.danmaku.ban.isFilterRobot} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.DANMAKU_BAN_ISFILTEROBOT, payload: v})} />
                     </Field>
