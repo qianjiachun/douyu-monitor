@@ -82,9 +82,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         if (rid === "") return;
         ws = new Ex_WebSocket_UnLogin(rid, (msg: string) => {
             msgHandler(msg);
-        }, () => {
-            closeWs();
-            connectWs(rid);
         });
     }
     const closeWs = (): void => {
