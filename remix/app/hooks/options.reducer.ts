@@ -15,6 +15,7 @@ enum OPTIONS_ACTION {
     ANIMATION = "animation",
     DANMAKU_SHOW = "danmaku_show",
     DANMAKU_KEYNICKNAMES = "danmaku_keyNicknames",
+    DANMAKU_FANSKEYWORDS = "danmaku_fansKeywords",
     DANMAKU_BAN_LEVEL = "danmaku_ban_level",
     DANMAKU_BAN_KEYWORDS = "danmaku_ban_keywords",
     DANMAKU_BAN_NICKNAMES = "danmaku_ban_nicknames",
@@ -64,6 +65,7 @@ const defaultOptions: IOptions = {
     danmaku: {
         show: ["level", "avatar", "fans", "noble", "roomAdmin", "diamond", "vip", "color"],
         keyNicknames: [],
+        fansKeywords: [],
         ban: {
             level: 0,
             keywords: [],
@@ -181,6 +183,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.DANMAKU_KEYNICKNAMES:
             state.danmaku.keyNicknames = String(payload).split(" ") || [];
+            break;
+        case OPTIONS_ACTION.DANMAKU_FANSKEYWORDS:
+            state.danmaku.fansKeywords = String(payload).split(" ") || [];
             break;
         case OPTIONS_ACTION.DANMAKU_BAN_LEVEL:
             state.danmaku.ban.level = Number(payload);

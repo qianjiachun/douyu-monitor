@@ -132,6 +132,7 @@ type IOptionsDanmakuShow = "level" | "avatar" | "fans" | "noble" | "roomAdmin" |
 interface IOptionsDanmaku {
     show: IOptionsDanmakuShow[];
     keyNicknames: string[]; // 高亮昵称
+    fansKeywords: string[]; // 只显示含有某些关键字的粉丝牌的弹幕
     ban: IOptionsDanmakuBan;
 }
 interface IOptionsDanmakuBan {
