@@ -204,7 +204,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         }
         //#endregion
         setDanmakuList(list => {
-            // 优化重复弹幕
+            // 折叠重复弹幕
             if (options.current.danmaku.ban.isFilterRepeat && list.length > 0 && list[list.length - 1].txt === data.txt) {
                 return list.map((item, index, array) => {
                     if (index === array.length - 1 && "repeatCount" in item) {
