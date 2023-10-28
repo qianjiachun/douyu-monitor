@@ -10,7 +10,7 @@ import stylesRoomAdmin from "~/resources/roomAdmin.css";
 import stylesUserLevel from "~/resources/userLevel.css";
 import stylesMonitor from "~/styles/monitor.css";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
@@ -80,11 +80,10 @@ interface ISuperchatSettingDialogData {
 
 const Index = () => {
 	const { rid, allGiftData, exoptions } = useLoaderData<ILoaderProps>();
-    const [allGift, setAllGift] = useState(allGiftData);
     const fetcher = useFetcher<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList } = useWebsocket(optionsRef, allGift);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList, patchGiftList } = useWebsocket(optionsRef);
 	const [isShowOptions, setIsShowOptions] = useState(false);
     const [isShowSuperchatSettingDialog, setIsShowSuperchatSettingDialog] = useState(false);
     const [superchatSettingDialogData, setSuperchatSettingDialogData] = useState<ISuperchatSettingDialogData>({
@@ -118,6 +117,7 @@ const Index = () => {
 		logInfo();
 		initOptions();
 		window.rid = rid;
+        window.allGift = allGiftData;
 		connectWs(rid);
         // 每隔8小时重新获取当前直播间礼物数据
         const timer = setInterval(() => fetcher.load(`/${rid}`), 8 * 3600 * 1000);
@@ -129,13 +129,17 @@ const Index = () => {
 	}, []);
 
     useEffect(() => {
-        if (fetcher.data) setAllGift(fetcher.data.allGiftData);
+        if (fetcher.data) {
+            window.allGift = fetcher.data.allGiftData;
+            patchGiftList();
+            console.log(`当前直播间${rid}礼物数据：`, window.allGift);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetcher.data]);
 
-    useEffect(() => {
-        allGift && console.log(`当前直播间${rid}礼物数据：`, allGift);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allGift])
+    const reloadGiftData = useCallback(() => {
+        fetcher.load(`/${rid}`);
+    }, [fetcher, rid]);
 
 	useEffect(() => {
 		window.document.documentElement.setAttribute("data-theme", options.mode);
@@ -163,9 +167,9 @@ const Index = () => {
         if (!options.gift.showEffect || options.showMode === "superchat") return;
         let giftMsgInfo = giftList[giftList.length - 1];
         if (!giftMsgInfo || giftMsgInfo.type !== "gift") return;
-        let svga = allGift[giftMsgInfo.gfid]?.svga;
+        let svga = window.allGift[giftMsgInfo.gfid]?.svga;
         if (!svga || svga === "") return;
-        let giftInfo = allGift[giftMsgInfo.gfid];
+        let giftInfo = window.allGift[giftMsgInfo.gfid];
         let giftPrice = Number(giftMsgInfo.gfcnt) * giftInfo.pc / 100;
         // 如果价格大于50元则显示特效
         if (giftPrice < 50) return;
@@ -284,7 +288,7 @@ const Index = () => {
                 <div style={{width: "100%", height: "100%", background: "transparent", position: "absolute", zIndex: 10, pointerEvents: "none"}} id="effect"></div>
                 {options.switch.includes("enter") && <Enter options={options} enterList={enterList}></Enter>}
                 {options.switch.length > 1 && <SplitLine order={2} transparent={options.transparent} direction={options.direction}></SplitLine>}
-                {options.switch.includes("gift") && <Gift options={options} giftList={giftList} allGiftData={allGift}></Gift>}
+                {options.switch.includes("gift") && <Gift options={options} giftList={giftList} reloadGiftData={reloadGiftData}></Gift>}
                 {options.switch.length > 2 && <SplitLine order={4} transparent={options.transparent} direction={options.direction}></SplitLine>}
                 {options.switch.includes("danmaku") && <Danmaku options={options} danmakuList={danmakuList}></Danmaku>}
                 {options.switch.length > 2 && <SplitLine order={6} transparent={options.transparent} direction={options.direction}></SplitLine>}

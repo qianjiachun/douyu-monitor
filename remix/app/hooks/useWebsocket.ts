@@ -46,7 +46,7 @@ const selectMsgType = (msgType: string): IMsgType => {
     return "";
 }
 
-const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftData) => {
+const useWebsocket = (options: MutableRefObject<IOptions>) => {
     let ws: Ex_WebSocket_UnLogin | null = null;
     const [danmakuList, setDanmakuList] = useState<IDanmaku[]>([]);
     const [giftList, setGiftList] = useState<IGift[]>([]);
@@ -114,13 +114,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         let data = stt.deserialize(msg);
         switch (msgType) {
             case "danmaku":
-                handleDanmaku(data)
+                handleDanmaku(data);
                 break;
             case "gift":
-                handleGift(data)
+                handleGift(data);
                 break;
             case "enter":
-                handleEnter(data)
+                handleEnter(data);
                 break;
             case "data":
                 handleData(data);
@@ -390,7 +390,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         switch (data.type) {
             case "dgb":
                 if (!isGiftValid(data)) return;
-                if (!allGiftData[data.gfid]) {
+                if (!window.allGift[data.gfid]) {
                     tmp = {
                         type: GIFT_TYPE.UNKNOWN,
                         name: "未知礼物，请到斗鱼查看"
@@ -399,12 +399,12 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 }
                 tmp = {
                     type: GIFT_TYPE.GIFT,
-                    name: allGiftData[data.gfid].n,
+                    name: window.allGift[data.gfid].n,
                 };
 
                 // #region superchat
                 if (options.current.switch.includes("superchat")) {
-                    const totalGiftPrice = Number(obj.gfcnt) * Number(allGiftData[data.gfid].pc) / 100;
+                    const totalGiftPrice = Number(obj.gfcnt) * Number(window.allGift[data.gfid].pc) / 100;
                     const uid = data.uid;
                     const superchatMinPrice = options.current.superchat.options[options.current.superchat.options.length - 1]?.minPrice;
                     if (totalGiftPrice >= superchatMinPrice) {
@@ -414,7 +414,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                 // #endregion
                 if (options.current.showStatus) {
                     setGiftStatus(prev => {
-                        let key = allGiftData[data.gfid].n + "|" + obj.gfid;
+                        let key = window.allGift[data.gfid].n + "|" + obj.gfid;
                         if (key in prev) {
                             return {
                                 ...prev,
@@ -427,11 +427,11 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
                             return {
                                 ...prev,
                                 [key]: {
-                                    name: allGiftData[data.gfid].n,
+                                    name: window.allGift[data.gfid].n,
                                     count: Number(obj.gfcnt),
                                     gfid: data.gfid,
-                                    price: Number(allGiftData[data.gfid].pc),
-                                    img: allGiftData[data.gfid].pic,
+                                    price: Number(window.allGift[data.gfid].pc),
+                                    img: window.allGift[data.gfid].pic,
                                 }
                             }
                         }
@@ -552,7 +552,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
     }
 
     const isGiftValid = (data: any): boolean => {
-        let giftData = allGiftData[data.gfid];
+        let giftData = window.allGift[data.gfid];
         if (giftData) {
             // 屏蔽单价
             if (giftData.pc < Number(options.current.gift.ban.price) * 100) return false;
@@ -567,8 +567,21 @@ const useWebsocket = (options: MutableRefObject<IOptions>, allGiftData: IGiftDat
         return Number(options.current.gift.ban.fansLevel) <= level;
     }
 
+    const patchGiftList = () => {
+        // 当礼物数据发生变化时，会重新修正数据
+        setGiftList(prev => {
+            return prev.map(item => {
+                if (item.type === GIFT_TYPE.UNKNOWN && window.allGift[item.gfid]) {
+                    return {...item, type: GIFT_TYPE.GIFT, name: window.allGift[item.gfid].n};
+                } else {
+                    return item;
+                }
+            })
+        })
+    }
+
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList, patchGiftList
     }
 }
 

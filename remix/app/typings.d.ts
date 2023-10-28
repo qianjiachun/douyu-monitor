@@ -1,6 +1,7 @@
 declare interface Window {
     rid: string;
-    SVGA: any
+    SVGA: any;
+    allGift: IGiftData;
 }
 
 // 礼物数据
@@ -75,7 +76,7 @@ interface IEnter {
 }
 
 interface IGift {
-    type: "gift" | "diamond" | "noble" | "fans"; // 礼物类型
+    type: "gift" | "diamond" | "noble" | "fans" | "unknown"; // 礼物类型
     name: string; // 礼物名称
     nn: string; // 昵称
     lv: string; // 等级
@@ -118,6 +119,10 @@ interface IOptions {
     showStatus: boolean; // 是否开启统计数据
     superchat: IOptionsSuperchat; // superchat设置
     showNobleNum: boolean; // 是否显示贵宾数
+}
+
+interface IGlobalState {
+    allGiftLength: number; // 所有礼物的个数，用于刷新礼物数据，allGift本体解耦，挂载在window上
 }
 
 interface ISize {

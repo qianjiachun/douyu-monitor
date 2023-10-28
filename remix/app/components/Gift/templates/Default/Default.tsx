@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import type { FC } from "react";
 import { memo, useMemo } from "react";
+import { Button } from "react-vant";
+import { GIFT_TYPE } from "~/hooks/useWebsocket";
 import { formatTime } from "~/utils";
 
 interface IProps {
@@ -14,6 +16,8 @@ interface IProps {
     giftData: IGiftItem;
     // 是否高亮
     isHighlight?: boolean;
+    // 点击刷新礼物
+    onClickReloadGiftData?: () => void;
 }
 
 const Default: FC<IProps> = (props) => {
@@ -21,6 +25,11 @@ const Default: FC<IProps> = (props) => {
     const itemClass = useMemo(() => {
         return props.isHighlight ? `highlight-${props.mode}` : "";
     }, [props]);
+    const onClickReloadGiftData = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        props.onClickReloadGiftData && props.onClickReloadGiftData();
+    };
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             <span className="item__gift">
@@ -29,6 +38,7 @@ const Default: FC<IProps> = (props) => {
             <span className="item__cnt">{Number(data.gfcnt) !== 0 ? `${data.name}*${data.gfcnt}` : data.name}</span>
             <span className="item__name">{data.nn}</span>
             {Number(data.hits) >= 5 && <span className="item__hits">累计x{data.hits}</span>}
+            {data.type === GIFT_TYPE.UNKNOWN ? <Button type="primary" size="mini" onClick={onClickReloadGiftData}>刷新礼物</Button> : <></>}
             <br/>
             <span className="item__time">{formatTime(String(data.key).split(".")[0])}</span>
         </div>

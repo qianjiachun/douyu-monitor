@@ -9,7 +9,7 @@ import Default from "./templates/Default/Default";
 interface IProps {
     options: IOptions;
     giftList: IGift[];
-	allGiftData: IGiftData;
+	reloadGiftData: () => void;
 }
 
 const FLAG = "gift";
@@ -19,7 +19,7 @@ const DIAMOND_URL = "https://shark2.douyucdn.cn/front-publish/live-player-aside-
 // 粉丝牌升级图片
 const FANS_LEVEL_UP = "https://shark2.douyucdn.cn/front-publish/live-anchor-title-master/assets/images/exp_ca09807.webp";
 
-const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
+const Gift: FC<IProps> = ({options, giftList, reloadGiftData}) => {
 	const { isLock, onScroll, onScrollUpdate, goToScrollBottom } = useScroll();
 	const wrapRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
@@ -43,8 +43,7 @@ const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
 
 	const checkHighlight = (data: IGift) => {
 		// 判断是否需要高亮
-		let giftData = allGiftData[data.gfid];
-		
+		let giftData = window.allGift[data.gfid];
         switch (data.type) {
             case GIFT_TYPE.GIFT:
                 // 高亮总价大于等于
@@ -61,8 +60,8 @@ const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
 		// 获取礼物的信息（图片 价格 名称）
 		switch (data.type) {
 			case GIFT_TYPE.GIFT:
-				if (allGiftData[data.gfid]) {
-					return allGiftData[data.gfid];
+				if (window.allGift[data.gfid]) {
+					return window.allGift[data.gfid];
 				} else {
 					break;
 				}
@@ -87,6 +86,7 @@ const Gift: FC<IProps> = ({options, giftList, allGiftData}) => {
 				showAnimation={options.animation}
 				giftData={getGiftData(item)}
 				isHighlight={checkHighlight(item)}
+				onClickReloadGiftData={reloadGiftData}
 				></Default>
 			})}
 			{isLock && <div className="gobottom" onClick={(e) => {e.stopPropagation();goToScrollBottom(wrapRef.current)}}>回到底部</div>}
