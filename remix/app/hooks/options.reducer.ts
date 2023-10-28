@@ -72,7 +72,7 @@ const defaultOptions: IOptions = {
             keywords: [],
             nicknames: [],
             isFilterRepeat: false,
-            isFilterRobot: false,
+            isFilterRobot: true,
             fansLevel: 0
         }
     },
