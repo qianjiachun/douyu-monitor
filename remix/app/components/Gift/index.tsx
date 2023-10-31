@@ -47,7 +47,7 @@ const Gift: FC<IProps> = ({options, giftList, reloadGiftData}) => {
         switch (data.type) {
             case GIFT_TYPE.GIFT:
                 // 高亮总价大于等于
-                return giftData && giftData.pc * Number(data.gfcnt) >= options.gift.totalPrice * 100;
+                return giftData && giftData.pc * Number(data.gfcnt) >= Number(options.gift.totalPrice) * 100;
             case GIFT_TYPE.FANS:
 				// 高亮粉丝牌升级大于
                 return Number(data.bl) >= options.gift.fansLevel;

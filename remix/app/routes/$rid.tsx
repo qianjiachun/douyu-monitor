@@ -14,7 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useWebsocket from "~/hooks/useWebsocket";
 import Danmaku from "~/components/Danmaku/index";
 
-import { Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs, Toast } from "react-vant";
+import { Button, Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs, Toast } from "react-vant";
 import { useImmerReducer } from "use-immer";
 import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";
@@ -432,9 +432,15 @@ const Index = () => {
                     <Field label="占比">
                         <Slider disabled={options.switch[options.switch.length-1] === "gift"} value={options.size.gift} onChange={(v: number) => dispatchOptions({type: OPTIONS_ACTION.SIZE, payload: {gift: v}})}/>
                     </Field>
-                    <Field value={String(options.gift.ban.price)} label="屏蔽单价<" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_BAN_PRICE, payload: Number(v)})} placeholder="请输入单价" />
-                    <Field value={String(options.gift.totalPrice)} label="高亮总价≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_TOTALPRICE, payload: Number(v)})} placeholder="请输入总价" />
-                    <Field value={options.gift.ban.keywords.join(" ")} label="屏蔽关键词" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: v})} placeholder="空格隔开 例如:荧光棒 鱼丸" />
+                    <Field value={String(options.gift.ban.price)} label="屏蔽单价<" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_BAN_PRICE, payload: v})} placeholder="请输入单价" />
+                    <Field value={String(options.gift.totalPrice)} label="高亮总价≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_TOTALPRICE, payload: v})} placeholder="请输入总价" />
+                    <Field
+                        value={options.gift.ban.keywords.join(" ")}
+                        label="屏蔽关键词"
+                        onChange={(v) => dispatchOptions({ type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: v })}
+                        placeholder="空格隔开 例如:荧光棒 鱼丸"
+                        suffix={<Button size="small" type="primary" onClick={() => dispatchOptions({ type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: `${options.gift.ban.keywords.join(" ")} 荧光棒 赞 鱼丸 弱鸡 呵呵 稳 充能电池` })}>免费</Button>}
+                    />
                     <Field value={String(options.gift.ban.fansLevel)} label="粉丝牌等级≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_BAN_FANSLEVEL, payload: Number(v)})} placeholder="屏蔽粉丝牌等级" />
                     <Field value={String(options.gift.fansLevel)} label="高亮升级≥" type="number" onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_FANSLEVEL, payload: Number(v)})} placeholder="高亮粉丝牌升级" />
                     <Field label="特效">

@@ -217,10 +217,10 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             state.enter.ban.level = Number(payload);
             break;
         case OPTIONS_ACTION.GIFT_TOTALPRICE:
-            state.gift.totalPrice = Number(payload);
+            state.gift.totalPrice = payload;
             break;
         case OPTIONS_ACTION.GIFT_BAN_PRICE:
-            state.gift.ban.price = Number(payload);
+            state.gift.ban.price = payload;
             break;
         case OPTIONS_ACTION.GIFT_BAN_KEYWORDS:
             state.gift.ban.keywords = String(payload).split(" ") || [];
