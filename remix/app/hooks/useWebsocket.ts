@@ -374,6 +374,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     }
 
     const handleGift = (data: any) => {
+        console.log(data)
         let obj: IGift = {
             type: GIFT_TYPE.GIFT,
             name: "",
@@ -393,7 +394,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 if (!window.allGift[data.gfid]) {
                     tmp = {
                         type: GIFT_TYPE.UNKNOWN,
-                        name: `未知礼物（id：${data.gfid}），请到斗鱼查看`
+                        name: `${data.gfn ? data.gfn : ""}（id: ${data.gfid}）未知价格，请到斗鱼查看`
                     }
                     break;
                 }
