@@ -10,7 +10,7 @@ const MSG_TYPE: any = {
     danmaku: ["chatmsg"],
     gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast"],
     enter: ["uenter"],
-    data: ["noble_num_info"],
+    data: ["noble_num_info", "oni"],
     fansPaper: ["fansPaper"],
     professgiftsrc: ["professgiftsrc"],
     voiceDanmu: ["voiceDanmu"]
@@ -393,7 +393,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 if (!window.allGift[data.gfid]) {
                     tmp = {
                         type: GIFT_TYPE.UNKNOWN,
-                        name: "未知礼物，请到斗鱼查看"
+                        name: `未知礼物（id：${data.gfid}），请到斗鱼查看`
                     }
                     break;
                 }
