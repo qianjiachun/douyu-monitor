@@ -18,6 +18,7 @@
             span {
                 @include fontColor("nicknameColor");
             }
+            cursor: pointer;
         }
         .item__time {
             @include fontColor("contentColor");

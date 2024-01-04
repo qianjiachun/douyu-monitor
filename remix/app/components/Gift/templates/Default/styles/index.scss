@@ -21,6 +21,7 @@
         }
         .item__name {
             @include fontColor("nicknameColor");
+            cursor: pointer;
         }
         .item__cnt {
             @include fontColor("contentColor");

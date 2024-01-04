@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { formatTime } from "~/utils";
+import { copyTextEvent, formatTime } from "~/utils";
 
 interface IProps {
     // 弹幕数据
@@ -69,13 +69,13 @@ const Default: FC<IProps> = (props) => {
             {/* 头像 */}
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} alt="" loading="lazy" /></span>}
             {/* 昵称 */}
-            <span className={clsx("item__name", {"super-name": data.isSuper})}>
+            <span className={clsx("item__name", {"super-name": data.isSuper})} onClick={(e) => copyTextEvent(e, data.nn)}>
                 {/* VIP */}
                 {props.showVip && data.isVip && <span className="Barrage-roomVipIcon"></span>}
                 {data.nn}：
             </span>
             {/* 弹幕 */}
-            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">
+            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt" onClick={(e) => copyTextEvent(e, data.txt)}>
                 {data.txt}
                 {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
             </span>

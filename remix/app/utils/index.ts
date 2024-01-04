@@ -1,3 +1,6 @@
+import copy from "copy-to-clipboard";
+import { Notify } from "react-vant";
+
 const LOCAL_NAME = "monitor_options";
 
 export function redirectUrl(url: string): void {
@@ -296,4 +299,11 @@ export function speakText(text: string) {
   }
   // 加入播放队列
   window.speechSynthesis.speak(speech)
+}
+
+export function copyTextEvent(event: any, text: string) {
+  event.stopPropagation && event.stopPropagation();
+  event.preventDefault && event.preventDefault();
+  copy(text);
+  Notify.show({type: "success", message: "复制成功", duration: 2000});
 }

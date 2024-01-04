@@ -22,9 +22,11 @@
         }
         .item__name {
             @include fontColor("nicknameColor");
+            cursor: pointer;
         }
         .item__txt {
             @include fontColor("txtColor");
+            cursor: pointer;
         }
         .item__time {
             @include fontColor("contentColor");
