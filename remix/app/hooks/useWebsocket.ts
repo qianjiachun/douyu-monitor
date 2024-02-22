@@ -374,7 +374,6 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     }
 
     const handleGift = (data: any) => {
-        console.log(data)
         let obj: IGift = {
             type: GIFT_TYPE.GIFT,
             name: "",
