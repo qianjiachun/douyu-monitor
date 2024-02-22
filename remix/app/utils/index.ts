@@ -159,6 +159,49 @@ export function getBagGiftData(): Promise<IGiftData> {
   });
 }
 
+export function getNowActGiftData(): Promise<IGiftData> {
+  const dateStr = formatTime(new Date().getTime(), "yyyyMM");
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://webconf.douyucdn.cn/resource/common/activity/actqzs${dateStr}_w.json`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
+      .then((res) => {
+        return res.text();
+      })
+      .then((ret) => {
+        let json: any = ret.substring(
+          String("DYConfigCallback(").length,
+          ret.length
+        );
+        json = json.substring(0, json.lastIndexOf(")"));
+        try {
+          json = JSON.parse(json);
+          let obj: IGiftData = {};
+          for (const item of json.data.exchangeList) {
+            const awardInfo = item.awardInfo;
+            if (!awardInfo || awardInfo.awardType == 96 || awardInfo.awardType == 103) continue;
+            obj[awardInfo.cardId] = {
+              n: awardInfo.name,
+              pic: awardInfo.pic,
+              pc: 1,
+              svga: "",
+            };
+          }
+          resolve(obj);
+        } catch (err) {
+          reject(err);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export function getRealRid(rid: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fetch(

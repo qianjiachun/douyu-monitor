@@ -345,6 +345,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     }
 
     const handleGift = (data: any) => {
+        if (!window.allGift[data.gfid]) data.gfid = data.pid;
         let obj: IGift = {
             type: GIFT_TYPE.GIFT,
             name: "",
