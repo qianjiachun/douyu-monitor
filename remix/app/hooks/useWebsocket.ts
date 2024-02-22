@@ -57,11 +57,10 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     const [giftStatus, setGiftStatus] = useState<IGiftStatistics>({});
     // const [panelDataList, setPanelDataList] = useState<IPanelData[]>([]);
     const [superchatList, setSuperchatList] = useState<ISuperchat[]>([]);
-    const [superchatPanelList, setSuperchatPanelList] = useState<ISuperchat[]>([]);
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setSuperchatPanelList(list => {
+            setSuperchatList(list => {
                 return list.filter(item => {
                     let now = new Date().getTime();
                     let superchatOption = getSuperchatOption(options.current.superchat.options, item.price);
@@ -185,16 +184,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 time: new Date().getTime()
             };
             setSuperchatList(list => {
-                if (options.current.superchat.speak) {
+                if (options.current.superchat.speak && options.current.showMode !== "panel") {
                     speakText(`${scObj.nn}说：${scObj.txt}`);
                 }
-                if (list.length >= options.current.threshold) {
-                    return [...list.splice(1), scObj];
-                } else {
-                    return [...list, scObj];
-                }
-            });
-            setSuperchatPanelList(list => {
                 if (list.length >= options.current.threshold) {
                     return [...list.splice(1), scObj];
                 } else {
@@ -252,16 +244,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {
-            if (options.current.superchat.speak) {
+            if (options.current.superchat.speak && options.current.showMode !== "panel") {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
-            if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
-            } else {
-                return [...list, scObj];
-            }
-        });
-        setSuperchatPanelList(list => {
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), scObj];
             } else {
@@ -299,16 +284,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {
-            if (options.current.superchat.speak) {
+            if (options.current.superchat.speak && options.current.showMode !== "panel") {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
-            if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
-            } else {
-                return [...list, scObj];
-            }
-        });
-        setSuperchatPanelList(list => {
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), scObj];
             } else {
@@ -337,16 +315,9 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {
-            if (options.current.superchat.speak) {
+            if (options.current.superchat.speak && options.current.showMode !== "panel") {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
-            if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
-            } else {
-                return [...list, scObj];
-            }
-        });
-        setSuperchatPanelList(list => {
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), scObj];
             } else {
@@ -581,7 +552,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     }
 
     return {
-        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList, patchGiftList
+        connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, patchGiftList
     }
 }
 

@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { apiGetGiftPreInfo, deepCopy, getBagGiftData, getLocalOptions, getRealRid, getRoomGiftData, getRoomGiftDataV2, getSuperchatOption, saveLocalOptions } from "~/utils";
+import { apiGetGiftPreInfo, deepCopy, getBagGiftData, getLocalOptions, getNowActGiftData, getRealRid, getRoomGiftData, getRoomGiftDataV2, getSuperchatOption, saveLocalOptions } from "~/utils";
 import "@vant/touch-emulator";
 // import styleVantBase from "react-vant/es/styles/base.css";
 import stylesVant from "react-vant/lib/index.css";
@@ -54,8 +54,8 @@ export const loader: LoaderFunction = async ({params, request}) => {
 	if (rid) {
 		roomId = (await getRealRid(rid)) || rid;
         let preInfo = await apiGetGiftPreInfo(rid);
-		let ret: any = await Promise.allSettled([getRoomGiftData(roomId), getBagGiftData(), getRoomGiftDataV2(preInfo)]);
-		allGiftData = {...ret[0].value, ...ret[1].value, ...ret[2].value};
+		let ret: any = await Promise.allSettled([getRoomGiftData(roomId), getBagGiftData(), getRoomGiftDataV2(preInfo), getNowActGiftData()]);
+		allGiftData = {...ret[0].value, ...ret[1].value, ...ret[2].value, ...ret[3].value};
 	}
 	return {
 		rid: roomId || rid,
@@ -83,7 +83,7 @@ const Index = () => {
     const fetcher = useFetcher<ILoaderProps>();
 	const [options, dispatchOptions] = useImmerReducer(optionsReducer, defaultOptions);
 	const optionsRef = useRef(options);
-	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, superchatPanelList, patchGiftList } = useWebsocket(optionsRef);
+	const { connectWs, closeWs, danmakuList, giftList, enterList, nobleNum, danmakuPerson, danmakuNum, giftStatus, superchatList, patchGiftList } = useWebsocket(optionsRef);
 	const [isShowOptions, setIsShowOptions] = useState(false);
     const [isShowSuperchatSettingDialog, setIsShowSuperchatSettingDialog] = useState(false);
     const [superchatSettingDialogData, setSuperchatSettingDialogData] = useState<ISuperchatSettingDialogData>({
@@ -296,9 +296,9 @@ const Index = () => {
             </div>
             :
             <div style={{width: "100%", height: "100%"}} onClick={() => setIsShowOptions(true)}>
-                {superchatPanelList.length > 0 &&
+                {superchatList.length > 0 &&
                 <div className="superchat superchat-panel">
-                    {superchatPanelList.sort((a, b) => b.price - a.price).map(item => {
+                    {superchatList.sort((a, b) => b.price - a.price).map(item => {
                         return <SuperchatItem
                         key={item.key}
                         option={getSuperchatOption(options.superchat.options, item.price)}
