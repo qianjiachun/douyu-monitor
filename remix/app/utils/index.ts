@@ -359,9 +359,7 @@ export function decompressDouyuExImageUrl(base36Str: string) {
   for (let i = base36Str.length - 1; i >= 0; i--) {
     const char = base36Str[i].toUpperCase();
     const charIndex = base36Chars.indexOf(char);
-    if (charIndex === -1) {
-      throw new Error(`Invalid base36 character: ${char}`);
-    }
+    if (charIndex === -1) return "";
     decimal += BigInt(charIndex) * multiplier;
     multiplier *= 36n;
   }
