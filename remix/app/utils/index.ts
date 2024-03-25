@@ -350,3 +350,21 @@ export function copyTextEvent(event: any, text: string) {
   copy(text);
   Notify.show({type: "success", message: "复制成功", duration: 2000});
 }
+
+export function decompressDouyuExImageUrl(base36Str: string) {
+  const base36Chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let decimal: any = 0n;
+  let multiplier: any = 1n;
+
+  for (let i = base36Str.length - 1; i >= 0; i--) {
+    const char = base36Str[i].toUpperCase();
+    const charIndex = base36Chars.indexOf(char);
+    if (charIndex === -1) {
+      throw new Error(`Invalid base36 character: ${char}`);
+    }
+    decimal += BigInt(charIndex) * multiplier;
+    multiplier *= 36n;
+  }
+
+  return decimal.toString();
+}

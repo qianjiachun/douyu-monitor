@@ -3,7 +3,8 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { copyTextEvent, formatTime } from "~/utils";
+import { copyTextEvent, decompressDouyuExImageUrl, formatTime } from "~/utils";
+import { YUBA_IMAGE_HOST } from "~/resources/yubaCDN";
 
 interface IProps {
     // 弹幕数据
@@ -45,6 +46,21 @@ const Default: FC<IProps> = (props) => {
             return "";
         }
     }, [props]);
+    
+    const danmakuText = useMemo(() => {
+        if (data.txt.includes(`[DouyuEx图片`)) {
+            return data.txt.replace(/\[DouyuEx图片(.*?)\]/g, (match, str: string) => {
+                const split = str.split(".");
+                const url = decompressDouyuExImageUrl(split[0]);
+                const realImageUrl = `${YUBA_IMAGE_HOST}${url.slice(0, 4) + "/" + url.slice(4, 6) + "/" + url.slice(6, 8) + "/" + url}.200x0.${split[1]}`;
+                const imgHtml = `<a href="${realImageUrl.replace("200x0.", "")}" target="_blank"><img class="ex-image-danmaku" src="${realImageUrl}" alt=""></a>`;
+                return imgHtml;
+            });
+        } else {
+            return data.txt;
+        }
+    }, [data.txt]);
+
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
@@ -75,8 +91,8 @@ const Default: FC<IProps> = (props) => {
                 {data.nn}：
             </span>
             {/* 弹幕 */}
-            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt" onClick={(e) => copyTextEvent(e, data.txt)}>
-                {data.txt}
+            <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">
+                {data.txt.includes(`[DouyuEx图片`) ? <span className="item__imgtxt" dangerouslySetInnerHTML={{ __html: danmakuText }}></span> : <span onClick={(e) => copyTextEvent(e, data.txt)}>{data.txt}</span>}
                 {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
             </span>
             

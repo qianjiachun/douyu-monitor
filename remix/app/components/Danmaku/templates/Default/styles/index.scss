@@ -36,6 +36,16 @@
             @include fontColor("contentColor");
             margin-left: 8px;
         }
+        .ex-image-danmaku {
+            height: 100%;
+            max-height: 32px;
+            border-radius: 5px;
+            margin: 0 4px;
+        }
+        .item__imgtxt {
+            display: inline-flex;
+            align-items: center;
+        }
     }
     .noble-day {
         background-color:#fff3df;
