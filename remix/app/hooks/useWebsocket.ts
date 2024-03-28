@@ -363,6 +363,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             case "dgb":
                 if (!isGiftValid(data)) return;
                 if (!window.allGift[data.gfid]) {
+                    if (isArrayInText(options.current.gift.ban.keywords, data.gfn)) return false;
                     tmp = {
                         type: GIFT_TYPE.UNKNOWN,
                         name: `${data.gfn ? data.gfn : ""}（id: ${data.gfid}）未知价格，请到斗鱼查看`
