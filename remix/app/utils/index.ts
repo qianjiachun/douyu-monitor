@@ -366,3 +366,9 @@ export function decompressDouyuExImageUrl(base36Str: string) {
 
   return decimal.toString();
 }
+
+export function isValidImageFile(filename: string) {
+  const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".bmp", ".ico", ".tiff", ".tif"];
+  const ext = filename.substring(filename.lastIndexOf(".")).toLowerCase();
+  return validExtensions.includes(ext);
+}

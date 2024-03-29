@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { copyTextEvent, decompressDouyuExImageUrl, formatTime } from "~/utils";
+import { copyTextEvent, decompressDouyuExImageUrl, formatTime, isValidImageFile } from "~/utils";
 import { YUBA_IMAGE_HOST } from "~/resources/yubaCDN";
 
 interface IProps {
@@ -50,6 +50,7 @@ const Default: FC<IProps> = (props) => {
     const danmakuText = useMemo(() => {
         if (data.txt.includes(`[DouyuEx图片`)) {
             return data.txt.replace(/\[DouyuEx图片(.*?)\]/g, (match, str: string) => {
+                if (!isValidImageFile(str)) return "";
                 const split = str.split(".");
                 const url = decompressDouyuExImageUrl(split[0]);
                 const realImageUrl = `${YUBA_IMAGE_HOST}${url.slice(0, 4) + "/" + url.slice(4, 6) + "/" + url.slice(6, 8) + "/" + url}.200x0.${split[1]}`;
