@@ -22,7 +22,7 @@ export function redirectUrl(url: string): void {
     // "http://localhost:3000/",
   ];
   if (HOSTS.includes(url)) {
-    location.href = "https://xiaochunchun.gitee.io/douyuex/";
+    location.href = "https://html.douyuex.com/";
   }
 }
 
