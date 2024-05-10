@@ -167,6 +167,7 @@ interface IOptionsGift {
     fansLevel: number; // 高亮粉丝牌升级大于等于
     ban: IOptionsGiftBan;
     showEffect: boolean; // 是否显示礼物特效
+    audio: boolean; // 是否开启礼物音效（价格同totalPrice）
 }
 
 interface IOptionsGiftBan {

@@ -31,6 +31,7 @@ enum OPTIONS_ACTION {
     GIFT_BAN_FANSLEVEL = "gift_ban_fansLevel",
     GIFT_FANSLEVEL = "gift_fansLevel",
     GIFT_SHOWEFFECT = "gift_showEffect",
+    GIFT_AUDIO = "gift_audio",
     SHOW_STATUS = "show_status",
     SUPERCHAT_SHOW = "superchat_show",
     SUPERCHAT_KEYWORD = "superchat_keyword",
@@ -87,6 +88,7 @@ const defaultOptions: IOptions = {
         totalPrice: 100,
         fansLevel: 11,
         showEffect: true,
+        audio: false,
         ban: {
             price: 0,
             keywords: [],
@@ -233,6 +235,9 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
             break;
         case OPTIONS_ACTION.GIFT_SHOWEFFECT:
             state.gift.showEffect = payload;
+            break;
+        case OPTIONS_ACTION.GIFT_AUDIO:
+            state.gift.audio = payload;
             break;
         case OPTIONS_ACTION.SHOW_STATUS:
             state.showStatus = payload;

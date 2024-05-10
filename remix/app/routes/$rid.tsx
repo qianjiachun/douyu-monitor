@@ -446,6 +446,9 @@ const Index = () => {
                     <Field label="特效">
                         <Switch size={20} checked={options.gift.showEffect} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_SHOWEFFECT, payload: v})} />
                     </Field>
+                    <Field label="音效">
+                        <Switch size={20} checked={options.gift.audio} onChange={(v) => dispatchOptions({type: OPTIONS_ACTION.GIFT_AUDIO, payload: v})} />
+                    </Field>
                 </Tabs.TabPane>
                 <Tabs.TabPane title="进场">
                     <Field label="占比">

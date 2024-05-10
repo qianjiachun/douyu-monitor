@@ -324,14 +324,14 @@ export function deepCopy<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
 }
 
-export function speakText(text: string) {
+export function speakText(text: string, rate = 1) {
   const speech = new SpeechSynthesisUtterance()
   // 设置播放内容
   speech.text = text
   // 设置话语的音调(0-2 默认1，值越大越尖锐,越低越低沉)
   speech.pitch = 0.8 
   // 设置说话的速度(0.1-10 默认1，值越大语速越快,越小语速越慢)
-  speech.rate = 1 
+  speech.rate = rate 
   // 设置说话的音量
   speech.volume = 10 
   // 设置播放语言

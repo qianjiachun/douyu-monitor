@@ -489,6 +489,14 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 return;
         }
         obj = {...obj, ...tmp};
+        if (options.current.gift.audio && obj.type === GIFT_TYPE.GIFT) {
+            const giftData = window.allGift[data.gfid];
+            if (giftData && giftData.pc * Number(obj.gfcnt) >= Number(options.current.gift.totalPrice) * 100) {
+                let audio: HTMLAudioElement | null = new Audio("./gift.wav");
+                audio.play().catch(() => speakText("播放音效失败，请先与网页进行交互", 2))
+                audio = null;
+            }
+        }
         setGiftList(list => {
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), obj];
