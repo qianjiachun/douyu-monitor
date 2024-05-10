@@ -489,15 +489,12 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 return;
         }
         obj = {...obj, ...tmp};
-        if (options.current.gift.audio && obj.type === GIFT_TYPE.GIFT) {
+        if (options.current.gift.audio) {
             const giftData = window.allGift[data.gfid];
-            if (giftData && giftData.pc * Number(obj.gfcnt) >= Number(options.current.gift.totalPrice) * 100) {
-                let audio: HTMLAudioElement | null = new Audio("./gift.wav");
-                audio.volume = 0.29;
-                audio.play().catch(() => speakText("播放音效失败，请先与网页进行交互", 2))
-                audio = null;
-            }
+            if (obj.type === GIFT_TYPE.GIFT && giftData && giftData.pc * Number(obj.gfcnt) >= Number(options.current.gift.totalPrice) * 100) playGiftAudio();
+            if (obj.type === GIFT_TYPE.DIAMOND) playGiftAudio();
         }
+        
         setGiftList(list => {
             if (list.length >= options.current.threshold) {
                 return [...list.splice(1), obj];
@@ -505,6 +502,13 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 return [...list, obj];
             }
         });
+    }
+
+    const playGiftAudio = () => {
+        let audio: HTMLAudioElement | null = new Audio("./gift.wav");
+        audio.volume = 0.29;
+        audio.play().catch(() => speakText("播放音效失败，请先与网页进行交互", 2))
+        audio = null;
     }
 
     const handleData = (data: any) => {
