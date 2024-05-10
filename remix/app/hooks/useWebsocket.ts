@@ -493,6 +493,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             const giftData = window.allGift[data.gfid];
             if (giftData && giftData.pc * Number(obj.gfcnt) >= Number(options.current.gift.totalPrice) * 100) {
                 let audio: HTMLAudioElement | null = new Audio("./gift.wav");
+                audio.volume = 0.29;
                 audio.play().catch(() => speakText("播放音效失败，请先与网页进行交互", 2))
                 audio = null;
             }
