@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
-import { Notify } from "react-vant";
-
+import { Notify, Dialog } from "react-vant";
+import { addBanOption } from "~/routes/$rid";
 const LOCAL_NAME = "monitor_options";
 
 export function redirectUrl(url: string): void {
@@ -342,6 +342,30 @@ export function speakText(text: string, rate = 1) {
   }
   // 加入播放队列
   window.speechSynthesis.speak(speech)
+}
+
+export function onClickTextDialog(event: any, text: string, type: string) {
+  Dialog.confirm({
+    title: '请选择操作',
+    message: text,
+    cancelButtonText: ("复制文本"),
+    confirmButtonText: (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : ""),
+    cancelButtonColor: '#000000',
+    confirmButtonColor: '#000000',
+    closeOnClickOverlay: true,
+    onCancel: () => {
+      copyTextEvent(event, text);
+    }
+  }).then(() => {
+    addBanOption(text, type);
+    Notify.show({type: "success", message: `屏蔽${type === 'nn' ? "昵称" : type === 'txt' ? "关键词" : ""}成功`, duration: 2000});
+  }).catch(() => { });
+}
+
+export function clickTextEvent(event: any, text: string, type: string) {
+  event.stopPropagation && event.stopPropagation();
+  event.preventDefault && event.preventDefault();
+  onClickTextDialog(event, text, type);
 }
 
 export function copyTextEvent(event: any, text: string) {
