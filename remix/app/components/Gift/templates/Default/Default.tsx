@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { memo, useMemo } from "react";
 import { Button } from "react-vant";
 import { GIFT_TYPE } from "~/hooks/useWebsocket";
-import { clickTextEvent, formatTime } from "~/utils";
+import { clickTextEvent, clickGiftEvent, formatTime } from "~/utils";
 
 interface IProps {
     // 礼物数据
@@ -35,7 +35,7 @@ const Default: FC<IProps> = (props) => {
             <span className="item__gift">
                 <img className="avatar" src={giftData.pic} loading="lazy" alt=""/>
             </span>
-            <span className="item__cnt">{Number(data.gfcnt) !== 0 ? `${data.name}*${data.gfcnt}` : data.name}</span>
+            <span className="item__cnt" onClick={(e) => clickGiftEvent(e, data.name)}>{Number(data.gfcnt) !== 0 ? `${data.name}*${data.gfcnt}` : data.name}</span>
             <span className="item__name" onClick={(e) => clickTextEvent(e, data.nn, 'nn')}>{data.nn}</span>
             {Number(data.hits) >= 5 && <span className="item__hits">累计x{data.hits}</span>}
             {data.type === GIFT_TYPE.UNKNOWN ? <Button type="primary" size="mini" onClick={onClickReloadGiftData}>刷新礼物</Button> : <></>}
