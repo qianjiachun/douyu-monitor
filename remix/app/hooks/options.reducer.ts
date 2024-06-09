@@ -47,7 +47,7 @@ interface IOptionsAction {
     payload?: any;
 }
 
-export interface IOptionContext {
+export interface IOptionsContext {
     state: IOptions;
     dispatch: Dispatch<IOptionsAction>;
 }
@@ -269,7 +269,7 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
     }
 }
 
-const OptionContext = createContext<IOptionContext>({
+const OptionsContext = createContext<IOptionsContext>({
     state: defaultOptions,
     dispatch: () => {}
 });
@@ -278,5 +278,5 @@ export {
     OPTIONS_ACTION,
     defaultOptions,
     optionsReducer,
-    OptionContext
+    OptionsContext
 };
