@@ -1,6 +1,7 @@
 import copy from "copy-to-clipboard";
-import { Notify, Dialog } from "react-vant";
-import { addBanOption } from "~/routes/$rid";
+import React from 'react';
+import { Notify, Dialog, Button } from "react-vant";
+import { addBanOption, addKeyNicknames } from "~/routes/$rid";
 const LOCAL_NAME = "monitor_options";
 
 export function redirectUrl(url: string): void {
@@ -344,29 +345,56 @@ export function speakText(text: string, rate = 1) {
   window.speechSynthesis.speak(speech)
 }
 
-export function onClickTextDialog(event: any, text: string, type: string) {
-  Dialog.confirm({
-    title: '请选择操作',
-    message: text,
-    cancelButtonText: ("复制文本"),
-    confirmButtonText: (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : ""),
-    cancelButtonColor: '#000000',
-    confirmButtonColor: '#000000',
-    closeOnClickOverlay: true,
-    onCancel: () => {
-      copyTextEvent(event, text);
-    }
-  }).then(() => {
-    addBanOption(text, type);
-    Notify.show({type: "success", message: `屏蔽${type === 'nn' ? "昵称" : type === 'txt' ? "关键词" : ""}成功`, duration: 2000});
-  }).catch(() => { });
-}
-
 export function clickTextEvent(event: any, text: string, type: string) {
+
   event.stopPropagation && event.stopPropagation();
   event.preventDefault && event.preventDefault();
-  onClickTextDialog(event, text, type);
+
+  const copyText = (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : "");
+
+  const footerContent = React.createElement('div', { className: 'clickText-button', style: { width: '100%' } },
+    React.createElement(Button.Group, { block: true, round: false, style: { width: '100%' } },
+      React.createElement(Button, {
+        onClick: () => {
+          copyTextEvent(event, text);
+          closeDialog();
+        }
+      }, '复制文本'),
+
+      React.createElement(Button, {
+        onClick: () => {
+          addBanOption(text, type);
+          Notify.show({ type: "success", message: `添加${copyText}成功`, duration: 2000 });
+          closeDialog();
+        }
+      }, copyText),
+
+      type == 'nn' && React.createElement(Button, {
+        onClick: () => {
+          addKeyNicknames(text);
+          Notify.show({ type: "success", message: "添加高亮昵称成功", duration: 2000 });
+          closeDialog();
+        }
+      }, '高亮昵称')
+    )
+  );
+
+  Dialog.confirm({
+    message: text,
+    closeOnClickOverlay: true,
+    footer: footerContent
+  }).then(() => { }).catch(() => { });
+
+  const closeDialog = () => {
+    const _dialog = document.querySelector('.rv-overlay') as HTMLElement;
+    _dialog.dispatchEvent(new MouseEvent('click', {
+      bubbles: true, // 是否冒泡
+      cancelable: true, // 是否可取消
+      view: window // 事件发生的视图
+    }));
+  }
 }
+
 
 export function copyTextEvent(event: any, text: string) {
   event.stopPropagation && event.stopPropagation();

@@ -100,6 +100,12 @@ export const addBanOption = (text: string, type: string) => {
         dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: `${options.danmaku.ban.keywords.join(" ")} ${text}` });
     }
 }
+export const addKeyNicknames = (text: string) => {
+    const options = getOptions();
+    const dispatchOptions = getDispatchOptions();
+    dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${options.danmaku.keyNicknames.join(" ")} ${text}` });
+ 
+}
 
 const Index = () => {
 	const { rid, allGiftData, exoptions } = useLoaderData<ILoaderProps>();
