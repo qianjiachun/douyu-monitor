@@ -1,7 +1,7 @@
 import copy from "copy-to-clipboard";
 import React from 'react';
 import { Notify, Dialog, Button } from "react-vant";
-import { addBanOption, addKeyNicknames, banGiftKeyword } from "~/routes/$rid";
+import { OPTIONS_ACTION, IOptionsContext } from "~/hooks/options.reducer";
 const LOCAL_NAME = "monitor_options";
 
 export function redirectUrl(url: string): void {
@@ -345,37 +345,45 @@ export function speakText(text: string, rate = 1) {
   window.speechSynthesis.speak(speech)
 }
 
-export function clickTextEvent(event: any, text: string, type: string) {
+export function clickTextEvent(optionsContext: IOptionsContext, event: any, text: string, type: string) {
   event.stopPropagation && event.stopPropagation();
   event.preventDefault && event.preventDefault();
+  const { state, dispatch } = optionsContext;
 
-  const banText = (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : "");
+  const banText = (type === "nn" ? "屏蔽昵称" : type === "txt" ? "屏蔽关键词" : "");
 
   // 创建footer按钮组控件
-  const footerContent = React.createElement('div', { className: 'clickText-button', style: { width: '100%' } },
-    React.createElement(Button.Group, { block: true, round: false, style: { width: '100%' } },
+  const footerContent = React.createElement("div", { className: "clickText-button", style: { width: "100%" } },
+    React.createElement(Button.Group, { block: true, round: false, style: { width: "100%" } },
+
       React.createElement(Button, {
         onClick: () => {
           copyTextEvent(event, text);
           closeDialog();
         }
-      }, '复制文本'),
+      }, "复制文本"),
 
       React.createElement(Button, {
         onClick: () => {
-          addBanOption(text, type);
+          if (type == "nn") {
+            dispatch({ type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: `${state.danmaku.ban.nicknames.join(" ")} ${text}` });
+          }
+          if (type == "txt") {
+            dispatch({ type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: `${state.danmaku.ban.keywords.join(" ")} ${text}` });
+          }
           Notify.show({ type: "success", message: `添加${banText}成功`, duration: 2000 });
           closeDialog();
         }
       }, banText),
 
-      type == 'nn' && React.createElement(Button, {
+      type == "nn" && React.createElement(Button, {
         onClick: () => {
-          addKeyNicknames(text);
+          dispatch({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${state.danmaku.keyNicknames.join(" ")} ${text}` });
           Notify.show({ type: "success", message: "添加高亮昵称成功", duration: 2000 });
           closeDialog();
         }
-      }, '高亮昵称')
+      }, "高亮昵称")
+
     )
   );
 
@@ -386,8 +394,8 @@ export function clickTextEvent(event: any, text: string, type: string) {
   }).then(() => { }).catch(() => { });
 
   const closeDialog = () => {
-    const _dialog = document.querySelector('.rv-overlay') as HTMLElement;
-    _dialog.dispatchEvent(new MouseEvent('click', {
+    const _dialog = document.querySelector(".rv-overlay") as HTMLElement;
+    _dialog.dispatchEvent(new MouseEvent("click", {
       bubbles: true,
       cancelable: true,
       view: window
@@ -395,18 +403,19 @@ export function clickTextEvent(event: any, text: string, type: string) {
   }
 }
 
-export function clickGiftEvent(event: any, name: string) {
+export function clickGiftEvent(optionsContext: IOptionsContext, event: any, name: string) {
   event.stopPropagation && event.stopPropagation();
   event.preventDefault && event.preventDefault();
-
+  const { state, dispatch } = optionsContext;
+  
   Dialog.confirm({
-    title: '是否屏蔽该礼物',
+    title: "是否屏蔽该礼物",
     message: name,
     closeOnClickOverlay: true,
-    onCancel: () => {},
+    onCancel: () => { },
     onConfirm: () => {
-      banGiftKeyword(name);
-      Notify.show({type: "success", message: "添加屏蔽礼物成功", duration: 2000});
+      dispatch({ type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: `${state.gift.ban.keywords.join(" ")} ${name}` });
+      Notify.show({ type: "success", message: "添加屏蔽礼物成功", duration: 2000 });
     },
   })
 }

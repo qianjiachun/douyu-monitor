@@ -78,42 +78,6 @@ interface ISuperchatSettingDialogData {
     value: string;
 }
 
-
-
-const createSetter = () => {
-    let value: any;
-    const setValue = (newValue: any) => {
-        value = newValue;
-    };
-    const getValue = () => value;
-    return { setValue, getValue };
-};
-const { setValue: setOptions, getValue: getOptions } = createSetter();
-const { setValue: setDispatchOptions, getValue: getDispatchOptions } = createSetter();
-
-export const addBanOption = (text: string, type: string) => {
-    const options = getOptions();
-    const dispatchOptions = getDispatchOptions();
-    if(type == 'nn'){
-        dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: `${options.danmaku.ban.nicknames.join(" ")} ${text}` });
-    }
-    if(type == 'txt'){
-        dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: `${options.danmaku.ban.keywords.join(" ")} ${text}` });
-    }
-}
-
-export const addKeyNicknames = (text: string) => {
-    const options = getOptions();
-    const dispatchOptions = getDispatchOptions();
-    dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${options.danmaku.keyNicknames.join(" ")} ${text}` });
-}
-
-export const banGiftKeyword = (name: string) => {
-    const options = getOptions();
-    const dispatchOptions = getDispatchOptions();
-    dispatchOptions({ type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: `${options.gift.ban.keywords.join(" ")} ${name}` });
-}
-
 const Index = () => {
 	const { rid, allGiftData, exoptions } = useLoaderData<ILoaderProps>();
     const fetcher = useFetcher<ILoaderProps>();
@@ -128,8 +92,7 @@ const Index = () => {
         value: "",
         index: 0,
     });
-    setOptions(options);
-    setDispatchOptions(dispatchOptions);
+
     let effectTimer: NodeJS.Timeout;
 
     // 加载动画
