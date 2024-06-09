@@ -1,3 +1,5 @@
+import type { Dispatch } from "react";
+import { createContext } from "react";
 import { formatObj } from "~/utils";
 
 enum OPTIONS_ACTION {
@@ -43,6 +45,11 @@ enum OPTIONS_ACTION {
 interface IOptionsAction {
     type: OPTIONS_ACTION;
     payload?: any;
+}
+
+export interface IOptionsContext {
+    state: IOptions;
+    dispatch: Dispatch<IOptionsAction>;
 }
 
 // 默认配置，遵循数据驱动视图
@@ -262,8 +269,14 @@ const optionsReducer = (state: IOptions, action: IOptionsAction) => {
     }
 }
 
+const OptionsContext = createContext<IOptionsContext>({
+    state: defaultOptions,
+    dispatch: () => {}
+});
+  
 export {
     OPTIONS_ACTION,
     defaultOptions,
-    optionsReducer
+    optionsReducer,
+    OptionsContext
 };
