@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { FC } from "react";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext } from "react";
+import { OptionsContext } from "~/hooks/options.reducer";
 import { nobleData } from "~/resources/nobleData";
 import { clickTextEvent, formatTime } from "~/utils";
 
@@ -34,6 +35,10 @@ const Default: FC<IProps> = (props) => {
         }
         return "";
     }, [props]);
+    const optionsContext = useContext(OptionsContext);
+    const handleClickTextEvent = (event: any, text: string, type: string) => {
+        clickTextEvent(optionsContext, event, text, type);
+    };
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
@@ -43,7 +48,7 @@ const Default: FC<IProps> = (props) => {
             {/* 头像 */}
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt=""/></span>}
             {/* 昵称 */}
-            <span className="item__name" onClick={(e) => clickTextEvent(e, data.nn, 'nn')}><span>{data.nn}</span> 进入了直播间</span>
+            <span className="item__name" onClick={(e) => handleClickTextEvent(e, data.nn, "nn")}><span>{data.nn}</span> 进入了直播间</span>
             {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
         </div>
     )

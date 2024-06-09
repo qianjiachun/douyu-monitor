@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext } from "react";
+import { OptionsContext } from "~/hooks/options.reducer";
 import type { FC } from "react";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
@@ -62,6 +63,11 @@ const Default: FC<IProps> = (props) => {
         }
     }, [data.txt]);
 
+    const optionsContext = useContext(OptionsContext);
+    const handleClickTextEvent = (event: any, text: string, type: string) => {
+        clickTextEvent(optionsContext, event, text, type);
+    };
+
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
@@ -86,14 +92,14 @@ const Default: FC<IProps> = (props) => {
             {/* 头像 */}
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} alt="" loading="lazy" /></span>}
             {/* 昵称 */}
-            <span className={clsx("item__name", {"super-name": data.isSuper})} onClick={(e) => clickTextEvent(e, data.nn, 'nn')}>
+            <span className={clsx("item__name", {"super-name": data.isSuper})} onClick={(e) => handleClickTextEvent(e, data.nn, "nn")}>
                 {/* VIP */}
                 {props.showVip && data.isVip && <span className="Barrage-roomVipIcon"></span>}
                 {data.nn}：
             </span>
             {/* 弹幕 */}
             <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">
-                {data.txt.includes(`[DouyuEx图片`) ? <span className="item__imgtxt" dangerouslySetInnerHTML={{ __html: danmakuText }}></span> : <span onClick={(e) => clickTextEvent(e, data.txt, 'txt')}>{data.txt}</span>}
+                {data.txt.includes(`[DouyuEx图片`) ? <span className="item__imgtxt" dangerouslySetInnerHTML={{ __html: danmakuText }}></span> : <span onClick={(e) => handleClickTextEvent(e, data.txt, "txt")}>{data.txt}</span>}
                 {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
             </span>
             
