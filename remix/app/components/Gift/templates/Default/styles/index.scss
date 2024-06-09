@@ -25,6 +25,7 @@
         }
         .item__cnt {
             @include fontColor("contentColor");
+            cursor: pointer;
         }
         .item__hits {
             @include fontColor("contentColor");

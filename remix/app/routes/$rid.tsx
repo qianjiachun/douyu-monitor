@@ -90,6 +90,7 @@ const createSetter = () => {
 };
 const { setValue: setOptions, getValue: getOptions } = createSetter();
 const { setValue: setDispatchOptions, getValue: getDispatchOptions } = createSetter();
+
 export const addBanOption = (text: string, type: string) => {
     const options = getOptions();
     const dispatchOptions = getDispatchOptions();
@@ -100,11 +101,17 @@ export const addBanOption = (text: string, type: string) => {
         dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: `${options.danmaku.ban.keywords.join(" ")} ${text}` });
     }
 }
+
 export const addKeyNicknames = (text: string) => {
     const options = getOptions();
     const dispatchOptions = getDispatchOptions();
     dispatchOptions({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${options.danmaku.keyNicknames.join(" ")} ${text}` });
- 
+}
+
+export const banGiftKeyword = (name: string) => {
+    const options = getOptions();
+    const dispatchOptions = getDispatchOptions();
+    dispatchOptions({ type: OPTIONS_ACTION.GIFT_BAN_KEYWORDS, payload: `${options.gift.ban.keywords.join(" ")} ${name}` });
 }
 
 const Index = () => {

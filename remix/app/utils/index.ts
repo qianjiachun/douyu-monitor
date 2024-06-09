@@ -1,7 +1,7 @@
 import copy from "copy-to-clipboard";
 import React from 'react';
 import { Notify, Dialog, Button } from "react-vant";
-import { addBanOption, addKeyNicknames } from "~/routes/$rid";
+import { addBanOption, addKeyNicknames, banGiftKeyword } from "~/routes/$rid";
 const LOCAL_NAME = "monitor_options";
 
 export function redirectUrl(url: string): void {
@@ -346,12 +346,12 @@ export function speakText(text: string, rate = 1) {
 }
 
 export function clickTextEvent(event: any, text: string, type: string) {
-
   event.stopPropagation && event.stopPropagation();
   event.preventDefault && event.preventDefault();
 
-  const copyText = (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : "");
+  const banText = (type === 'nn' ? "屏蔽昵称" : type === 'txt' ? "屏蔽关键词" : "");
 
+  // 创建footer按钮组控件
   const footerContent = React.createElement('div', { className: 'clickText-button', style: { width: '100%' } },
     React.createElement(Button.Group, { block: true, round: false, style: { width: '100%' } },
       React.createElement(Button, {
@@ -364,10 +364,10 @@ export function clickTextEvent(event: any, text: string, type: string) {
       React.createElement(Button, {
         onClick: () => {
           addBanOption(text, type);
-          Notify.show({ type: "success", message: `添加${copyText}成功`, duration: 2000 });
+          Notify.show({ type: "success", message: `添加${banText}成功`, duration: 2000 });
           closeDialog();
         }
-      }, copyText),
+      }, banText),
 
       type == 'nn' && React.createElement(Button, {
         onClick: () => {
@@ -388,11 +388,27 @@ export function clickTextEvent(event: any, text: string, type: string) {
   const closeDialog = () => {
     const _dialog = document.querySelector('.rv-overlay') as HTMLElement;
     _dialog.dispatchEvent(new MouseEvent('click', {
-      bubbles: true, // 是否冒泡
-      cancelable: true, // 是否可取消
-      view: window // 事件发生的视图
+      bubbles: true,
+      cancelable: true,
+      view: window
     }));
   }
+}
+
+export function clickGiftEvent(event: any, name: string) {
+  event.stopPropagation && event.stopPropagation();
+  event.preventDefault && event.preventDefault();
+
+  Dialog.confirm({
+    title: '是否屏蔽该礼物',
+    message: name,
+    closeOnClickOverlay: true,
+    onCancel: () => {},
+    onConfirm: () => {
+      banGiftKeyword(name);
+      Notify.show({type: "success", message: "添加屏蔽礼物成功", duration: 2000});
+    },
+  })
 }
 
 
