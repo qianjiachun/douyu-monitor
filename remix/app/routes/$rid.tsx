@@ -16,7 +16,7 @@ import Danmaku from "~/components/Danmaku/index";
 
 import { Button, Cell, Checkbox, Collapse, Dialog, Field, Image, Popup, Radio, Slider, Switch, Tabs, Toast } from "react-vant";
 import { useImmerReducer } from "use-immer";
-import { defaultOptions, optionsReducer, OPTIONS_ACTION } from "~/hooks/options.reducer";
+import { defaultOptions, optionsReducer, OPTIONS_ACTION, OptionContext } from "~/hooks/options.reducer";
 import Enter from "~/components/Enter";
 import Gift from "~/components/Gift";
 import SplitLine from "~/components/SplitLine";
@@ -275,7 +275,7 @@ const Index = () => {
 		return;
 	}
 
-    return <>
+    return <OptionContext.Provider value={{ state: options, dispatch: dispatchOptions }}>
         {
             options.showMode === "default" && options.showNobleNum &&
             <div className="noblenum" style={{left: options.align === "left" ? "auto" : "8px", right: options.align === "right" ? "auto" : "8px"}}>
@@ -528,7 +528,7 @@ const Index = () => {
                 </Tabs.TabPane>
             </Tabs>
         </Popup>
-    </>;
+    </OptionContext.Provider>;
 }
 
 export default Index;
