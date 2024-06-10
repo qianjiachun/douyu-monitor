@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import { memo, useMemo, useContext } from "react";
-import { OptionsContext } from "~/hooks/options.reducer";
+import { OPTIONS_ACTION, OptionsContext } from "~/hooks/options.reducer";
 import type { FC } from "react";
+import React from "react";
+import { Notify, Dialog,Button } from "react-vant";
 import { danmakuColor } from "~/resources/danmakuColor";
 import { nobleData } from "~/resources/nobleData";
-import { clickTextEvent, decompressDouyuExImageUrl, formatTime, isValidImageFile } from "~/utils";
+import { copyTextEvent, decompressDouyuExImageUrl, formatTime, isValidImageFile } from "~/utils";
 import { YUBA_IMAGE_HOST } from "~/resources/yubaCDN";
 
 interface IProps {
@@ -63,10 +65,63 @@ const Default: FC<IProps> = (props) => {
         }
     }, [data.txt]);
 
-    const optionsContext = useContext(OptionsContext);
-    const handleClickTextEvent = (event: any, text: string, type: string) => {
-        clickTextEvent(optionsContext, event, text, type);
-    };
+    const { state, dispatch } = useContext(OptionsContext);
+    
+    function clickTextEvent(event: any, text: string, type: string) {
+        event.stopPropagation && event.stopPropagation();
+        event.preventDefault && event.preventDefault();
+
+        const banText = (type === "nn" ? "屏蔽昵称" : type === "txt" ? "屏蔽关键词" : "");
+
+        const footerContent = React.createElement("div", { className: "clickText-button", style: { width: "100%" } },
+            React.createElement(Button.Group, { block: true, round: false, style: { width: "100%" } },
+
+                React.createElement(Button, {
+                    onClick: () => {
+                        copyTextEvent(event, text);
+                        closeDialog();
+                    }
+                }, "复制文本"),
+
+                React.createElement(Button, {
+                    onClick: () => {
+                        if (type == "nn") {
+                            dispatch({ type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: `${state.danmaku.ban.nicknames.join(" ")} ${text}` });
+                        }
+                        if (type == "txt") {
+                            dispatch({ type: OPTIONS_ACTION.DANMAKU_BAN_KEYWORDS, payload: `${state.danmaku.ban.keywords.join(" ")} ${text}` });
+                        }
+                        Notify.show({ type: "success", message: `添加${banText}成功`, duration: 2000 });
+                        closeDialog();
+                    }
+                }, banText),
+
+                type == "nn" && React.createElement(Button, {
+                    onClick: () => {
+                        dispatch({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${state.danmaku.keyNicknames.join(" ")} ${text}` });
+                        Notify.show({ type: "success", message: "添加高亮昵称成功", duration: 2000 });
+                        closeDialog();
+                    }
+                }, "高亮昵称")
+
+            )
+        );
+
+        Dialog.confirm({
+            message: text,
+            closeOnClickOverlay: true,
+            footer: footerContent
+        }).then(() => { }).catch(() => { });
+
+        const closeDialog = () => {
+            const _dialog = document.querySelector(".rv-overlay") as HTMLElement;
+            _dialog.dispatchEvent(new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            }));
+        }
+    }
 
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
@@ -92,14 +147,14 @@ const Default: FC<IProps> = (props) => {
             {/* 头像 */}
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} alt="" loading="lazy" /></span>}
             {/* 昵称 */}
-            <span className={clsx("item__name", {"super-name": data.isSuper})} onClick={(e) => handleClickTextEvent(e, data.nn, "nn")}>
+            <span className={clsx("item__name", {"super-name": data.isSuper})} onClick={(e) => clickTextEvent(e, data.nn, "nn")}>
                 {/* VIP */}
                 {props.showVip && data.isVip && <span className="Barrage-roomVipIcon"></span>}
                 {data.nn}：
             </span>
             {/* 弹幕 */}
             <span style={props.showColor ? {color: danmakuColor[data.color]} : {}} className="item__txt">
-                {data.txt.includes(`[DouyuEx图片`) ? <span className="item__imgtxt" dangerouslySetInnerHTML={{ __html: danmakuText }}></span> : <span onClick={(e) => handleClickTextEvent(e, data.txt, "txt")}>{data.txt}</span>}
+                {data.txt.includes(`[DouyuEx图片`) ? <span className="item__imgtxt" dangerouslySetInnerHTML={{ __html: danmakuText }}></span> : <span onClick={(e) => clickTextEvent(e, data.txt, "txt")}>{data.txt}</span>}
                 {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
             </span>
             
