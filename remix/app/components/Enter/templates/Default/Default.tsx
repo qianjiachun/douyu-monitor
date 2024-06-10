@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import type { FC } from "react";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useContext } from "react";
+import { OPTIONS_ACTION, OptionsContext } from "~/hooks/options.reducer";
+import React from "react";
+import { Notify, Dialog,Button } from "react-vant";
 import { nobleData } from "~/resources/nobleData";
 import { copyTextEvent, formatTime } from "~/utils";
 
@@ -34,6 +37,58 @@ const Default: FC<IProps> = (props) => {
         }
         return "";
     }, [props]);
+    
+    const { state, dispatch } = useContext(OptionsContext);
+
+    function clickNickNameEvent(event: any, text: string) {
+        event.stopPropagation && event.stopPropagation();
+        event.preventDefault && event.preventDefault();
+
+        const footerContent = React.createElement("div", { className: "clickText-button", style: { width: "100%" } },
+            React.createElement(Button.Group, { block: true, round: false, style: { width: "100%" } },
+
+                React.createElement(Button, {
+                    onClick: () => {
+                        copyTextEvent(event, text);
+                        closeDialog();
+                    }
+                }, "复制文本"),
+
+                React.createElement(Button, {
+                    onClick: () => {
+                        dispatch({ type: OPTIONS_ACTION.DANMAKU_BAN_NICKNAMES, payload: `${state.danmaku.ban.nicknames.join(" ")} ${text}` });
+                        Notify.show({ type: "success", message: `添加屏蔽昵称成功`, duration: 2000 });
+                        closeDialog();
+                    }
+                }, "屏蔽昵称"),
+
+                React.createElement(Button, {
+                    onClick: () => {
+                        dispatch({ type: OPTIONS_ACTION.DANMAKU_KEYNICKNAMES, payload: `${state.danmaku.keyNicknames.join(" ")} ${text}` });
+                        Notify.show({ type: "success", message: "添加高亮昵称成功", duration: 2000 });
+                        closeDialog();
+                    }
+                }, "高亮昵称")
+
+            )
+        );
+
+        Dialog.confirm({
+            message: text,
+            closeOnClickOverlay: true,
+            footer: footerContent
+        }).then(() => { }).catch(() => { });
+
+        const closeDialog = () => {
+            const _dialog = document.querySelector(".rv-overlay") as HTMLElement;
+            _dialog.dispatchEvent(new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            }));
+        }
+    }
+
     return (
         <div className={clsx("item", {"fadeInLeft": props.showAnimation}, itemClass)}>
             {/* 等级 */}
@@ -43,7 +98,7 @@ const Default: FC<IProps> = (props) => {
             {/* 头像 */}
             {props.showAvatar && <span className="item__avatar"><img className="avatar" src={`https://apic.douyucdn.cn/upload/${data.avatar}_small.jpg`} loading="lazy" alt=""/></span>}
             {/* 昵称 */}
-            <span className="item__name" onClick={(e) => copyTextEvent(e, data.nn)}><span>{data.nn}</span> 进入了直播间</span>
+            <span className="item__name" onClick={(e) => clickNickNameEvent(e, data.nn)}><span>{data.nn}</span> 进入了直播间</span>
             {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
         </div>
     )
