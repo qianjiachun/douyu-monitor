@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, memo } from "react";
+import React, { useCallback, useContext, memo } from "react";
 import { OPTIONS_ACTION, OptionsContext } from "~/hooks/options.reducer";
 
 interface IProps {
@@ -63,6 +63,7 @@ const SplitLine: React.FC<IProps> = ({ order, transparent, direction }) => {
     document.addEventListener(moveEvent, onMouseMove);
     document.addEventListener(endEvent, onMouseUp);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [direction, state]);
 
 
