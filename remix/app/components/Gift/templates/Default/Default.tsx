@@ -105,7 +105,7 @@ const Default: FC<IProps> = (props) => {
             <span className="item__gift">
                 <img className="avatar" src={giftData.pic} loading="lazy" alt=""/>
             </span>
-            <span className="item__cnt" onClick={(e) => clickGiftEvent(e, data.name)}>{Number(data.gfcnt) !== 0 ? `${data.name}*${data.gfcnt}` : data.name}</span>
+            <span className="item__cnt" onClick={(e) => clickGiftEvent(e, data.name)}>{Number(data.gfcnt) !== 0 ? `${data.name}${data.type === GIFT_TYPE.UNKNOWN ? `（id: ${data.gfid}）未知价格，请到斗鱼查看` : ``}*${data.gfcnt}` : data.name}</span>
             <span className="item__name" onClick={(e) => clickNickNameEvent(e, data.nn)}>{data.nn}</span>
             {Number(data.hits) >= 5 && <span className="item__hits">累计x{data.hits}</span>}
             {data.type === GIFT_TYPE.UNKNOWN ? <Button type="primary" size="mini" onClick={onClickReloadGiftData}>刷新礼物</Button> : <></>}
