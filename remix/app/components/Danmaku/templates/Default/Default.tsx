@@ -158,7 +158,7 @@ const Default: FC<IProps> = (props) => {
                 {data.repeatCount > 1 && <span className="item__repeat">x{data.repeatCount}</span>}
             </span>
             
-            {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split(".")[0])}</span></>}
+            {props.showTime && <><br/><span className="item__time">{formatTime(String(data.key).split("_")[1])}</span></>}
         </div>
     )
 }

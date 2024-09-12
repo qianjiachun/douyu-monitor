@@ -98,7 +98,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
     //         }
     //         const obj = {type, data};
     //         if (list.length >= options.current.threshold) {
-    //             return [...list.splice(1), obj];
+    //             return [...list.slice(1), obj];
     //         } else {
     //             return [...list, obj];
     //         }
@@ -168,7 +168,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             isRoomAdmin: data.rg == "4",
             isSuper: data.pg == "5",
             isVip: data.ail == "453/" || data.ail == "454/",
-            key: new Date().getTime() + Math.random(),
+            key: data.nn + `_` + new Date().getTime(),
             repeatCount: 1
         };
         // 过滤机器人弹幕
@@ -188,7 +188,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                     speakText(`${scObj.nn}说：${scObj.txt}`);
                 }
                 if (list.length >= options.current.threshold) {
-                    return [...list.splice(1), scObj];
+                    return [...list.slice(1), scObj];
                 } else {
                     return [...list, scObj];
                 }
@@ -206,7 +206,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 });
             };
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), obj];
+                return [...list.slice(1), obj];
             } else {
                 return [...list, obj];
             }
@@ -248,7 +248,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
+                return [...list.slice(1), scObj];
             } else {
                 return [...list, scObj];
             }
@@ -288,7 +288,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
+                return [...list.slice(1), scObj];
             } else {
                 return [...list, scObj];
             }
@@ -319,7 +319,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                 speakText(`${scObj.nn}说：${scObj.txt}`);
             }
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), scObj];
+                return [...list.slice(1), scObj];
             } else {
                 return [...list, scObj];
             }
@@ -337,7 +337,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
         }
         setEnterList(list => {
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), obj];
+                return [...list.slice(1), obj];
             } else {
                 return [...list, obj];
             }
@@ -497,7 +497,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
         
         setGiftList(list => {
             if (list.length >= options.current.threshold) {
-                return [...list.splice(1), obj];
+                return [...list.slice(1), obj];
             } else {
                 return [...list, obj];
             }
