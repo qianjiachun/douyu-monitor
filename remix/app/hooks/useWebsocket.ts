@@ -520,7 +520,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
 
     const isDanmakuValid = (data: any): boolean => {
         // 判断屏蔽等级
-        if (Number(data.level) <= options.current.danmaku.ban.level) return false;
+        if (Number(data.level) < options.current.danmaku.ban.level) return false;
         // 判断关键词
         if (isArrayInText(options.current.danmaku.ban.keywords, data.txt)) return false;
         // 判断关键昵称
