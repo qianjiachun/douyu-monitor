@@ -167,7 +167,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             isNoble: !!data.nc,
             isRoomAdmin: data.rg == "4",
             isSuper: data.pg == "5",
-            isVip: data.ail == "453/" || data.ail == "454/",
+            isVip: data.ail && (data.ail.includes("453/") || data.ail.includes("454/")),
             key: data.nn + `_` + new Date().getTime(),
             repeatCount: 1
         };
@@ -311,7 +311,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
             isNoble: !!data.chatmsg.nc,
             isRoomAdmin: data.chatmsg.rg == "4",
             isSuper: data.chatmsg.pg == "5",
-            isVip: data.chatmsg.ail == "453/" || data.chatmsg.ail == "454/",
+            isVip: data.chatmsg.ail && (data.chatmsg.includes("453/") || data.chatmsg.includes("454/")),
             key: new Date().getTime() + Math.random(),
         };
         setSuperchatList(list => {
