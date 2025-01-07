@@ -134,7 +134,7 @@ const Default: FC<IProps> = (props) => {
             </span>}
             {/* 粉丝牌 */}
             {props.showFans && !!data.fansName &&
-            <div className={clsx("item__fans", {"is-diamonds": data.isDiamond}, "FansMedal", `fansLevel-${data.fansLv}`)}>
+            <div className={clsx("item__fans", {"is-diamonds": data.isDiamond}, "FansMedal", `fansLevel-${Number(data.fansLv) <= 50 ? data.fansLv : `50`}`)}>
                 <span className="FansMedal-name">{data.fansName}</span>
                 {/* 钻粉 */}
                 {data.isDiamond && props.showDiamond && <img className="FansMedalBox-diamondsIcon" src="https://sta-op.douyucdn.cn/douyu/2021/08/05/02304a1c04587e43ac626ce5ce07d935.png" alt="" loading="lazy"/>}
