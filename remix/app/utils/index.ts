@@ -217,8 +217,8 @@ export function getRealRid(rid: string): Promise<string> {
       .then((ret) => {
         resolve(ret.data.room_id);
       })
-      .catch((err) => {
-        reject(err);
+      .catch(() => {
+        resolve(rid);
       });
   });
 }
