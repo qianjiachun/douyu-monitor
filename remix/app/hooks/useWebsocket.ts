@@ -411,7 +411,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                     });
                 }
                 break;
-            case "odfbc":
+            case "dfobc":
                 // 开通钻粉
                 tmp = {
                     type: GIFT_TYPE.DIAMOND,
@@ -422,7 +422,7 @@ const useWebsocket = (options: MutableRefObject<IOptions>) => {
                     hits: "0",
                 }
                 break;
-            case "rndfbc": 
+            case "dfrbc": 
                 // 续费钻粉
                 tmp = {
                     type: GIFT_TYPE.DIAMOND,
