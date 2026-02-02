@@ -8,7 +8,7 @@ import { nobleData } from "~/resources/nobleData";
 
 const MSG_TYPE: any = {
     danmaku: ["chatmsg"],
-    gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast"],
+    gift: ["dgb", "odfbc", "rndfbc", "anbc", "rnewbc", "blab", "fansupgradebroadcast", "dfobc", "dfrbc"],
     enter: ["uenter"],
     data: ["noble_num_info", "oni"],
     fansPaper: ["fansPaper"],
